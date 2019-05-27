@@ -16,8 +16,13 @@ runtime: nodejs10
 
 handlers:
 - url: /
-  static_files: build/index.html
-  upload: build/index.html
+  static_files: dist/index.html
+  upload: dist/index.html
 - url: /
-  static_dir: build
+  static_dir: dist
+# wildcard everything else, serving index.html
+- url: '/(.*)'
+  secure: always
+  static_files: dist/index.html
+  upload: dist/index.html
 # [END runtime]
