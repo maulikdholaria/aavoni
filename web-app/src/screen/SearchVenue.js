@@ -1,8 +1,10 @@
 import React from 'react';
 import { Container, Row, Col, Card, CardDeck, Button } from 'react-bootstrap';
+import Icon from '@material-ui/core/Icon';
+import SearchStyle from '../style/Search.less'
 import SearchApi from '../api/SearchApi';
 
-class Search extends React.Component {
+class SearchVenue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,6 +29,14 @@ class Search extends React.Component {
     });
   }
 
+  getPriceRangeText(pricerange) {
+    var pricerangetext = "";
+    for (var i = 0; i < pricerange; i++) {
+      pricerangetext += "$";
+    }
+    return pricerangetext;
+  }
+
   render() {
     const { success, data, errors, response, isLoaded } = this.state;
     console.log(data);
@@ -41,16 +51,19 @@ class Search extends React.Component {
             <Col></Col>
             <Col md={10}>
                 <Row>
-                  {data.listings.map(listing => (
-                    <Col key={listing.id} lg={6} xl={3}>
-                      <Card key={listing.id}>
-                        <Card.Body>
+                  {data.items.map(item => (
+                    <Col key={item.id} lg={6} xl={3}>
+                      <Card key={item.id} className="search-card">
+                        <Card.Body className="body">
                           <Card.Img variant="top" src="images/1.jpg" height="250"/>
-                          <Card.Title>{listing.createdBy.firstName}</Card.Title>
-                          <Card.Text>
-                            {listing.title}
+                          <Card.Title className="title">{item.name} - {item.id}</Card.Title>
+                          <Card.Text className="location">
+                            <Icon className="icon">location_on</Icon><span> {item.location}</span>
                           </Card.Text>
-                          <Button variant="primary">Rent at ${ listing.rent } </Button>
+                          <Card.Text className="price">
+                            Price Range: {this.getPriceRangeText(item.pricerange)}
+                          </Card.Text>
+                          
                         </Card.Body>
                       </Card>
                     </Col>
@@ -65,4 +78,4 @@ class Search extends React.Component {
   }
 }
 
-export default Search;
+export default SearchVenue;

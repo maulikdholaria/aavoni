@@ -1,11 +1,10 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import HeaderStyle from "../../style/Header.less";
 
 function HomePage() {
   return (
-    <Container fluid>
-    	<div id="header">Hello123</div>
-    </Container>
+    <div id="header"></div>    
   );
 }
 

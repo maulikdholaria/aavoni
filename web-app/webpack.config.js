@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
   entry: './src/index.js',
   module: {
@@ -14,6 +16,20 @@ module.exports = {
       {
         test: /\.svg$/,
         loader: 'svg-inline-loader'
+      },
+      {
+        test: /\.less$/,
+        use: [
+          {
+            loader: 'style-loader', // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader', // translates CSS into CommonJS
+          },
+          {
+            loader: 'less-loader', // compiles Less to CSS
+          },
+        ],
       }
     ]
   },
@@ -25,6 +41,9 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js'
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
   devServer: {
     contentBase: './dist',
     port: 3000,
@@ -32,6 +51,7 @@ module.exports = {
     proxy: {
       '/api': 'http://localhost:3001',
       '/images': 'http://localhost:3001'
-    }
+    },
+    hot: true
   }
 };

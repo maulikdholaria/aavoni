@@ -13,6 +13,7 @@
 #
 # [START runtime]
 runtime: nodejs10
+service: front-end
 
 handlers:
 - url: /
@@ -20,9 +21,7 @@ handlers:
   upload: dist/index.html
 - url: /
   static_dir: dist
-# wildcard everything else, serving index.html
-- url: '/(.*)'
+- url: /.*
   secure: always
-  static_files: dist/index.html
-  upload: dist/index.html
+  script: auto
 # [END runtime]
