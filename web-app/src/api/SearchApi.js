@@ -1,7 +1,7 @@
 class SearchApi {
 
-  getItems(callback) {
-    fetch("api/search")
+  searchVenue(callback) {
+    fetch("api/search/venue")
     .then(res => res.json())
     .then(callback)
   }

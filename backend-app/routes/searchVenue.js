@@ -4,7 +4,7 @@ var fs = require('fs');
 
 
 router.get('/', function(req, res, next) {	   
-  fs.readFile('resp/search.json', 'utf8', function(err, contents) {
+  fs.readFile('resp/searchVenue.json', 'utf8', function(err, contents) {
 	res.send(contents);
   });
 });

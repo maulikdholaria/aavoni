@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "Hello there wedding",
+    "address": "xyz street, san Francisco",
+    "ratings": 5,
+    "pricerange": 5,
+    "weddings": 100,
+    "type": "Winery",
+    "about": "We invite you to come and visit the elegantly restored historic landmark San Francisco City Hall and see how it can accommodate all your event needs. It is a fabulous showcase with rich history and rooms like no other venue in San Francisco.City Hall is a destination and tourist attraction known world wide. Its rooms are extremely versatile and able to accommodate any type of event you may be planning. You will see that it is a magnificent place to host a wide variety of events, perfectly suited for a business conference, corporate reception, social gala or wedding.San Francisco City Hall is wheelchair accessible and very convenient to public transportation. The closest accessible Bart Station is Civic Center, three blocks from City Hall. Accessible Muni lines are the 42, 71 and F Line to Market and Van Ness, Civic Center. Public parking garage is conveniently located across the street from City Hall at Civic Center Plaza.City Hall Events Department office hours are 9:00 am-5:30 pm, Monday through Friday."
+  },
+  "errors": []
+}

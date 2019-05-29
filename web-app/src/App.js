@@ -8,6 +8,7 @@ import ViewPort from './screen/common/ViewPort';
 import HomePage from './screen/HomePage';
 import Maulik from './screen/Maulik';
 import SearchVenue from './screen/SearchVenue';
+import VenueDetails from './screen/VenueDetails';
 
 const API_HOST="http://localhost:3001"
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/" exact={true} component={HomePage} />
         <Route path="/maulik/add/:addid/hello/:helloid" component={Maulik} />
         <Route path="/search/venue" exact component={SearchVenue} />
+        <Route path="/venue/:id" component={VenueDetails} />
       </div>
     </BrowserRouter>
   );

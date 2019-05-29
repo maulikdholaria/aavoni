@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { Container, Row, Col, Card, CardDeck, Button } from 'react-bootstrap';
 import Icon from '@material-ui/core/Icon';
-import SearchStyle from '../style/Search.less'
+import SearchStyle from '../style/Search.less';
 import SearchApi from '../api/SearchApi';
 
 class SearchVenue extends React.Component {
@@ -18,7 +19,7 @@ class SearchVenue extends React.Component {
 
   componentDidMount() {
     const searchApi = new SearchApi();
-    searchApi.getItems(response => {
+    searchApi.searchVenue(response => {
       this.setState({
           sucess: response.sucess,
           data: response.data,
@@ -39,7 +40,6 @@ class SearchVenue extends React.Component {
 
   render() {
     const { success, data, errors, response, isLoaded } = this.state;
-    console.log(data);
     if (success) {
       return <div>Error: {errors[0].message}</div>;
     } else if (!isLoaded) {
@@ -53,19 +53,20 @@ class SearchVenue extends React.Component {
                 <Row>
                   {data.items.map(item => (
                     <Col key={item.id} lg={6} xl={3}>
-                      <Card key={item.id} className="search-card">
-                        <Card.Body className="body">
-                          <Card.Img variant="top" src="images/1.jpg" height="250"/>
-                          <Card.Title className="title">{item.name} - {item.id}</Card.Title>
-                          <Card.Text className="location">
-                            <Icon className="icon">location_on</Icon><span> {item.location}</span>
-                          </Card.Text>
-                          <Card.Text className="price">
-                            Price Range: {this.getPriceRangeText(item.pricerange)}
-                          </Card.Text>
-                          
-                        </Card.Body>
-                      </Card>
+                      <Link to={{pathname: `/venue/${item.id}`}}>
+                        <Card key={item.id} className="search-card">
+                          <Card.Body className="body">
+                            <Card.Img variant="top" src="images/1.jpg" height="250"/>
+                            <Card.Title className="title">{item.name} - {item.id}</Card.Title>
+                            <Card.Text className="location">
+                              <Icon className="icon">location_on</Icon><span> {item.location}</span>
+                            </Card.Text>
+                            <Card.Text className="price">
+                              Price Range: {this.getPriceRangeText(item.pricerange)}
+                            </Card.Text>
+                          </Card.Body>
+                        </Card>
+                      </Link>
                     </Col>
                   ))}
                 </Row>
