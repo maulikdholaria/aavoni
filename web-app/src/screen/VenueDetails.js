@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
-import { Container, Row, Col, Card, CardDeck, Button } from 'react-bootstrap';
-import Icon from '@material-ui/core/Icon';
-
+import { BrowserView, MobileView, isBrowser, isMobile } from "react-device-detect";
+import store from '../redux-store/store';
+import VenueDetailsMobile from './component/VenueDetailsMobile'
 import VenueApi from '../api/VenueApi';
 
 class VenueDetails extends React.Component {
@@ -17,17 +16,11 @@ class VenueDetails extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const venueApi = new VenueApi();
-    venueApi.getVenue(this.props.match.params.id, response => {
-      this.setState({
-          sucess: response.sucess,
-          data: response.data,
-          errors: response.errors,
-          reason: response.reason,
-          isLoaded: true
-      });
-    });
+  addCurrentVenueDetail(data) {
+    return {
+      type: 'ADD_CURRENT_VENUE_DETAIL',
+      data
+    }
   }
 
   getPriceRangeText(pricerange) {
@@ -38,6 +31,32 @@ class VenueDetails extends React.Component {
     return pricerangetext;
   }
 
+  componentDidMount() {
+    const venueApi = new VenueApi();
+    const currState = store.getState();
+    console.log(currState);
+    if(!Array.isArray(currState.currentVenueDetail) && currState.currentVenueDetail.id == this.props.match.params.id) {
+      this.setState({
+        sucess: true,
+        data: currState.currentVenueDetail,
+        errors: [],
+        reason: null,
+        isLoaded: true
+      });
+      return;
+    }
+    venueApi.getVenue(this.props.match.params.id, response => {
+      store.dispatch(this.addCurrentVenueDetail(response.data));
+      this.setState({
+          sucess: response.sucess,
+          data: response.data,
+          errors: response.errors,
+          reason: response.reason,
+          isLoaded: true
+      });
+    });
+  }
+
   render() {
     const { success, data, errors, response, isLoaded } = this.state;
     if (success) {
@@ -46,9 +65,14 @@ class VenueDetails extends React.Component {
       return <div>Loading...</div>;
     } else {
       return (
-        <Container fluid>
-          
-        </Container>
+        <div>
+          <BrowserView>
+		    <h1> This is rendered only in browser </h1>
+		  </BrowserView>
+		  <MobileView>
+		  	<VenueDetailsMobile data={data}/>
+		  </MobileView>
+		</div>
       );
     }
   }

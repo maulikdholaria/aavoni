@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, CardDeck, Button } from 'react-bootstrap';
 import Icon from '@material-ui/core/Icon';
+import store from '../redux-store/store';
 import SearchStyle from '../style/Search.less';
 import SearchApi from '../api/SearchApi';
 
@@ -10,24 +11,19 @@ class SearchVenue extends React.Component {
     super(props);
     this.state = {
       sucess: false,
-      data: {},
+      totalVenues: 0,
+      venues: {},
       errors: [],
       reason: null,
       isLoaded: false
     };
   }
 
-  componentDidMount() {
-    const searchApi = new SearchApi();
-    searchApi.searchVenue(response => {
-      this.setState({
-          sucess: response.sucess,
-          data: response.data,
-          errors: response.errors,
-          reason: response.reason,
-          isLoaded: true
-      });
-    });
+  addCurrentSearchVenues(data) {
+    return {
+      type: 'ACC_CURRENT_SEARCH_VENUES',
+      data
+    }
   }
 
   getPriceRangeText(pricerange) {
@@ -38,8 +34,47 @@ class SearchVenue extends React.Component {
     return pricerangetext;
   }
 
+  updateState(response) {
+    this.setState({
+          sucess: response.sucess,
+          totalVenues: response.data.totalVenues,
+          venues: response.data.venues,
+          errors: response.errors,
+          reason: response.reason,
+          isLoaded: true
+    });
+  }
+
+  componentDidMount() {
+    const searchApi = new SearchApi();
+    const currState = store.getState();
+
+    if(!Array.isArray(currState.venues)) {
+      this.setState({
+        sucess: true,
+        totalVenues: currState.venues.totalVenues,
+        venues: currState.venues.venues,
+        errors: [],
+        reason: null,
+        isLoaded: true
+      });
+      return;
+    }
+    searchApi.searchVenue(response => {
+      store.dispatch(this.addCurrentSearchVenues(response.data));
+      this.setState({
+          sucess: response.sucess,
+          totalVenues: response.data.totalVenues,
+          venues: response.data.venues,
+          errors: response.errors,
+          reason: response.reason,
+          isLoaded: true
+      });
+    });
+  }
+
   render() {
-    const { success, data, errors, response, isLoaded } = this.state;
+    const { success, venues, errors, response, isLoaded } = this.state;
     if (success) {
       return <div>Error: {errors[0].message}</div>;
     } else if (!isLoaded) {
@@ -51,18 +86,18 @@ class SearchVenue extends React.Component {
             <Col></Col>
             <Col md={10}>
                 <Row>
-                  {data.items.map(item => (
-                    <Col key={item.id} lg={6} xl={3}>
-                      <Link to={{pathname: `/venue/${item.id}`}}>
-                        <Card key={item.id} className="search-card">
+                  {venues.map(venue => (
+                    <Col key={venue.id} lg={6} xl={3}>
+                      <Link to={{pathname: `/venue/${venue.id}`}}>
+                        <Card key={venue.id} className="search-card">
                           <Card.Body className="body">
                             <Card.Img variant="top" src="images/1.jpg" height="250"/>
-                            <Card.Title className="title">{item.name} - {item.id}</Card.Title>
+                            <Card.Title className="title">{venue.name} - {venue.id}</Card.Title>
                             <Card.Text className="location">
-                              <Icon className="icon">location_on</Icon><span> {item.location}</span>
+                              <Icon className="icon">location_on</Icon><span> {venue.location}</span>
                             </Card.Text>
                             <Card.Text className="price">
-                              Price Range: {this.getPriceRangeText(item.pricerange)}
+                              Price Range: {this.getPriceRangeText(venue.pricerange)}
                             </Card.Text>
                           </Card.Body>
                         </Card>

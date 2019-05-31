@@ -9,6 +9,7 @@ import HomePage from './screen/HomePage';
 import Maulik from './screen/Maulik';
 import SearchVenue from './screen/SearchVenue';
 import VenueDetails from './screen/VenueDetails';
+import VenueContact from './screen/VenueContact';
 
 const API_HOST="http://localhost:3001"
 
@@ -21,7 +22,8 @@ function App() {
         <Route path="/" exact={true} component={HomePage} />
         <Route path="/maulik/add/:addid/hello/:helloid" component={Maulik} />
         <Route path="/search/venue" exact component={SearchVenue} />
-        <Route path="/venue/:id" component={VenueDetails} />
+        <Route path="/venue/:id" exact component={VenueDetails} />
+        <Route path="/venue/contact/:id" exact component={VenueContact} />
       </div>
     </BrowserRouter>
   );

@@ -1,8 +1,8 @@
 {
   "success": true,
   "data": {
-    "totalItems": 7,
-    "items": [
+    "totalVenues": 17,
+    "venues": [
       {
         "id": 1,
         "name": "Hello there wedding",
