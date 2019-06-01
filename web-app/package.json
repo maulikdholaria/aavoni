@@ -5,18 +5,23 @@
   "dependencies": {
     "@material-ui/core": "^4.0.0",
     "@material-ui/icons": "^4.0.0",
+    "@mdi/js": "^3.6.95",
+    "@mdi/react": "^1.1.1",
     "bootstrap": "^4.3.1",
+    "formik": "^1.5.7",
     "install": "^0.12.2",
     "react": "^16.8.6",
     "react-aspect-ratio": "^1.0.40",
     "react-bootstrap": "^1.0.0-beta.8",
     "react-device-detect": "^1.6.2",
     "react-dom": "^16.8.6",
+    "react-formik-ui": "^3.0.8",
     "react-google-maps": "^9.4.5",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
-    "redux-starter-kit": "^0.5.1"
+    "redux-starter-kit": "^0.5.1",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
@@ -50,6 +55,7 @@
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "react-hot-loader": "^4.8.8",
+    "react-social-icons": "^4.1.0",
     "style-loader": "^0.23.1",
     "svg-inline-loader": "^0.8.0",
     "webpack": "^4.32.2",

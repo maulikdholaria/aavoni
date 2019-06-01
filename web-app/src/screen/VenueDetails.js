@@ -34,7 +34,7 @@ class VenueDetails extends React.Component {
   componentDidMount() {
     const venueApi = new VenueApi();
     const currState = store.getState();
-    console.log(currState);
+    
     if(!Array.isArray(currState.currentVenueDetail) && currState.currentVenueDetail.id == this.props.match.params.id) {
       this.setState({
         sucess: true,
@@ -67,12 +67,12 @@ class VenueDetails extends React.Component {
       return (
         <div>
           <BrowserView>
-		    <h1> This is rendered only in browser </h1>
-		  </BrowserView>
-		  <MobileView>
-		  	<VenueDetailsMobile data={data}/>
-		  </MobileView>
-		</div>
+		        <h1> This is rendered only in browser </h1>
+		      </BrowserView>
+		      <MobileView>
+		  	   <VenueDetailsMobile data={data}/>
+		      </MobileView>
+		    </div>
       );
     }
   }

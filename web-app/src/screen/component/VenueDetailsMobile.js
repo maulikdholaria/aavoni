@@ -1,8 +1,10 @@
 import React from 'react';
 import { Container, Row, Col, Carousel, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import AspectRatio from 'react-aspect-ratio';
 import Icon from '@material-ui/core/Icon';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import SocialIcons from '../common/SocialIcons';
 import 'react-aspect-ratio/aspect-ratio.css';
 import VenueDetailsStyle from '../../style/VenueDetails.less';
 
@@ -35,7 +37,7 @@ class VenueDetailsMobile extends React.Component {
 	))
 
   	return(
-  	  <Container className="venue-details">
+  	  <Container className="venue-details-mobile">
   		<Row noGutters={true}>
       		<Col xs={12} sm={12} md={12} lg={12} xl={12}> 
       			
@@ -57,6 +59,7 @@ class VenueDetailsMobile extends React.Component {
 	          	  <div className="name">{data.name}</div>
 	          	  <div>{data.type}</div>
 	          	  <div className="location"><Icon className="icon">location_on</Icon><span> {data.address}</span></div>
+	          	  <SocialIcons />
 	          	  <hr />
 	          	  <div className="about">{data.about}</div>
       			</div>
@@ -70,7 +73,9 @@ class VenueDetailsMobile extends React.Component {
 				  containerElement={<div style={{ height: `400px` }} />}
 				  mapElement={<div style={{ height: `100%` }} />}
 				/>
-      			<Button href={venueContactUrl} className="contact" variant="primary" size="lg" block>Contact Now</Button>
+				<Link className="contact" to={venueContactUrl}>
+      				<Button className="link-button" variant="primary" size="lg" block>Contact Now</Button>
+      			</Link>
       		</Col>
       		<Col> </Col>
       	</Row>
