@@ -1,27 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col, Card, CardDeck, Button } from 'react-bootstrap';
-import Icon from '@material-ui/core/Icon';
+import { BrowserView, MobileView, isBrowser, isMobile } from "react-device-detect";
 import store from '../redux-store/store';
-import SearchVenueStyle from '../style/SearchVenue.less';
 import SearchApi from '../api/SearchApi';
+import SearchWeddingPlannerMobile from './component/SearchWeddingPlannerMobile';
+import SearchWeddingPlannerBrowser from './component/SearchWeddingPlannerBrowser';
 
 class SearchWeddingPlanner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       sucess: false,
-      totalVenues: 0,
-      venues: {},
+      totalPlanners: 0,
+      planners: [],
       errors: [],
       reason: null,
       isLoaded: false
     };
   }
 
-  addCurrentSearchVenues(data) {
+  addCurrentWeddingPlannersSearch(data) {
     return {
-      type: 'ACC_CURRENT_SEARCH_VENUES',
+      type: 'ADD_CURRENT_WEDDING_PLANNERS_SEARCH',
       data
     }
   }
@@ -34,38 +33,27 @@ class SearchWeddingPlanner extends React.Component {
     return pricerangetext;
   }
 
-  updateState(response) {
-    this.setState({
-          sucess: response.sucess,
-          totalVenues: response.data.totalVenues,
-          venues: response.data.venues,
-          errors: response.errors,
-          reason: response.reason,
-          isLoaded: true
-    });
-  }
-
   componentDidMount() {
     const searchApi = new SearchApi();
     const currState = store.getState();
 
-    if(!Array.isArray(currState.venues)) {
+    if(!Array.isArray(currState.weddingPlanners)) {
       this.setState({
         sucess: true,
-        totalVenues: currState.venues.totalVenues,
-        venues: currState.venues.venues,
+        totalPlanners: currState.weddingPlanners.totalPlanners,
+        planners: currState.weddingPlanners.planners,
         errors: [],
         reason: null,
         isLoaded: true
       });
       return;
     }
-    searchApi.searchVenue(response => {
-      store.dispatch(this.addCurrentSearchVenues(response.data));
+    searchApi.searchWeddingPlanner(response => {
+      store.dispatch(this.addCurrentWeddingPlannersSearch(response.data));
       this.setState({
           sucess: response.sucess,
-          totalVenues: response.data.totalVenues,
-          venues: response.data.venues,
+          totalPlanners: response.data.totalPlanners,
+          planners: response.data.planners,
           errors: response.errors,
           reason: response.reason,
           isLoaded: true
@@ -74,41 +62,21 @@ class SearchWeddingPlanner extends React.Component {
   }
 
   render() {
-    const { success, venues, errors, response, isLoaded } = this.state;
+    const { success, totalPlanners, planners, errors, response, isLoaded } = this.state;
     if (success) {
       return <div>Error: {errors[0].message}</div>;
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (
-        <Container className="search-venue" fluid>
-          <Row>
-            <Col></Col>
-            <Col md={10}>
-                <Row>
-                  {venues.map(venue => (
-                    <Col key={venue.id} lg={6} xl={3}>
-                      <Link to={{pathname: `/venue/${venue.id}`}}>
-                        <Card key={venue.id} className="search-card">
-                          <Card.Body className="body">
-                            <Card.Img variant="top" src="images/1.jpg" height="250"/>
-                            <Card.Title className="title">{venue.name} - {venue.id}</Card.Title>
-                            <Card.Text className="location">
-                              <Icon className="icon">location_on</Icon><span> {venue.location}</span>
-                            </Card.Text>
-                            <Card.Text className="price">
-                              Price Range: {this.getPriceRangeText(venue.pricerange)}
-                            </Card.Text>
-                          </Card.Body>
-                        </Card>
-                      </Link>
-                    </Col>
-                  ))}
-                </Row>
-            </Col>
-            <Col></Col>
-          </Row>
-        </Container>
+        <div>
+          <BrowserView>
+            <SearchWeddingPlannerBrowser totalPlanners={totalPlanners} planners={planners}/>
+          </BrowserView>
+          <MobileView>
+            <SearchWeddingPlannerMobile totalPlanners={totalPlanners} planners={planners}/>
+          </MobileView>
+        </div>
       );
     }
   }

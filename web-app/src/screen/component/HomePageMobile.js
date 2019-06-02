@@ -16,7 +16,7 @@ class VenueDetailsMobile extends React.Component {
   handleSubmit = (values) => {
     const whatUrlParam=GlobalMapping['modules'][values['what']-1]['urlParam'];
     const whereUrlParam=GlobalMapping['location'][values['where']-1]['urlParam'];
-    this.props.history.push("/" + whatUrlParam + "/" + whereUrlParam);
+    this.props.history.push("/s/" + whatUrlParam + "/" + whereUrlParam);
   }
 
   getFormSchema = () => {

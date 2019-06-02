@@ -22,8 +22,8 @@ function App() {
       <div>
         <Route path="/" exact={true} component={HomePage} />
         <Route path="/maulik/add/:addid/hello/:helloid" component={Maulik} />
-        <Route path="/wedding-planner/:location" exact component={SearchWeddingPlanner} />
-        <Route path="/wedding-venue/:location" exact component={SearchWeddingVenue} />
+        <Route path="/s/wedding-planner/:location" exact component={SearchWeddingPlanner} />
+        <Route path="/s/wedding-venue/:location" exact component={SearchWeddingVenue} />
         <Route path="/venue/:id" exact component={VenueDetails} />
         <Route path="/venue/contact/:id" exact component={VenueContact} />
       </div>
