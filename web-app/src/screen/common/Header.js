@@ -1,11 +1,25 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
-import HeaderStyle from "../../style/Header.less";
+import { BrowserView, MobileView, isBrowser, isMobile } from "react-device-detect";
+import HeaderMobile from '../component/HeaderMobile'
 
-function HomePage() {
-  return (
-    <div id="header"></div>    
-  );
+class Header extends React.Component {
+  constructor(props) {
+  	super(props);
+  }
+  
+  render() {
+  	
+  	return (
+	  <div>
+	  	<BrowserView>
+	  	  
+	  	</BrowserView>
+	  	<MobileView>
+	  	  <HeaderMobile/>
+	  	</MobileView>
+	  </div>
+  	);
+  }
 }
 
-export default HomePage;
+export default Header;

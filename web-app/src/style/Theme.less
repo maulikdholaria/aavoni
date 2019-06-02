@@ -1,4 +1,7 @@
 @background-color: #fafafa;
+//@element-color: #007bff;
+//@element-color: #a338eb;
+@element-color: rgb(107, 50, 153);
 
 body {
 	background-color: @background-color;
@@ -6,8 +9,10 @@ body {
 
 .link-button {
 	border-radius: 0;
-	background-color: #007bff;
+	background-color: @element-color;
+	border-color: @element-color;
     color: white;
     padding: 10px;
     border-radius: 0;
+    width: 100%;
 }

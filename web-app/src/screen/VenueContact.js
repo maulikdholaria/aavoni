@@ -67,12 +67,12 @@ class VenueContact extends React.Component {
       return (
         <div>
           <BrowserView>
-		    <h1> This is rendered only in browser </h1>
-		  </BrowserView>
-		  <MobileView>
-		    <VenueContactMobile data={data}/>
-		  </MobileView>
-		</div>
+		        <h1> This is rendered only in browser </h1>
+		      </BrowserView>
+		      <MobileView>
+		        <VenueContactMobile data={data}/>
+		      </MobileView>
+		    </div>
       );
     }
   }

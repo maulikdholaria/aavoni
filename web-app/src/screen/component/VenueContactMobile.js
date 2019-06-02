@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Row, Col, Carousel } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import { Form, Input, SubmitBtn, Datepicker, Select, Textarea } from 'react-formik-ui';
 import * as Yup from 'yup';
@@ -102,7 +101,7 @@ class VenueContactMobile extends React.Component {
 				          ]}
 					    />
 					    <Textarea name='message' label='Message (Optional)' />
-	      		  		<SubmitBtn className="link-button contact-button" >Contact Now</SubmitBtn>
+	      		  		<SubmitBtn className="link-button">Send</SubmitBtn>
 	      			  
 			        </Form>
 		        

@@ -27,6 +27,7 @@ app.use('/api/search/venue', searchVenueRouter);
 app.use('/api/venue', venueRouter);
 
 app.use('/images', express.static(path.join(__dirname, 'public')))
+app.use('/site-assets', express.static(path.join(__dirname, 'public')))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

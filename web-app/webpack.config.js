@@ -50,7 +50,8 @@ module.exports = {
     historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:3001',
-      '/images': 'http://localhost:3001'
+      '/images': 'http://localhost:3001',
+      '/site-assets': 'http://localhost:3001'
     },
     hot: true
   }
