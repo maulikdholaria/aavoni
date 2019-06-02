@@ -1,0 +1,145 @@
+{
+  "success": true,
+  "data": {
+    "totalPlanners": 17,
+    "planners": [
+      {
+        "id": 1,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 5,
+        "weddings": 100
+      },
+      {
+        "id": 2,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 3,
+        "weddings": 100
+      },
+      {
+        "id": 3,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 2,
+        "weddings": 100
+      },
+      {
+        "id": 4,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 5,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 4,
+        "weddings": 100
+      },
+      {
+        "id": 6,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 7,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 8,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 9,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 10,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 11,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 12,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 13,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 14,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 15,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 16,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      },
+      {
+        "id": 17,
+        "name": "I'm Wedding Planner",
+        "location": "San Francisco, CA",
+        "ratings": 5,
+        "pricerange": 1,
+        "weddings": 100
+      }
+    ]
+  },
+  "errors": []
+}

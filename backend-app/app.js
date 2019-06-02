@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var searchWeddingPlannerRouter = require('./routes/searchWeddingPlanner');
 var searchVenueRouter = require('./routes/searchVenue');
 var usersRouter = require('./routes/users');
 var venueRouter = require('./routes/venue');
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/search/wedding-planner', searchWeddingPlannerRouter);
 app.use('/api/search/venue', searchVenueRouter);
 app.use('/api/venue', venueRouter);
 
