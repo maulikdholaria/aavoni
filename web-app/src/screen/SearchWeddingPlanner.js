@@ -6,7 +6,7 @@ import store from '../redux-store/store';
 import SearchVenueStyle from '../style/SearchVenue.less';
 import SearchApi from '../api/SearchApi';
 
-class SearchVenue extends React.Component {
+class SearchWeddingPlanner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -114,4 +114,4 @@ class SearchVenue extends React.Component {
   }
 }
 
-export default SearchVenue;
+export default SearchWeddingPlanner;

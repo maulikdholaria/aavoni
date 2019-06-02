@@ -42,7 +42,7 @@ class VenueContactMobile extends React.Component {
   	return(
   	  <Container className="venue-contact-mobile">
 		<Row noGutters={true}>
-  		<Col xs={12} sm={12} md={12} lg={12} xl={12}> 
+  		<Col> 
   			<div className="venue-info">
           	  <div className="name">{data.name}</div>
           	  <div>{data.type}</div>
@@ -101,7 +101,7 @@ class VenueContactMobile extends React.Component {
 				          ]}
 					    />
 					    <Textarea name='message' label='Message (Optional)' />
-	      		  		<SubmitBtn className="link-button">Send</SubmitBtn>
+	      		  		<SubmitBtn className="link-button">Send Message</SubmitBtn>
 	      			  
 			        </Form>
 		        
@@ -110,7 +110,7 @@ class VenueContactMobile extends React.Component {
   			
   			
   		</Col>
-  		<Col> </Col>
+  		
       	</Row>
       </Container>
   	);

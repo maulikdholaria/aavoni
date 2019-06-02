@@ -7,7 +7,8 @@ import Header from './screen/common/Header';
 import ViewPort from './screen/common/ViewPort';
 import HomePage from './screen/HomePage';
 import Maulik from './screen/Maulik';
-import SearchVenue from './screen/SearchVenue';
+import SearchWeddingPlanner from './screen/SearchWeddingPlanner';
+import SearchWeddingVenue from './screen/SearchWeddingVenue';
 import VenueDetails from './screen/VenueDetails';
 import VenueContact from './screen/VenueContact';
 
@@ -21,7 +22,8 @@ function App() {
       <div>
         <Route path="/" exact={true} component={HomePage} />
         <Route path="/maulik/add/:addid/hello/:helloid" component={Maulik} />
-        <Route path="/search/venue" exact component={SearchVenue} />
+        <Route path="/wedding-planner/:location" exact component={SearchWeddingPlanner} />
+        <Route path="/wedding-venue/:location" exact component={SearchWeddingVenue} />
         <Route path="/venue/:id" exact component={VenueDetails} />
         <Route path="/venue/contact/:id" exact component={VenueContact} />
       </div>
