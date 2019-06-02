@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, CardDeck, Button } from 'react-bootstrap';
 import Icon from '@material-ui/core/Icon';
 import store from '../redux-store/store';
-import SearchStyle from '../style/Search.less';
+import SearchVenueStyle from '../style/SearchVenue.less';
 import SearchApi from '../api/SearchApi';
 
 class SearchVenue extends React.Component {
@@ -81,7 +81,7 @@ class SearchVenue extends React.Component {
       return <div>Loading...</div>;
     } else {
       return (
-        <Container fluid>
+        <Container className="search-venue" fluid>
           <Row>
             <Col></Col>
             <Col md={10}>
