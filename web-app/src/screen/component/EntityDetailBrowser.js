@@ -30,6 +30,8 @@ class EntityDetailBrowser extends React.Component {
 	  email: Yup.string()
 	    .email('Invalid email')
 	    .required('Required'),
+	  phone: Yup.string()
+	    .required('Required'),
 	  guests: Yup.string()
 	    .required('Required'),
 	  budget: Yup.string()
@@ -110,6 +112,7 @@ class EntityDetailBrowser extends React.Component {
 				        lname: '',
 				        email: '',
 				        phone: '',
+				        date: '',
 				        guests: '',
 				        budget: '',
 				        message: ''
@@ -120,9 +123,10 @@ class EntityDetailBrowser extends React.Component {
 				      	
 					        <Form className="form contact-form" mode='themed'>
 					        	<Row>
-					        		<Col lg={6} xl={6}> <Input name="fname" label="First Name" autoComplete="given-name"/> </Col>
-					        		<Col lg={6} xl={6}> <Input name="lname" label="Last Name" autoComplete="family-name"/> </Col>
-					        		<Col lg={12} xl={12}> <Input name="email" type="email" label="Email" autoComplete="email"/></Col>
+					        		<Col lg={6} xl={6}> <Input name="fname" label="First Name" autoComplete="name"/> </Col>
+					        		<Col lg={6} xl={6}> <Input name="lname" label="Last Name" autoComplete="name"/> </Col>
+					        		<Col lg={6} xl={6}> <Input name="email" type="email" label="Email" autoComplete="email"/></Col>
+					        		<Col lg={6} xl={6}> <Input name="phone" type="tel" label="Phone" autoComplete="tel"/></Col>
 					        		<Col lg={12} xl={12}> <Datepicker name="date" label="Date" dateFormat="MM/dd/YYYY"/></Col>
 					        		<Col lg={6} xl={6}> 
 					        			<Select name='guests' label='Est. Guests' placeholder='Select...'
