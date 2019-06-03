@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, CardDeck, Button } from 'react-bootstrap';
 import Icon from '@material-ui/core/Icon';
 import * as Utils from '../common/Utils';
-import SearchWeddingPlannerStyle from '../../style/SearchWeddingPlanner.less';
+import WeddingPlannerSearchStyle from '../../style/WeddingPlannerSearch.less';
 
 
-class SearchWeddingPlannerMobile extends React.Component {
+class WeddingPlannerSearchMobile extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -44,4 +44,4 @@ class SearchWeddingPlannerMobile extends React.Component {
   }
 }
 
-export default SearchWeddingPlannerMobile;
+export default WeddingPlannerSearchMobile;

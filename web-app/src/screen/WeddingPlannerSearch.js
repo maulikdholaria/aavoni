@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserView, MobileView, isBrowser, isMobile } from "react-device-detect";
 import store from '../redux-store/store';
 import SearchApi from '../api/SearchApi';
-import SearchWeddingPlannerMobile from './component/SearchWeddingPlannerMobile';
-import SearchWeddingPlannerBrowser from './component/SearchWeddingPlannerBrowser';
+import WeddingPlannerSearchMobile from './component/WeddingPlannerSearchMobile';
+import WeddingPlannerSearchBrowser from './component/WeddingPlannerSearchBrowser';
 
-class SearchWeddingPlanner extends React.Component {
+class WeddingPlannerSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -63,10 +63,10 @@ class SearchWeddingPlanner extends React.Component {
       return (
         <div>
           <BrowserView>
-            <SearchWeddingPlannerBrowser totalPlanners={totalPlanners} planners={planners}/>
+            <WeddingPlannerSearchBrowser totalPlanners={totalPlanners} planners={planners}/>
           </BrowserView>
           <MobileView>
-            <SearchWeddingPlannerMobile totalPlanners={totalPlanners} planners={planners}/>
+            <WeddingPlannerSearchMobile totalPlanners={totalPlanners} planners={planners}/>
           </MobileView>
         </div>
       );
@@ -74,4 +74,4 @@ class SearchWeddingPlanner extends React.Component {
   }
 }
 
-export default SearchWeddingPlanner;
+export default WeddingPlannerSearch;

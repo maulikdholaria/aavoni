@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, CardDeck, Button } from 'react-bootstrap';
 import Icon from '@material-ui/core/Icon';
 import * as Utils from '../common/Utils';
-import SearchWeddingPlannerStyle from '../../style/SearchWeddingPlanner.less';
+import WeddingPlannerSearchStyle from '../../style/WeddingPlannerSearch.less';
 
 
-class SearchWeddingPlannerBrowser extends React.Component {
+class WeddingPlannerSearchBrowser extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -21,7 +21,7 @@ class SearchWeddingPlannerBrowser extends React.Component {
           <Col md={10} lg={10} xl={10}>
               <Row>
                 {planners.map(planner => (
-                  <Col key={planner.id} lg={3} xl={3}>
+                  <Col key={planner.id} lg={4} xl={3}>
                     <Link to={{pathname: `/wedding-planner/${planner.id}`}} style={{ textDecoration: 'none' }}>
                       <Card key={planner.id} className="search-card">
                         <Card.Body className="body">
@@ -48,4 +48,4 @@ class SearchWeddingPlannerBrowser extends React.Component {
   }
 }
 
-export default SearchWeddingPlannerBrowser;
+export default WeddingPlannerSearchBrowser;
