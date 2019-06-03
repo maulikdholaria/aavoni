@@ -32,7 +32,7 @@ class HomePageBrowser extends React.Component {
   	
   	return(
   	  <div className="home-page-desktop">
-	  	  <Container>
+	  	  
 	  		<Row noGutters={true}>
 	      		<Col> 
 	      			<div className="block1">Amazing planners, exclusive venues, memorable experience & beyond</div>
@@ -61,9 +61,15 @@ class HomePageBrowser extends React.Component {
 				        
 				      )}
 				    />
+				    <div className="block3">
+				    	Join the amzing community to help people celebrate time of thier life.
+				    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Become a vendor </a> 
+				    	or 
+				    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Offer your venue </a>
+			    	</div>
 	      		</Col>
 	      	</Row>
-	      </Container>
+	      
       </div>
 
   	);
