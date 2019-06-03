@@ -20,7 +20,7 @@ class WeddingPlannerSearch extends React.Component {
 
   addCurrentWeddingPlannersSearch(data) {
     return {
-      type: 'ADD_CURRENT_WEDDING_PLANNERS_SEARCH',
+      type: 'ADD_CURRENT_PLANNER_SEARCH',
       data
     }
   }
@@ -29,11 +29,11 @@ class WeddingPlannerSearch extends React.Component {
     const searchApi = new SearchApi();
     const currState = store.getState();
 
-    if(!Array.isArray(currState.weddingPlanners)) {
+    if(!Array.isArray(currState.planners)) {
       this.setState({
         sucess: true,
-        totalPlanners: currState.weddingPlanners.totalPlanners,
-        planners: currState.weddingPlanners.planners,
+        totalPlanners: currState.planners.totalPlanners,
+        planners: currState.planners.planners,
         errors: [],
         reason: null,
         isLoaded: true

@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
-import weddingPlanners from './weddingPlanners';
+import planners from './planners';
+import currentPlannerDetail from './currentPlannerDetail';
 import venues from './venues';
 import currentVenueDetail from './currentVenueDetail';
 
 export default combineReducers({
-  weddingPlanners,
+  planners,
   venues,
+  currentPlannerDetail,
   currentVenueDetail
 })
