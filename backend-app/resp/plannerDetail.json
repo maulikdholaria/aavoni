@@ -1,0 +1,17 @@
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "I am wedding planner",
+    "address": "24724 Arnold Drive, Sonoma, CA 95476",
+    "lat": 38.217280,
+    "lng": -122.454820,
+    "ratings": 5,
+    "pricerange": 5,
+    "weddings": 100,
+    "type": "Planner & Designer",
+    "about": "Co-owners of Eclipse Event Co., Lauren Chumbley and Kristi DePew, pride themselves on being honest, approachable, and trustworthy, and they bring those qualities into each event they produce. Whether it be an intimate gathering of 20 people, or a massive wedding of 350, they do it all, and everything in between!",
+    "images": ["images/p1.jpg", "images/p2.jpg","images/p3.jpg","images/4.jpg","images/5.jpg","images/6.jpg","images/7.jpg","images/8.jpg","images/9.jpg","images/10.jpg"]
+  },
+  "errors": []
+}

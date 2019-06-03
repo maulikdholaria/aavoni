@@ -9,6 +9,7 @@ var searchWeddingPlannerRouter = require('./routes/searchWeddingPlanner');
 var searchVenueRouter = require('./routes/searchVenue');
 var usersRouter = require('./routes/users');
 var venueRouter = require('./routes/venue');
+var plannerRouter = require('./routes/planner');
 
 var app = express();
 
@@ -24,10 +25,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/venue', venueRouter);
+app.use('/api/planner', plannerRouter);
 app.use('/api/search/wedding-planner', searchWeddingPlannerRouter);
 app.use('/api/search/venue', searchVenueRouter);
-app.use('/api/venue', venueRouter);
-
 app.use('/images', express.static(path.join(__dirname, 'public')))
 app.use('/site-assets', express.static(path.join(__dirname, 'public')))
 
