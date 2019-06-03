@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserView, MobileView, isBrowser, isMobile } from "react-device-detect";
 import store from '../redux-store/store';
 import EntityDetailMobile from './component/EntityDetailMobile'
+import EntityDetailBrowser from './component/EntityDetailBrowser'
 import PlannerApi from '../api/PlannerApi';
 
 class WeddingPlannerDetail extends React.Component {
@@ -59,7 +60,7 @@ class WeddingPlannerDetail extends React.Component {
       return (
         <div>
           <BrowserView>
-		        <h1> This is rendered only in browser </h1>
+		        <EntityDetailBrowser data={data}/>
 		      </BrowserView>
 		      <MobileView>
 		  	    <EntityDetailMobile data={data}/>
