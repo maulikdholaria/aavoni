@@ -19,11 +19,11 @@ class EntityDetailBrowser extends React.Component {
 
   getFormSchema = () => {
     return Yup.object().shape({
-	  firstName: Yup.string()
+	  fname: Yup.string()
 	    .min(2, 'Too Short!')
 	    .max(50, 'Too Long!')
 	    .required('Required'),
-	  lastName: Yup.string()
+	  lname: Yup.string()
 	    .min(2, 'Too Short!')
 	    .max(50, 'Too Long!')
 	    .required('Required'),
@@ -35,6 +35,10 @@ class EntityDetailBrowser extends React.Component {
 	  budget: Yup.string()
 	    .required('Required')
 	});
+  }
+
+  handleSubmit = (values) => {
+    console.log(values);
   }
 
   render() {
@@ -102,8 +106,8 @@ class EntityDetailBrowser extends React.Component {
       			</div>
       			<Formik
 				      initialValues={{
-				        firstName: '',
-				        lastName: '',
+				        fname: '',
+				        lname: '',
 				        email: '',
 				        phone: '',
 				        guests: '',
@@ -111,17 +115,14 @@ class EntityDetailBrowser extends React.Component {
 				        message: ''
 				      }}
 				      validationSchema={this.getFormSchema}
-				      onSubmit={values => {
-				        // same shape as initial values
-				        console.log(values);
-				      }}
+				      onSubmit={this.handleSubmit}
 				      render={({ errors, touched }) => (
 				      	
 					        <Form className="form contact-form" mode='themed'>
 					        	<Row>
-					        		<Col lg={6} xl={6}> <Input name="firstName" label="First Name" /> </Col>
-					        		<Col lg={6} xl={6}> <Input name="lastName" label="Last Name" /> </Col>
-					        		<Col lg={12} xl={12}> <Input name="email" type="email" label="Email"/></Col>
+					        		<Col lg={6} xl={6}> <Input name="fname" label="First Name" autoComplete="given-name"/> </Col>
+					        		<Col lg={6} xl={6}> <Input name="lname" label="Last Name" autoComplete="family-name"/> </Col>
+					        		<Col lg={12} xl={12}> <Input name="email" type="email" label="Email" autoComplete="email"/></Col>
 					        		<Col lg={12} xl={12}> <Datepicker name="date" label="Date" dateFormat="MM/dd/YYYY"/></Col>
 					        		<Col lg={6} xl={6}> 
 					        			<Select name='guests' label='Est. Guests' placeholder='Select...'
