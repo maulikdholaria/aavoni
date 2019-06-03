@@ -8,7 +8,8 @@ cd /usr/share/app/wedding-planner-finder/backend-app
 rm -rf node_modules/*
 rm -rf node_modules/.bin/*
 rm -rf node_modules/.cache/*
-rm package-lock.json
+rm -f package-lock.json
+git pull
 npm install
 ps -ef | grep 'node ./bin/www' | kill -9 `awk '{print $2}'`
 rm -f /tmp/back-end-app.out
@@ -22,5 +23,6 @@ rm -rf node_modules/*
 rm -rf node_modules/.bin/*
 rm -rf node_modules/.cache/*
 rm -f package-lock.json
+git pull
 npm install
 npm run bundle
