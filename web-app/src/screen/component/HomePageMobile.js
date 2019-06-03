@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { Container, Row, Col, Carousel, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { Form, Input, SubmitBtn, Datepicker, Select, Textarea } from 'react-formik-ui';
@@ -59,6 +59,12 @@ class HomePageMobile extends React.Component {
 			        
 			      )}
 			    />
+			    <div className="block3">
+			    	Join the amzing community to help people celebrate time of thier life.
+			    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Become a vendor </a> 
+			    	or 
+			    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Offer your venue </a>
+			    </div>
       		</Col>
       	</Row>
       </Container>
