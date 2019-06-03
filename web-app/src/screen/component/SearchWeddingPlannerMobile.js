@@ -1,27 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, CardDeck, Button } from 'react-bootstrap';
-import AspectRatio from 'react-aspect-ratio';
 import Icon from '@material-ui/core/Icon';
-import store from '../../redux-store/store';
+import * as Utils from '../common/Utils';
 import SearchWeddingPlannerStyle from '../../style/SearchWeddingPlanner.less';
-import SearchApi from '../../api/SearchApi';
+
 
 class SearchWeddingPlannerMobile extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
-
-
-  getPriceRangeText(pricerange) {
-    var pricerangetext = "";
-    for (var i = 0; i < pricerange; i++) {
-      pricerangetext += "$";
-    }
-    return pricerangetext;
-  }
-
 
   render() {
     const { totalPlanners, planners } = this.props;
@@ -41,7 +29,7 @@ class SearchWeddingPlannerMobile extends React.Component {
                             <Icon className="icon">location_on</Icon><span> {planner.location}</span>
                           </Card.Text>
                           <Card.Text className="price">
-                            Price Range: {this.getPriceRangeText(planner.pricerange)}
+                            Price Range: {Utils.getPriceRangeText(planner.pricerange)}
                           </Card.Text>
                         </Card.Body>
                       </Card>

@@ -25,14 +25,6 @@ class SearchWeddingPlanner extends React.Component {
     }
   }
 
-  getPriceRangeText(pricerange) {
-    var pricerangetext = "";
-    for (var i = 0; i < pricerange; i++) {
-      pricerangetext += "$";
-    }
-    return pricerangetext;
-  }
-
   componentDidMount() {
     const searchApi = new SearchApi();
     const currState = store.getState();

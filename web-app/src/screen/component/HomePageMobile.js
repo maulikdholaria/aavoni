@@ -8,7 +8,7 @@ import HomePageStyle from '../../style/HomePageStyle.less';
 import FormStyle from '../../style/Form.less';
 import { GlobalMapping } from '../../GlobalMapping';
 
-class VenueDetailsMobile extends React.Component {
+class HomePageMobile extends React.Component {
   constructor(props) {
   	super(props);
   }
@@ -44,12 +44,12 @@ class VenueDetailsMobile extends React.Component {
 			      onSubmit={this.handleSubmit}
 			      render={({ errors, touched }) => (
 			      	
-				        <Form className="form venue-contact-form" mode='themed'>
+				        <Form className="form block2" mode='themed'>
 
-				          	<Select name='what' label='Need help with' placeholder='Select...'
+				          	<Select name='what' label='I need help with' placeholder='Select...'
 					          options={GlobalMapping.modules}
 						    />
-						    <Select name='where' label='Where' placeholder='Select...'
+						    <Select name='where' label='In' placeholder='Select...'
 					          options={GlobalMapping.location}
 						    />
 						    
@@ -67,4 +67,4 @@ class VenueDetailsMobile extends React.Component {
   }
 }
 
-export default withRouter(VenueDetailsMobile);
+export default withRouter(HomePageMobile);

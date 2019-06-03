@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserView, MobileView, isBrowser, isMobile } from "react-device-detect";
-import HomePageMobile from './component/HomePageMobile'
+import HomePageMobile from './component/HomePageMobile';
+import HomePageBrowser from './component/HomePageBrowser'
 
 class HomePage extends React.Component {
 
@@ -12,7 +13,7 @@ class HomePage extends React.Component {
 	return (
 	  <div>
   	    <BrowserView>
-          <h1> This is rendered only in browser </h1>
+          <HomePageBrowser />
       	</BrowserView>
       	<MobileView>
         	<HomePageMobile />
