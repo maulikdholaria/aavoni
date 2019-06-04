@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, CardDeck, Button } from 'react-bootstrap';
+import AspectRatio from 'react-aspect-ratio';
 import Icon from '@material-ui/core/Icon';
 import * as Utils from '../common/Utils';
 import WeddingPlannerSearchStyle from '../../style/WeddingPlannerSearch.less';
@@ -25,7 +26,9 @@ class WeddingPlannerSearchBrowser extends React.Component {
                     <Link to={{pathname: `/wedding-planner/${planner.id}`}} style={{ textDecoration: 'none' }}>
                       <Card key={planner.id} className="search-card">
                         <Card.Body className="body">
-                          <Card.Img variant="top" src={planner.img} width="100%"/>
+                          <AspectRatio ratio="4/3">
+                            <Card.Img variant="top" src={planner.img} width="100%"/>
+                          </AspectRatio>
                           <Card.Title className="title">{planner.name} - {planner.id}</Card.Title>
                           <Card.Text className="location">
                             <Icon className="icon">location_on</Icon><span> {planner.location}</span>
