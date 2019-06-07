@@ -8,6 +8,7 @@ import { Formik } from 'formik';
 import { Form, Input, SubmitBtn, Datepicker, Select, Textarea } from 'react-formik-ui';
 import * as Yup from 'yup';
 import SocialIcons from '../common/SocialIcons';
+import LeadsApi from '../../api/LeadsApi';
 import 'react-aspect-ratio/aspect-ratio.css';
 import EntityDetailStyle from '../../style/EntityDetail.less';
 
@@ -40,7 +41,14 @@ class EntityDetailBrowser extends React.Component {
   }
 
   handleSubmit = (values) => {
+  	const { data } = this.props;
+  	values.toUserId = data.id;
+  	values.date = values.date.toISOString().split('T')[0];
     console.log(values);
+    const leadsApi = new LeadsApi();
+    leadsApi.plannerLeadCreate(values, response => {
+    	console.log(response.data);
+    });
   }
 
   render() {

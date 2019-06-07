@@ -3,15 +3,21 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var fs = require('fs');
 
+var config = require('./config');
 var indexRouter = require('./routes/index');
 var searchWeddingPlannerRouter = require('./routes/searchWeddingPlanner');
 var searchVenueRouter = require('./routes/searchVenue');
 var usersRouter = require('./routes/users');
 var venueRouter = require('./routes/venue');
 var plannerRouter = require('./routes/planner');
+var leadsRouter = require('./routes/leads');
 
 var app = express();
+
+console.log("Starting for ENV: " + app.get('env') );
+console.log(config);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,6 +33,7 @@ app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/venue', venueRouter);
 app.use('/api/planner', plannerRouter);
+app.use('/api/leads/', leadsRouter);
 app.use('/api/search/wedding-planner', searchWeddingPlannerRouter);
 app.use('/api/search/venue', searchVenueRouter);
 app.use('/images', express.static(path.join(__dirname, 'public')))

@@ -30,3 +30,6 @@ git pull
 npm install
 cd /usr/share/app/wedding-planner-finder/web-app
 npm run bundle
+
+
+export $NODE_ENV=production
