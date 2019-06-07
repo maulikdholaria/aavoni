@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Carousel, Button } from 'react-bootstrap';
+import { Container, Row, Col, Carousel, Button, Toast } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AspectRatio from 'react-aspect-ratio';
 import Icon from '@material-ui/core/Icon';
@@ -16,6 +16,9 @@ import EntityDetailStyle from '../../style/EntityDetail.less';
 class EntityDetailBrowser extends React.Component {
   constructor(props) {
   	super(props);
+  	this.state = {
+      showToast: false,
+    };
   }
 
   getFormSchema = () => {
@@ -47,12 +50,15 @@ class EntityDetailBrowser extends React.Component {
     console.log(values);
     const leadsApi = new LeadsApi();
     leadsApi.plannerLeadCreate(values, response => {
-    	console.log(response.data);
+    	this.setState({
+          showToast: true
+      	});
     });
   }
 
   render() {
   	const { data } = this.props;
+  	const { showToast } = this.state;
   	const addressUrl = "http://maps.google.com/?q=" + data.address;
   	const plannerContactUrl = "/planner/contact/" + data.id
   	const MyMapComponent = withScriptjs(withGoogleMap((props) =>
@@ -130,6 +136,11 @@ class EntityDetailBrowser extends React.Component {
 				      render={({ errors, touched }) => (
 				      	
 					        <Form className="form contact-form" mode='themed'>
+					        	<Toast className={`confirmation-toast`} show={showToast} delay={3000} autohide>
+						          <Toast.Header>
+					              	<strong className="mr-auto">Sent</strong>
+								  </Toast.Header>
+						        </Toast>
 					        	<Row>
 					        		<Col lg={6} xl={6}> <Input name="fname" label="First Name" autoComplete="name"/> </Col>
 					        		<Col lg={6} xl={6}> <Input name="lname" label="Last Name" autoComplete="name"/> </Col>
