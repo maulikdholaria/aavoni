@@ -9,6 +9,7 @@ import HomePage from './screen/HomePage';
 import Maulik from './screen/Maulik';
 import WeddingPlannerSearch from './screen/WeddingPlannerSearch';
 import WeddingPlannerDetail from './screen/WeddingPlannerDetail';
+import PlannerContact from './screen/PlannerContact';
 import SearchWeddingVenue from './screen/SearchWeddingVenue';
 import VenueDetails from './screen/VenueDetails';
 import VenueContact from './screen/VenueContact';
@@ -25,6 +26,7 @@ function App() {
         <Route path="/maulik/add/:addid/hello/:helloid" component={Maulik} />
         <Route path="/s/wedding-planner/:location" exact component={WeddingPlannerSearch} />
         <Route path="/wedding-planner/:id" exact component={WeddingPlannerDetail} />
+        <Route path="/planner/contact/:id" exact component={PlannerContact} />
         <Route path="/s/wedding-venue/:location" exact component={SearchWeddingVenue} />
         <Route path="/venue/:id" exact component={VenueDetails} />
         <Route path="/venue/contact/:id" exact component={VenueContact} />

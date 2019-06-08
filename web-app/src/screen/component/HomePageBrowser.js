@@ -15,7 +15,7 @@ class HomePageBrowser extends React.Component {
 
   handleSubmit = (values) => {
     const whatUrlParam=GlobalMapping['modules'][values['what']-1]['urlParam'];
-    const whereUrlParam=GlobalMapping['location'][values['where']-1]['urlParam'];
+    const whereUrlParam=GlobalMapping['location'][values['where']-1]['marketCity'];
     this.props.history.push("/s/" + whatUrlParam + "/" + whereUrlParam);
   }
 
@@ -62,7 +62,7 @@ class HomePageBrowser extends React.Component {
 				      )}
 				    />
 				    <div className="block3">
-				    	Join the amzing community to help people celebrate time of thier life.
+				    	Join the amzing community to help people celebrate time of their life.
 				    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Become a vendor </a> 
 				    	or 
 				    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Offer your venue </a>

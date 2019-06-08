@@ -3,7 +3,7 @@ export const GlobalMapping = {'modules':[{ value: '1', label: 'Wedding Planner',
 				 						//{ value: '3', label: 'Corporate Event Planner', 'urlParam': 'corporate-event-planner' },
 										//{ value: '4', label: 'Corporate Event Venue', 'urlParam': 'corporate-event-venue' }
 										],
-					  		  'location': [{ value: '1', label: 'San Francisco / Bay Area', 'urlParam': 'san-francisco' },
-										   { value: '2', label: 'New York', 'urlParam': 'new-york' },
-										   { value: '3', label: 'Los Angeles', 'urlParam': 'los-angeles' }]
+					  		  'location': [{ value: '1', label: 'San Francisco / Bay Area', 'marketCity': 'san-francisco' },
+										   { value: '2', label: 'New York', 'marketCity': 'new-york' },
+										   { value: '3', label: 'Los Angeles', 'marketCity': 'los-angeles' }]
 					  		  }
