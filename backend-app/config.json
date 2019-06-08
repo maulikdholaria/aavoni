@@ -8,6 +8,14 @@
 		  "debug": false
 		}
 	},
+	"staging": {
+		"mysql": {
+		  "host": "35.197.10.228",
+		  "user": "root",
+		  "password": "root",
+		  "database": "aavoni"
+		}
+	},
 	"production": {
 		"mysql": {
 		  "host": "localhost",

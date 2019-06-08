@@ -15,6 +15,7 @@ npm install
 cd /usr/share/app/wedding-planner-finder/backend-app
 ps -ef | grep 'node ./bin/www' | kill -9 `awk '{print $2}'`
 rm -f /tmp/back-end-app.out
+export NODE_ENV=staging
 nohup npm start > /tmp/back-end-app.out 2>&1 &
 
 
