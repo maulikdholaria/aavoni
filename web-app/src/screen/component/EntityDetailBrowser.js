@@ -1,6 +1,7 @@
 import React from 'react';
-import { Container, Row, Col, Carousel, Alert, Button, Toast } from 'react-bootstrap';
+import { Container, Row, Col, Carousel, Alert, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import store from '../../redux-store/store';
 import AspectRatio from 'react-aspect-ratio';
 import Icon from '@material-ui/core/Icon';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
@@ -17,10 +18,19 @@ class EntityDetailBrowser extends React.Component {
   constructor(props) {
   	super(props);
   	this.state = {
+  	  leadInfo: {fname: '', lname: '', email: '', phone: '', date: '', guests: '', budget: '', message: ''},
   	  formClass: 'show-form',
   	  showAlert: false,
       showToast: false,
     };
+  }
+
+
+  addCurrentPlannerLead(data) {
+    return {
+      type: 'ADD_CURRENT_PLANNER_LEAD',
+      data
+    }
   }
 
   getFormSchema = () => {
@@ -48,23 +58,35 @@ class EntityDetailBrowser extends React.Component {
   handleSubmit = (values) => {
   	const { data } = this.props;
   	values.toUserId = data.id;
+
+  	store.dispatch(this.addCurrentPlannerLead(values));
+  	this.setState({leadInfo: values});
+
   	values.date = values.date.toISOString().split('T')[0];
-    console.log(values);
-    const leadsApi = new LeadsApi();
-    leadsApi.plannerLeadCreate(values, response => {
-    	this.setState({
-    	  formClass: 'hide-form',
-    	  showAlert: true,
-          showToast: true
-      	});
+  	const leadsApi = new LeadsApi();
+  	leadsApi.plannerLeadCreate(values, response => {
+      this.setState({
+		leadInfo: values,
+    	formClass: 'hide-form',
+    	showAlert: true,
+        showToast: true
+      });
     });
   }
 
+
   render() {
   	const { data } = this.props;
-  	const { formClass, showToast, showAlert } = this.state;
+  	const { leadInfo, formClass, showToast, showAlert } = this.state;
+  	const currState = store.getState();
   	const addressUrl = "http://maps.google.com/?q=" + data.address;
-  	const plannerContactUrl = "/planner/contact/" + data.id
+  	const plannerContactUrl = "/planner/contact/" + data.id;
+  	var formLeadInfo  = leadInfo;
+  	
+  	if(!Array.isArray(currState.currentPlannerLead)) {
+  		formLeadInfo = currState.currentPlannerLead;
+  	}
+  	
   	const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 	  <GoogleMap
 	    defaultZoom={12}
@@ -133,26 +155,12 @@ class EntityDetailBrowser extends React.Component {
 	      			</div>
 	      			<div className={formClass}>
 		      			<Formik
-						      initialValues={{
-						        fname: '',
-						        lname: '',
-						        email: '',
-						        phone: '',
-						        date: '',
-						        guests: '',
-						        budget: '',
-						        message: ''
-						      }}
+						      initialValues={formLeadInfo}
 						      validationSchema={this.getFormSchema}
 						      onSubmit={this.handleSubmit}
 						      render={({ errors, touched }) => (
 						      	
 							        <Form className="form contact-form" mode='themed'>
-							        	<Toast className={`confirmation-toast`} show={showToast} delay={3000} autohide>
-								          <Toast.Header>
-							              	<strong className="mr-auto">Sent</strong>
-										  </Toast.Header>
-								        </Toast>
 							        	<Row>
 							        		<Col lg={6} xl={6}> <Input name="fname" label="First Name" autoComplete="name"/> </Col>
 							        		<Col lg={6} xl={6}> <Input name="lname" label="Last Name" autoComplete="name"/> </Col>
