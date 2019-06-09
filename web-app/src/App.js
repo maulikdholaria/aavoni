@@ -10,6 +10,7 @@ import Maulik from './screen/Maulik';
 import WeddingPlannerSearch from './screen/WeddingPlannerSearch';
 import WeddingPlannerDetail from './screen/WeddingPlannerDetail';
 import PlannerContact from './screen/PlannerContact';
+import Account from './screen/Account';
 import SearchWeddingVenue from './screen/SearchWeddingVenue';
 import VenueDetails from './screen/VenueDetails';
 import VenueContact from './screen/VenueContact';
@@ -30,6 +31,7 @@ function App() {
         <Route path="/s/wedding-venue/:location" exact component={SearchWeddingVenue} />
         <Route path="/venue/:id" exact component={VenueDetails} />
         <Route path="/venue/contact/:id" exact component={VenueContact} />
+        <Route path="/account" exact component={Account} />
       </div>
     </BrowserRouter>
   );

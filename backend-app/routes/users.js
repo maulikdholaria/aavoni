@@ -14,30 +14,23 @@ router.get('/me', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  result = users_model.get_user_by_email(req.body.email);
+  const secret = 'aavoni-99';
+  const entered_pass_hash = crypto.createHmac('sha256', secret)
+						  .update(req.body.password)
+               			  .digest('hex');
+  result = users_model.get_user_for_login(req.body.email, entered_pass_hash);
   result.then(function(resp){
   	if(resp.length != 1 ) {
   	  res.send({'success': false});
   	}
 
-  	user = resp[0];
-
-  	const secret = 'aavoni-99';
-	const entered_pass_hash = crypto.createHmac('sha256', secret)
-							  .update(req.body.password)
-                   			  .digest('hex');
-
-    if(entered_pass_hash != user.password) {
-      res.send({'success': false}); 
-    }
-
-    req.session.user = user;
+    req.session.user = resp[0];
   	res.send({'success': true, 'data': resp[0]});
   });
 });
 
 router.get('/logout', function(req, res, next) {
-  req.session.user = null;
+  req.session = null;
   res.send({'success': true});
 });
 
