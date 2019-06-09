@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var cookieSession = require('cookie-session');
 var logger = require('morgan');
 var fs = require('fs');
 
@@ -22,6 +23,12 @@ console.log(config);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['user'],
+  maxAge: 365 * 24 * 60 * 60 * 1000 // 365 days
+}))
 
 app.use(logger('dev'));
 app.use(express.json());
