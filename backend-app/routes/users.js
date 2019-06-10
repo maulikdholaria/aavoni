@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const crypto = require('crypto');
 var users_model = require('../models/users');
-
+const secret = 'aavoni-99';
 
 router.get('/me', function(req, res, next) {
   if(req.session.user == undefined || req.session.user ==null) {
@@ -13,8 +13,26 @@ router.get('/me', function(req, res, next) {
   }
 });
 
+router.post('/create', function(req, res, next) {
+  if(!req.session.isAdmin) {
+  	res.send({'success': false, 'reason': 'USER_UNAUTHORIZED'});
+  	return;
+  }
+
+  req.body.password = crypto.createHmac('sha256', secret)
+						.update(req.body.password)
+						.digest('hex');
+
+  result = users_model.create(req.body);
+  result.then(function(resp){
+  	res.send({'success': true, 'data': {'id': resp[0]}});
+  }).catch(function(error) {
+      res.send({'success': false, 'reason': 'UNEXPECTED_ERROR'});
+  	  return;
+  });
+});
+
 router.post('/login', function(req, res, next) {
-  const secret = 'aavoni-99';
   const entered_pass_hash = crypto.createHmac('sha256', secret)
 						  .update(req.body.password)
                			  .digest('hex');
@@ -22,6 +40,7 @@ router.post('/login', function(req, res, next) {
   result.then(function(resp){
   	if(resp.length != 1 ) {
   	  res.send({'success': false});
+  	  return;
   	}
 
     req.session.user = resp[0];

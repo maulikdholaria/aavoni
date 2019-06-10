@@ -9,7 +9,7 @@ import { Formik } from 'formik';
 import { Form, Input, SubmitBtn, Datepicker, Select, Textarea } from 'react-formik-ui';
 import * as Yup from 'yup';
 import SocialIcons from './common/SocialIcons';
-import PlannerApi from '../api/PlannerApi';
+import PlannersApi from '../api/PlannersApi';
 import LeadsApi from '../api/LeadsApi';
 import PlannerContactStyle from '../style/PlannerContact.less';
 
@@ -81,7 +81,7 @@ class PlannerContact extends React.Component {
   }
 
   componentDidMount() {
-    const plannerApi = new PlannerApi();
+    const plannersApi = new PlannersApi();
     const currState = store.getState();
     
     if(!Array.isArray(currState.currentPlannerDetail) && currState.currentPlannerDetail.id == this.props.match.params.id) {
@@ -90,10 +90,11 @@ class PlannerContact extends React.Component {
       });
       return;
     }
-    plannerApi.get(this.props.match.params.id, response => {
-      store.dispatch(this.addCurrentPlannerDetail(response.data));
+    plannersApi.get(this.props.match.params.id, response => {
+      const responseData = response.data;
+      store.dispatch(this.addCurrentPlannerDetail(responseData.data));
       this.setState({
-        data: response.data
+        data: responseData.data
       });
     });
   }

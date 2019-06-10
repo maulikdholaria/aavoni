@@ -3,7 +3,7 @@ import { BrowserView, MobileView, isBrowser, isMobile } from "react-device-detec
 import store from '../redux-store/store';
 import EntityDetailMobile from './component/EntityDetailMobile'
 import EntityDetailBrowser from './component/EntityDetailBrowser'
-import PlannerApi from '../api/PlannerApi';
+import PlannersApi from '../api/PlannersApi';
 
 class WeddingPlannerDetail extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class WeddingPlannerDetail extends React.Component {
   }
 
   componentDidMount() {
-    const plannerApi = new PlannerApi();
+    const plannersApi = new PlannersApi();
     const currState = store.getState();
     
     if(!Array.isArray(currState.currentPlannerDetail) && currState.currentPlannerDetail.id == this.props.match.params.id) {
@@ -38,13 +38,14 @@ class WeddingPlannerDetail extends React.Component {
       });
       return;
     }
-    plannerApi.get(this.props.match.params.id, response => {
-      store.dispatch(this.addCurrentPlannerDetail(response.data));
+    plannersApi.get(this.props.match.params.id, response => {
+      const responseData = response.data;
+      store.dispatch(this.addCurrentPlannerDetail(responseData.data));
       this.setState({
-          sucess: response.sucess,
-          data: response.data,
-          errors: response.errors,
-          reason: response.reason,
+          sucess: responseData.sucess,
+          data: responseData.data,
+          errors: responseData.errors,
+          reason: responseData.reason,
           isLoaded: true
       });
     });

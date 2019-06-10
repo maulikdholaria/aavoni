@@ -12,7 +12,7 @@ var searchWeddingPlannerRouter = require('./routes/searchWeddingPlanner');
 var searchVenueRouter = require('./routes/searchVenue');
 var usersRouter = require('./routes/users');
 var venueRouter = require('./routes/venue');
-var plannerRouter = require('./routes/planner');
+var plannersRouter = require('./routes/planners');
 var leadsRouter = require('./routes/leads');
 
 var app = express();
@@ -28,7 +28,22 @@ app.use(cookieSession({
   name: 'session',
   keys: ['user'],
   maxAge: 365 * 24 * 60 * 60 * 1000 // 365 days
-}))
+}));
+
+// Determine user authentication & authorization
+app.use(function(req, res, next) {
+  req.session.isAuthenticated = false;
+  req.session.isAdmin = false;
+
+  if(req.session.user != undefined || req.session.user != null) {
+  	req.session.isAuthenticated = true;
+  	const loggedinEmail = req.session.user.email;
+    if(loggedinEmail.match(/@aavoni.com$/g)) {
+  	  req.session.isAdmin = true;
+    }
+  } 
+  next();
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -39,7 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/venue', venueRouter);
-app.use('/api/planner', plannerRouter);
+app.use('/api/planners/', plannersRouter);
 app.use('/api/leads/', leadsRouter);
 app.use('/api/search/wedding-planner', searchWeddingPlannerRouter);
 app.use('/api/search/venue', searchVenueRouter);
