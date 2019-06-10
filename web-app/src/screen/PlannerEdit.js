@@ -8,6 +8,7 @@ import { Formik } from 'formik';
 import { Form, Input, SubmitBtn, Datepicker, Select, Textarea } from 'react-formik-ui';
 import * as Yup from 'yup';
 import SocialIcons from './common/SocialIcons';
+import { GlobalMapping } from '../GlobalMapping';
 import PlannersApi from '../api/PlannersApi';
 
 import 'react-aspect-ratio/aspect-ratio.css';
@@ -23,7 +24,8 @@ class PlannerEdit extends React.Component {
   	  	instagram: '',
   	  	pinterest: '',
   	  	website: '',
-  	  	address: ''
+  	  	address: '',
+  	  	marketCity: ''
   	  }
     };
   }
@@ -67,7 +69,8 @@ class PlannerEdit extends React.Component {
 	  							  instagram: data.instagram,
 	  			  				  pinterest: data.pinterest,
 	  			  				  website: data.website,
-	  			  				  address: data.address}}
+	  			  				  address: data.address,
+	  			  				  marketCity: data.marketCity}}
 	  			  validationSchema={this.getFormSchema}
 			      onSubmit={this.handleSubmit}
 			      render={({ errors, touched }) => (
@@ -81,6 +84,7 @@ class PlannerEdit extends React.Component {
 				        		<Col lg={8} xl={8}> <Input name="pinterest" label="Pinterest Page"/> </Col>
 				        		<Col lg={8} xl={8}> <Input name="website" label="Website"/> </Col>
 				        		<Col lg={8} xl={8}> <Input name="address" label="Mailing/Business Address"/> </Col>
+				        		<Col lg={8} xl={8}> <Select name="marketCity" label="Market City" placeholder='Select...' options={GlobalMapping.marketCity} /> </Col>
 							</Row> 
 		      		  		<SubmitBtn className="link-button">UPDATE</SubmitBtn>
 				        </Form>

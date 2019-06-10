@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var planners_model = require('../models/planners');
-var fs = require('fs');
-
+var geocoder = require('../lib/geocoder');
 
 router.get('/get/:id', function(req, res, next) {	   
   result = planners_model.get(req.params.id);
@@ -13,7 +12,6 @@ router.get('/get/:id', function(req, res, next) {
     }
     resp[0].images = ["images/p1.jpg", "images/p2.jpg","images/p3.jpg"];
     resp[0].about = resp[0].about.toString('utf8');
-    console.log(resp[0]);
     res.send({'success': true, 'data': resp[0]});
   });
 });
@@ -44,10 +42,17 @@ router.post('/edit/:id', function(req, res, next) {
     return;
   }
 
-  result = planners_model.edit(req.body);
-  result.then(function(resp){
-    res.send({'success': true, 'data': {'id': parseInt(req.body.id)}});
+  geocoder.geocode(req.body.address, function(gerr, gres) {
+    req.body.city = gres[0].city;
+    req.body.lat = gres[0].latitude;
+    req.body.lng = gres[0].longitude;
+    result = planners_model.edit(req.body);
+    result.then(function(resp){
+      res.send({'success': true, 'data': {'id': parseInt(req.body.id)}});
+    });
+    
   });
+
 });
 
 module.exports = router;

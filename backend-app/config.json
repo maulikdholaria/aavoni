@@ -6,7 +6,8 @@
 		  "password": "root",
 		  "database": "aavoni",
 		  "debug": false
-		}
+		},
+		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00"
 	},
 	"staging": {
 		"mysql": {
@@ -14,7 +15,8 @@
 		  "user": "root",
 		  "password": "root",
 		  "database": "aavoni"
-		}
+		},
+		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00"
 	},
 	"production": {
 		"mysql": {
@@ -22,6 +24,7 @@
 		  "user": "root",
 		  "password": "root",
 		  "database": "aavoni"
-		}
+		},
+		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00"
 	}
 }

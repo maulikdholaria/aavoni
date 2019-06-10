@@ -1,5 +1,5 @@
 var knex = require('../lib/mysql_knex');
-const tableName = 'planners'
+const tableName = 'planners';
 
 var planners = {
   create: function(params) {
@@ -11,7 +11,7 @@ var planners = {
     return promise.then();
   },
   edit: function(params) {
-  	const allowed_fields = ['name', 'address', 'city', 'state', 'lat', 'lng', 'fb', 'instagram', 'pinterest', 'website', 'about'];
+  	const allowed_fields = ['marketCity', 'name', 'address', 'city', 'state', 'lat', 'lng', 'fb', 'instagram', 'pinterest', 'website', 'about'];
   	
   	var obj_to_be_updated = {}
   	allowed_fields.map(function(field) {
