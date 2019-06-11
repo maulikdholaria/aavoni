@@ -11,6 +11,7 @@ import WeddingPlannerSearch from './screen/WeddingPlannerSearch';
 import WeddingPlannerDetail from './screen/WeddingPlannerDetail';
 import PlannerContact from './screen/PlannerContact';
 import PlannerEdit from './screen/PlannerEdit';
+import PlannerEditImages from './screen/PlannerEditImages';
 import Account from './screen/Account';
 import SearchWeddingVenue from './screen/SearchWeddingVenue';
 import VenueDetails from './screen/VenueDetails';
@@ -30,6 +31,7 @@ function App() {
         <Route path="/wedding-planner/:id" exact component={WeddingPlannerDetail} />
         <Route path="/planner/contact/:id" exact component={PlannerContact} />
         <Route path="/planner/edit/:id" exact component={PlannerEdit} />
+        <Route path="/planner/edit/images/:id" exact component={PlannerEditImages} />
         <Route path="/s/wedding-venue/:location" exact component={SearchWeddingVenue} />
         <Route path="/venue/:id" exact component={VenueDetails} />
         <Route path="/venue/contact/:id" exact component={VenueContact} />

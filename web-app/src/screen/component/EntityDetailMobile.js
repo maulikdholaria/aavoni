@@ -41,7 +41,7 @@ class EntityDetailMobile extends React.Component {
   		<Row noGutters={true}>
       		<Col xs={12} sm={12} md={12} lg={12} xl={12}> 
       			
-      			<Carousel indicators={false} controls={false} interval='3000'>
+      			<Carousel indicators={false} interval='3000'>
       			{data.images.map((image, index) => (
       				<Carousel.Item key={index}>
       					<AspectRatio ratio="4/3">
@@ -57,8 +57,8 @@ class EntityDetailMobile extends React.Component {
       			<div className="info">
 	          	  <div className="name">{data.name}</div>
 	          	  <div>{data.type}</div>
-	          	  <div className="location"><Icon className="icon">location_on</Icon><span> {data.address}</span></div>
-	          	  <SocialIcons />
+	          	  <div className="location"><Icon className="icon">location_on</Icon><span style={{verticalAlign: 'super'}}> {data.city}</span></div>
+	          	  <SocialIcons facebook={data.fb} instagram={data.instagram} pinterest={data.pinterest} site={data.website}/>
 	          	  <hr />
 	          	  <div className="about">{data.about}</div>
       			</div>

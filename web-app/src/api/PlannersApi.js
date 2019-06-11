@@ -12,6 +12,11 @@ class PlannersApi {
     .then(callback)
   }
 
+  uploadImages(id, imageFile, callback) {
+    axios.post("api/planners/upload/images/" + id, imageFile)
+    .then(callback)
+  }
+
 }
 
 export default PlannersApi;

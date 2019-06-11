@@ -7,7 +7,8 @@
 		  "database": "aavoni",
 		  "debug": false
 		},
-		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00"
+		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00",
+		"IMAGE_BASE_DIR": "/Users/mdholaria/app"
 	},
 	"staging": {
 		"mysql": {
@@ -16,7 +17,8 @@
 		  "password": "root",
 		  "database": "aavoni"
 		},
-		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00"
+		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00",
+		"IMAGE_BASE_DIR": "/usr/share/app"
 	},
 	"production": {
 		"mysql": {
@@ -25,6 +27,7 @@
 		  "password": "root",
 		  "database": "aavoni"
 		},
-		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00"
+		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00",
+		"IMAGE_BASE_DIR": "/usr/share/app"
 	}
 }

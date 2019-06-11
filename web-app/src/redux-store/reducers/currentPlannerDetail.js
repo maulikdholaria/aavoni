@@ -6,6 +6,7 @@ export default function currentPlannerDetail(state = [], action) {
         id: action.data.id,
         about: action.data.about,
         address: action.data.address,
+        city: action.data.city,
         images: action.data.images,
         lat: action.data.lat,
         lng: action.data.lng,

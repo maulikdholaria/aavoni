@@ -117,8 +117,8 @@ class PlannerContact extends React.Component {
 	      			<div className="info">
 		          	  <div className="name">{data.name}</div>
 		          	  <div>{data.type}</div>
-		          	  <div className="location"><Icon className="icon">location_on</Icon><span> {data.address}</span></div>
-		          	  <SocialIcons />
+		          	  <div className="location"><Icon className="icon">location_on</Icon><span style={{verticalAlign: 'super'}}> {data.city}</span></div>
+		          	  <SocialIcons facebook={data.fb} instagram={data.instagram} pinterest={data.pinterest} site={data.website}/>
 		          	  <hr />
 	      			</div>
 	      			<div>

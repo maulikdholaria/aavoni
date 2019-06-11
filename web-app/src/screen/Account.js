@@ -3,18 +3,25 @@ import { Container, Row, Col, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { Form, Input, SubmitBtn } from 'react-formik-ui';
 import * as Yup from 'yup';
+import store from '../redux-store/store';
 import UsersApi from '../api/UsersApi';
-
 
 
 class Account extends React.Component {
   constructor(props) {
   	super(props);
   	this.state = {
-  	  isLoggedIn: false
+  	  isLoggedIn: false,
+  	  userInfo: {id: null, email: '', fname: '', lname: ''}
   	};
   }
 
+  addCurrentLoggedInUser(data) {
+    return {
+      type: 'ADD_CURRENT_LOGGEDIN_USER',
+      data
+    }
+  }
   
   getFormSchema = () => {
     return Yup.object().shape({
@@ -30,7 +37,8 @@ class Account extends React.Component {
   	const usersApi = new UsersApi();
   	usersApi.login(values, response => {
       if(response.data.success == true) {
-      	this.setState({isLoggedIn: true});
+      	this.setState({isLoggedIn: true, userInfo: response.data.data});
+      	store.dispatch(this.addCurrentLoggedInUser(response.data.data));
       }
     });
   }
@@ -39,13 +47,15 @@ class Account extends React.Component {
     const usersApi = new UsersApi();
   	usersApi.getLoggedInUser(response => {
       if(response.data.success == true) {
-      	this.setState({isLoggedIn: true});
+      	this.setState({isLoggedIn: true, userInfo: response.data.data});
+      	store.dispatch(this.addCurrentLoggedInUser(response.data.data));
       }
     });
   }
   
   render() {
-  	const { isLoggedIn } = this.state
+  	const { isLoggedIn, userInfo } = this.state;
+  	
   	return(
   	  <div style={{padding: 15 + 'px 0'}}>
 	  	<Container>
@@ -68,9 +78,9 @@ class Account extends React.Component {
 			  />
 			  }
 			  { isLoggedIn && 
-			  	<Alert variant="dark">
-	    		  You are logged in
-	  			</Alert>
+			  	<Alert variant="dark" style={{textAlign: 'center'}}>
+	    		  Logged in as <strong>{userInfo.email}</strong>
+	  			</Alert> 
 	  		  }
 	  		</Col>
 	  		<Col xs={12} sm={12} md={4}></Col>
