@@ -8,6 +8,11 @@ export const GlobalMapping = {'modules':[{ value: '1', label: 'Wedding Planner',
 										   { value: '3', label: 'Los Angeles', 'marketCity': 'los-angeles' }],
 							  'marketCity': [{label: 'San Francisco / Bay Area', 'value': 'san-francisco' },
 										   {label: 'New York', 'value': 'new-york' },
-										   {label: 'Los Angeles', 'value': 'los-angeles' }]
+										   {label: 'Los Angeles', 'value': 'los-angeles' }],
+							  'priceRange': [{label: '$', 'value': '1' },
+							  				 {label: '$$', 'value': '2' },
+							  				 {label: '$$$', 'value': '3' },
+							  				 {label: '$$$$', 'value': '4' },
+							  				 {label: '$$$$$', 'value': '5' }]
 					  		  
 					  		  }

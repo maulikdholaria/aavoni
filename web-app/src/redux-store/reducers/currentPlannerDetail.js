@@ -11,7 +11,7 @@ export default function currentPlannerDetail(state = [], action) {
         lat: action.data.lat,
         lng: action.data.lng,
         name: action.data.name,
-        pricerange: action.data.pricerange,
+        priceRange: action.data.priceRange,
         ratings: action.data.ratings,
         type: action.data.type,
         wedding: action.data.wedding,

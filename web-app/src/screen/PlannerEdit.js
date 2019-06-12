@@ -12,14 +12,15 @@ class PlannerEdit extends React.Component {
   	super(props);
   	this.state = {
   	  data: {
-  	  	name: '',
-  	  	about: '',
-  	  	fb: '',
-  	  	instagram: '',
-  	  	pinterest: '',
-  	  	website: '',
-  	  	address: '',
-  	  	marketCity: ''
+        name: '',
+        about: '',
+        priceRange: '',
+        fb: '',
+        instagram: '',
+        pinterest: '',
+        website: '',
+        address: '',
+        marketCity: ''
   	  }
     };
   }
@@ -34,6 +35,18 @@ class PlannerEdit extends React.Component {
   	plannersApi.edit(values, response => {
       
     });
+  }
+
+  initialValues = (data) => {
+    return {name: data.name,
+            about: data.about,
+            priceRange: data.priceRange,
+            fb: data.fb,
+            instagram: data.instagram,
+            pinterest: data.pinterest,
+            website: data.website,
+            address: data.address,
+            marketCity: data.marketCity};
   }
 
   componentDidMount() {
@@ -56,28 +69,22 @@ class PlannerEdit extends React.Component {
       		<Col xs={12} sm={12} md={12} lg={6} xl={6}>
 	  			<Formik
 	  			  enableReinitialize={true}
-	  			  initialValues={{name: data.name,
-	  							  about: data.about,
-	  							  fb: data.fb,
-	  							  instagram: data.instagram,
-	  			  				  pinterest: data.pinterest,
-	  			  				  website: data.website,
-	  			  				  address: data.address,
-	  			  				  marketCity: data.marketCity}}
+	  			  initialValues={this.initialValues(data)}
 	  			  validationSchema={this.getFormSchema}
 			      onSubmit={this.handleSubmit}
 			      render={({ errors, touched }) => (
 			      	
 				        <Form className="form contact-form" mode='themed'>
 				        	<Row>
-				        		<Col lg={6} xl={6}> <Input name="name" label="Name / Business Name"/> </Col>
-				        		<Col lg={12} xl={12}> <Textarea name='about' label='About' rows="10"/> </Col>
-				        		<Col lg={8} xl={8}> <Input name="fb" label="Facebook Page"/> </Col>
-				        		<Col lg={8} xl={8}> <Input name="instagram" label="Instagram Page"/> </Col>
-				        		<Col lg={8} xl={8}> <Input name="pinterest" label="Pinterest Page"/> </Col>
-				        		<Col lg={8} xl={8}> <Input name="website" label="Website"/> </Col>
-				        		<Col lg={8} xl={8}> <Input name="address" label="Mailing/Business Address"/> </Col>
-				        		<Col lg={8} xl={8}> <Select name="marketCity" label="Market City" placeholder='Select...' options={GlobalMapping.marketCity} /> </Col>
+  			        		<Col lg={6} xl={6}> <Input name="name" label="Name / Business Name"/> </Col>
+  			        		<Col lg={12} xl={12}> <Textarea name='about' label='About' rows="10"/> </Col>
+                    <Col lg={8} xl={8}> <Select name="priceRange" label="priceRange" placeholder='Select...' options={GlobalMapping.priceRange} /> </Col>
+  			        		<Col lg={8} xl={8}> <Input name="fb" label="Facebook Page"/> </Col>
+  			        		<Col lg={8} xl={8}> <Input name="instagram" label="Instagram Page"/> </Col>
+  			        		<Col lg={8} xl={8}> <Input name="pinterest" label="Pinterest Page"/> </Col>
+  			        		<Col lg={8} xl={8}> <Input name="website" label="Website"/> </Col>
+  			        		<Col lg={8} xl={8}> <Input name="address" label="Mailing/Business Address"/> </Col>
+  			        		<Col lg={8} xl={8}> <Select name="marketCity" label="Market City" placeholder='Select...' options={GlobalMapping.marketCity} /> </Col>
 							    </Row> 
 		      		  	<SubmitBtn className="link-button">UPDATE</SubmitBtn>
 				        </Form>
