@@ -54,6 +54,10 @@ class PlannerEditImages extends React.Component {
           />
           <br/><br/>
           <Link to={{pathname: "/wedding-planner/" + this.props.match.params.id}}>Planner {this.props.match.params.id}</Link>
+          <br/>
+          <br/>
+          <br/>
+          <a target="_blank" href={`/api/planners/clear/images/${this.props.match.params.id}`}>Clear Images - {this.props.match.params.id}</a>
       		</Col>
       		<Col lg={3} xl={3}> </Col>
       	</Row>
