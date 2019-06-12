@@ -1,3 +1,4 @@
+#!/bin/sh
 sudo su
 export NODE_ENV=staging
 
