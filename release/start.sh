@@ -1,4 +1,5 @@
 sudo su
+export NODE_ENV=staging
 
 cd /usr/share/app/wedding-planner-finder/
 git pull
@@ -20,7 +21,6 @@ export NODE_ENV=staging
 nohup npm start > /tmp/back-end-app.out 2>&1 &
 
 
-
 # frontend app
 cd /usr/share/app/wedding-planner-finder/web-app
 rm -rf node_modules/*
@@ -34,4 +34,3 @@ cd /usr/share/app/wedding-planner-finder/web-app
 npm run bundle
 
 
-export $NODE_ENV=production
