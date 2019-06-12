@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 class SearchApi {
 
   searchVenue(callback) {
@@ -7,9 +9,11 @@ class SearchApi {
   }
 
   searchWeddingPlanner(callback) {
-    fetch("api/search/wedding-planner")
-    .then(res => res.json())
+    axios.get("api/search/wedding-planner")
     .then(callback)
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
 }

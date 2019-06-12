@@ -41,13 +41,14 @@ class WeddingPlannerSearch extends React.Component {
       return;
     }
     searchApi.searchWeddingPlanner(response => {
-      store.dispatch(this.addCurrentWeddingPlannersSearch(response.data));
+      const responseData = response.data;
+      store.dispatch(this.addCurrentWeddingPlannersSearch(responseData.data));
       this.setState({
-          sucess: response.sucess,
-          totalPlanners: response.data.totalPlanners,
-          planners: response.data.planners,
-          errors: response.errors,
-          reason: response.reason,
+          sucess: responseData.sucess,
+          totalPlanners: responseData.data.totalPlanners,
+          planners: responseData.data.planners,
+          errors: responseData.errors,
+          reason: responseData.reason,
           isLoaded: true
       });
     });

@@ -1,11 +1,19 @@
 var express = require('express');
 var router = express.Router();
+var planners_table = require('../tables/planners');
+var planner_model = require('../models/planner');
 var fs = require('fs');
 
-
 router.get('/', function(req, res, next) {	   
-  fs.readFile('resp/searchWeddingPlanner.json', 'utf8', function(err, contents) {
-	res.send(contents);
+  result = planners_table.getAll({'marketCity': 'san-francisco'});
+  result.then(function(resp){
+  	let weddingPlanners = [];
+  	let plannerObj;
+  	for(var i = 0; i < resp.length; i++) {
+  		plannerObj = new planner_model(resp[i]);
+  		weddingPlanners.push(plannerObj.getInfo());
+  	}
+  	res.send({'success': true, 'data': {totalPlanners: weddingPlanners.length, planners: weddingPlanners}});
   });
 });
 

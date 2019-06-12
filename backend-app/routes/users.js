@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const crypto = require('crypto');
-var users_model = require('../models/users');
+var users_table = require('../tables/users');
 const secret = 'aavoni-99';
 
 router.get('/me', function(req, res, next) {
@@ -23,7 +23,7 @@ router.post('/create', function(req, res, next) {
 						.update(req.body.password)
 						.digest('hex');
 
-  result = users_model.create(req.body);
+  result = users_table.create(req.body);
   result.then(function(resp){
   	res.send({'success': true, 'data': {'id': resp[0]}});
   }).catch(function(error) {
@@ -36,7 +36,7 @@ router.post('/login', function(req, res, next) {
   const entered_pass_hash = crypto.createHmac('sha256', secret)
 						  .update(req.body.password)
                			  .digest('hex');
-  result = users_model.get_user_for_login(req.body.email, entered_pass_hash);
+  result = users_table.get_user_for_login(req.body.email, entered_pass_hash);
   result.then(function(resp){
   	if(resp.length != 1 ) {
   	  res.send({'success': false});

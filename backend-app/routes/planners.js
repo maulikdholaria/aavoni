@@ -1,28 +1,22 @@
 var express = require('express');
 var router = express.Router();
-var planners_model = require('../models/planners');
+var planners_table = require('../tables/planners');
+var planner_model = require('../models/planner');
 var geocoder = require('../lib/geocoder');
 var config = require('../config');
 var path = require('path');
 var fs = require('fs');
 
 router.get('/get/:id', function(req, res, next) {	 
-  const destDir = config['IMAGE_BASE_DIR'] + '/images/planners/' + req.params.id + '/';  
-  result = planners_model.get(req.params.id);
+  result = planners_table.get(req.params.id);
   result.then(function(resp){
     if(resp.length != 1 ) {
       res.send({'success': false});
       return;
     }
-    resp[0].about = resp[0].about.toString('utf8');
-    resp[0].images = Array();
-    
-    const files = fs.readdirSync(destDir);
-    const imgPath = '/images/planners/' + req.params.id + "/";
-    for (var i = 0; i < files.length; i++) {
-      resp[0].images.push(imgPath + files[i]);
-    }
-    res.send({'success': true, 'data': resp[0]});
+
+    plannerObj = new planner_model(resp[0]);
+    res.send({'success': true, 'data': plannerObj.getInfo()});
   });
 });
 
@@ -35,7 +29,7 @@ router.post('/create', function(req, res, next) {
     res.send({'success': false, 'reason': 'UNEXPECTED_ERROR'});
     return;
   }
-  result = planners_model.create(req.body);
+  result = planners_table.create(req.body);
   result.then(function(resp){
   	res.send({'success': true, 'data': {'id': resp[0]}});
   });
@@ -56,7 +50,7 @@ router.post('/edit/:id', function(req, res, next) {
     req.body.city = gres[0].city;
     req.body.lat = gres[0].latitude;
     req.body.lng = gres[0].longitude;
-    result = planners_model.edit(req.body);
+    result = planners_table.edit(req.body);
     result.then(function(resp){
       res.send({'success': true, 'data': {'id': parseInt(req.body.id)}});
     });
@@ -78,7 +72,8 @@ router.post('/upload/images/:id', function(req, res, next) {
 
   const fileName = req.files.file.name;
   const destDir = config['IMAGE_BASE_DIR'] + '/images/planners/' + req.params.id + '/';
-  const destFile = destDir + Date.now() + path.extname(fileName);
+  const destFileName = Date.now() + path.extname(fileName);
+  const destFile = destDir + destFileName;
   
   if (!fs.existsSync(destDir)){
     fs.mkdirSync(destDir, { recursive: true });
@@ -88,8 +83,19 @@ router.post('/upload/images/:id', function(req, res, next) {
     if (err)
       return res.status(500).send(err);
 
-    res.send({'success': true});
+    result = planners_table.appendImage(req.params.id, destFileName);
+    result.then(function(resp){
+      res.send({'success': true});
+    });
   });  
+});
+
+router.get('/clear/images/:id', function(req, res, next) {  
+  result = planners_table.clearImages(req.params.id);
+  result.then(function(resp){
+    console.log(resp);
+    res.send({'success': true});
+  });
 });
 
 module.exports = router;

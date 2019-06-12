@@ -22,16 +22,16 @@ class WeddingPlannerSearchBrowser extends React.Component {
           <Col md={10} lg={10} xl={10}>
               <Row>
                 {planners.map(planner => (
-                  <Col key={planner.id} lg={4} xl={3}>
+                  <Col key={planner.id} lg={4} xl={4}>
                     <Link to={{pathname: `/wedding-planner/${planner.id}`}} style={{ textDecoration: 'none' }}>
                       <Card key={planner.id} className="search-card">
                         <Card.Body className="body">
-                          <AspectRatio ratio="4/3">
-                            <Card.Img variant="top" src={planner.img} width="100%"/>
+                          <AspectRatio ratio="16/9">
+                            <Card.Img variant="top" src={planner.images[0]} width="100%"/>
                           </AspectRatio>
                           <Card.Title className="title">{planner.name} - {planner.id}</Card.Title>
                           <Card.Text className="location">
-                            <Icon className="icon">location_on</Icon><span> {planner.location}</span>
+                            <Icon className="icon">location_on</Icon><span> {planner.city}</span>
                           </Card.Text>
                           <Card.Text className="price">
                             Price Range: {Utils.getPriceRangeText(planner.pricerange)}

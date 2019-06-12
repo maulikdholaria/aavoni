@@ -48,7 +48,7 @@ class HomePageBrowser extends React.Component {
 					        <Form className="form block2" mode='themed'>
 				        	  <Row>
 		        			    <Col md="5">
-		        				  <Select name='what' label='I need help with' placeholder='Select...' options={GlobalMapping.modules} />
+		        				  <Select name='what' label='I need a' placeholder='Select...' options={GlobalMapping.modules} />
 		        			    </Col>
 		        			  	<Col md="5">
 		        				  <Select name='where' label='In' placeholder='Select...' options={GlobalMapping.location} />
@@ -62,7 +62,7 @@ class HomePageBrowser extends React.Component {
 				      )}
 				    />
 				    <div className="block3">
-				    	Join the amzing community to help people celebrate time of their life.
+				    	Join the amazing community to help people celebrate time of their life.
 				    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Become a vendor </a> 
 				    	or 
 				    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Offer your venue </a>

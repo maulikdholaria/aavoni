@@ -105,7 +105,8 @@ class EntityDetailBrowser extends React.Component {
   	return(
   	  <Container className="entity-details-browser" fluid>
   		<Row noGutters={true}>
-      		<Col lg={8} xl={8}> 
+  			<Col lg={1} xl={1}> </Col>
+      		<Col md={8} lg={6} xl={6}> 
       			
       			<Carousel indicators={false} interval='3000'>
       			{data.images.map((image, index) => (
@@ -138,7 +139,7 @@ class EntityDetailBrowser extends React.Component {
 				  mapElement={<div style={{ height: `100%` }} />}
 				/>
       		</Col>
-      		<Col>
+      		<Col md={4} lg={4} xl={4}>
       			<div className="info-lead-right">
 	      			<div className="info">
 		          	  <div className="name">{data.name}</div>
@@ -180,7 +181,7 @@ class EntityDetailBrowser extends React.Component {
 											    />
 							        		</Col>
 							        		<Col lg={6} xl={6}> 
-							        			<Select name='budget' label='Approximate Budget' placeholder='Select...'
+							        			<Select name='budget' label='Approx. Budget' placeholder='Select...'
 										          options={[
 										            { value: '0', label: 'Not Sure' },
 										          	{ value: '1', label: '$0-$5,000' },
@@ -199,13 +200,7 @@ class EntityDetailBrowser extends React.Component {
 							        		</Col>
 							        		<Col lg={12} xl={12}>  <Textarea name='message' label='Message (Optional)' /> </Col>
 							        	</Row>
-							          	
-							        	
-							          	
-							          	
-							            
-									    
-									   
+
 					      		  		<SubmitBtn className="link-button">Send Message</SubmitBtn>
 					      			  
 							        </Form>
@@ -215,6 +210,7 @@ class EntityDetailBrowser extends React.Component {
 			    	</div>
 		    	</div>
       		</Col>
+      		<Col lg={1} xl={1}> </Col>
       	</Row>
       </Container>
 
