@@ -39,6 +39,7 @@ class Account extends React.Component {
       if(response.data.success == true) {
       	this.setState({isLoggedIn: true, userInfo: response.data.data});
       	store.dispatch(this.addCurrentLoggedInUser(response.data.data));
+        this.props.history.push("/dashboard");
       }
     });
   }
@@ -49,6 +50,7 @@ class Account extends React.Component {
       if(response.data.success == true) {
       	this.setState({isLoggedIn: true, userInfo: response.data.data});
       	store.dispatch(this.addCurrentLoggedInUser(response.data.data));
+        this.props.history.push("/dashboard");
       }
     });
   }

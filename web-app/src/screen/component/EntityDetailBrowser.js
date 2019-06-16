@@ -12,7 +12,7 @@ import SocialIcons from '../common/SocialIcons';
 import LeadsApi from '../../api/LeadsApi';
 import 'react-aspect-ratio/aspect-ratio.css';
 import EntityDetailStyle from '../../style/EntityDetail.less';
-
+import { Config } from '../../Config';
 
 class EntityDetailBrowser extends React.Component {
   constructor(props) {
@@ -82,6 +82,7 @@ class EntityDetailBrowser extends React.Component {
   	const addressUrl = "http://maps.google.com/?q=" + data.address;
   	const plannerContactUrl = "/planner/contact/" + data.id;
   	var formLeadInfo  = leadInfo;
+  	var gMapURL = "https://maps.googleapis.com/maps/api/js?key=" + Config.googleMap.KEY + "&v=3.exp&libraries=geometry,drawing,places";
   	
   	if(!Array.isArray(currState.currentPlannerLead)) {
   		formLeadInfo = currState.currentPlannerLead;
@@ -133,7 +134,7 @@ class EntityDetailBrowser extends React.Component {
 				  isMarkerShown
 				  lat={data.lat}
 				  lng={data.lng}
-				  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbQ_h-tKmbqPlRkOVu4IYL58zSMUjpDXE&v=3.exp&libraries=geometry,drawing,places"
+				  googleMapURL={gMapURL}
 				  loadingElement={<div style={{ height: `100%` }} />}
 				  containerElement={<div style={{ height: `400px` }} />}
 				  mapElement={<div style={{ height: `100%` }} />}

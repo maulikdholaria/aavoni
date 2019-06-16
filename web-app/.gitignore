@@ -11,6 +11,7 @@
 # production
 /build
 /dist/bundle.js
+/src/Config.js
 
 # misc
 .DS_Store

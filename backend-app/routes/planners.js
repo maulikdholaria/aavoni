@@ -36,26 +36,43 @@ router.post('/create', function(req, res, next) {
 });
 
 router.post('/edit/:id', function(req, res, next) {    
-  if(!req.session.isAdmin) {
-    res.send({'success': false, 'reason': 'USER_UNAUTHORIZED'});
-    return;
-  }
-
   if (isNaN(req.params.id)) {
     res.send({'success': false, 'reason': 'INVALID_REQUEST'});
     return;
   }
 
-  geocoder.geocode(req.body.address, function(gerr, gres) {
-    req.body.city = gres[0].city;
-    req.body.lat = gres[0].latitude;
-    req.body.lng = gres[0].longitude;
-    result = planners_table.edit(req.body);
-    result.then(function(resp){
-      res.send({'success': true, 'data': {'id': parseInt(req.body.id)}});
-    });
+  const currUserId = req.session.user.id;
+  result = planners_table.get(req.params.id);
+  result.then(function(resp){
+    if(resp.length != 1 ) {
+      res.send({'success': false, 'errors': ['Planner entity does not exist'], 'resp': 'ENTITY_NOT_EXSIT'});
+      return;
+    }
+
+    const planner = resp[0];
+
+    if(currUserId != planner.userId && !req.session.isAdmin) {
+      res.send({'success': false, 'reason': 'USER_UNAUTHORIZED'});
+      return;
+    } 
+
+    geocoder.geocode(req.body.address, function(gerr, gres) {
+      req.body.city = gres[0].city;
+      req.body.lat = gres[0].latitude;
+      req.body.lng = gres[0].longitude;
+      result = planners_table.edit(req.body);
+      result.then(function(resp){
+        res.send({'success': true, 'data': {'id': parseInt(req.body.id)}});
+      });
     
+    });
+
+  }).catch(function(error) {
+      res.send({'success': false, 'reason': 'UNEXPECTED_ERROR'});
+      return;
   });
+
+  
 
 });
 

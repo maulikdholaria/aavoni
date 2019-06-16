@@ -7,7 +7,7 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
 import SocialIcons from '../common/SocialIcons';
 import 'react-aspect-ratio/aspect-ratio.css';
 import EntityDetailStyle from '../../style/EntityDetail.less';
-
+import { Config } from '../../Config';
 
 class EntityDetailMobile extends React.Component {
   constructor(props) {
@@ -17,7 +17,9 @@ class EntityDetailMobile extends React.Component {
   render() {
   	const { data } = this.props;
   	const addressUrl = "http://maps.google.com/?q=" + data.address;
-  	const plannerContactUrl = "/planner/contact/" + data.id
+  	const plannerContactUrl = "/planner/contact/" + data.id;
+  	var gMapURL = "https://maps.googleapis.com/maps/api/js?key=" + Config.googleMap.KEY + "&v=3.exp&libraries=geometry,drawing,places";
+  	
   	const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 	  <GoogleMap
 	    defaultZoom={12}
@@ -67,7 +69,7 @@ class EntityDetailMobile extends React.Component {
 				  isMarkerShown
 				  lat={data.lat}
 				  lng={data.lng}
-				  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbQ_h-tKmbqPlRkOVu4IYL58zSMUjpDXE&v=3.exp&libraries=geometry,drawing,places"
+				  googleMapURL={gMapURL}
 				  loadingElement={<div style={{ height: `100%` }} />}
 				  containerElement={<div style={{ height: `400px` }} />}
 				  mapElement={<div style={{ height: `100%` }} />}

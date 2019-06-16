@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import { Form, Input, SubmitBtn, Select, Textarea } from 'react-formik-ui';
 import * as Yup from 'yup';
 import { GlobalMapping } from '../GlobalMapping';
+import UsersApi from '../api/UsersApi';
 import PlannersApi from '../api/PlannersApi';
 
 
@@ -33,7 +34,9 @@ class PlannerEdit extends React.Component {
   	values.id = this.props.match.params.id;
   	const plannersApi = new PlannersApi();
   	plannersApi.edit(values, response => {
-      this.props.history.push("/planner/edit/images/" + this.props.match.params.id);
+      if(response.data.success == true) {
+        this.props.history.push("/planner/edit/images/" + this.props.match.params.id);
+      }
     });
   }
 
@@ -50,13 +53,19 @@ class PlannerEdit extends React.Component {
   }
 
   componentDidMount() {
-    const plannersApi = new PlannersApi();
-    
-    plannersApi.get(this.props.match.params.id, response => {
-      const responseData = response.data;
-      this.setState({
-        data: responseData.data
-      });
+    const usersApi = new UsersApi();
+    usersApi.getLoggedInUser(response => {
+      if(response.data.success == true) {
+        const plannersApi = new PlannersApi();
+        plannersApi.get(this.props.match.params.id, response => {
+          const responseData = response.data;
+          this.setState({
+            data: responseData.data
+          });
+        });
+      } else {
+        this.props.history.push("/account");
+      }
     });
   }
 

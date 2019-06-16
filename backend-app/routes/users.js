@@ -7,7 +7,7 @@ const secret = 'aavoni-99';
 const stripe = require("stripe")(config["STRIPE_SECRET_KEY"]);
 
 router.get('/me', function(req, res, next) {
-  if(req.session.user == undefined || req.session.user ==null) {
+  if(req.session.isAuthenticated == undefined || req.session.isAuthenticated == null || req.session.isAuthenticated == false) {
   	res.send({'success': false, 'reason': 'USER_NOT_LOGGED_IN'});
   }
   else {

@@ -7,14 +7,14 @@ import Header from './screen/common/Header';
 import ViewPort from './screen/common/ViewPort';
 import HomePage from './screen/HomePage';
 import CreateAccount from './screen/CreateAccount';
+import Account from './screen/Account';
+import Dashboard from './screen/Dashboard';
 import ManageCC from './screen/ManageCC';
-import Maulik from './screen/Maulik';
 import WeddingPlannerSearch from './screen/WeddingPlannerSearch';
 import WeddingPlannerDetail from './screen/WeddingPlannerDetail';
 import PlannerContact from './screen/PlannerContact';
 import PlannerEdit from './screen/PlannerEdit';
 import PlannerEditImages from './screen/PlannerEditImages';
-import Account from './screen/Account';
 import SearchWeddingVenue from './screen/SearchWeddingVenue';
 import VenueDetails from './screen/VenueDetails';
 import VenueContact from './screen/VenueContact';
@@ -30,7 +30,8 @@ function App() {
         <Route path="/" exact={true} component={HomePage} />
         <Route path="/create-account" exact={true} component={CreateAccount} />
         <Route path="/manage-cc" exact component={ManageCC} />
-        <Route path="/maulik/add/:addid/hello/:helloid" component={Maulik} />
+        <Route path="/account" exact component={Account} />
+        <Route path="/dashboard" exact component={Dashboard} />
         <Route path="/s/wedding-planner/:location" exact component={WeddingPlannerSearch} />
         <Route path="/wedding-planner/:id" exact component={WeddingPlannerDetail} />
         <Route path="/planner/contact/:id" exact component={PlannerContact} />
@@ -39,7 +40,6 @@ function App() {
         <Route path="/s/wedding-venue/:location" exact component={SearchWeddingVenue} />
         <Route path="/venue/:id" exact component={VenueDetails} />
         <Route path="/venue/contact/:id" exact component={VenueContact} />
-        <Route path="/account" exact component={Account} />
       </div>
     </BrowserRouter>
   );
