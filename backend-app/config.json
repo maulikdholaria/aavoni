@@ -8,7 +8,8 @@
 		  "debug": false
 		},
 		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00",
-		"IMAGE_BASE_DIR": "/Users/mdholaria/app"
+		"IMAGE_BASE_DIR": "/Users/mdholaria/app",
+		"STRIPE_SECRET_KEY": "sk_test_jBXyFHUarWH1OggmcAklqPHN00WJQuvf5m"
 	},
 	"staging": {
 		"mysql": {

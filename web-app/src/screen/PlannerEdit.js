@@ -33,7 +33,7 @@ class PlannerEdit extends React.Component {
   	values.id = this.props.match.params.id;
   	const plannersApi = new PlannersApi();
   	plannersApi.edit(values, response => {
-      
+      this.props.history.push("/planner/edit/images/" + this.props.match.params.id);
     });
   }
 
@@ -86,7 +86,7 @@ class PlannerEdit extends React.Component {
   			        		<Col lg={8} xl={8}> <Input name="address" label="Mailing/Business Address"/> </Col>
   			        		<Col lg={8} xl={8}> <Select name="marketCity" label="Market City" placeholder='Select...' options={GlobalMapping.marketCity} /> </Col>
 							    </Row> 
-		      		  	<SubmitBtn className="link-button">UPDATE</SubmitBtn>
+		      		  	<SubmitBtn className="link-button">UPDATE & UOLOAD IMAGES</SubmitBtn>
 				        </Form>
 			        
 			      )}

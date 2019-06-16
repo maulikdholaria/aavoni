@@ -3,12 +3,17 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col, Alert } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { Form, DropZone, SubmitBtn } from 'react-formik-ui';
+import * as yup from 'yup';
 import PlannersApi from '../api/PlannersApi';
 
 
 class PlannerEditImages extends React.Component {
   constructor(props) {
-  	super(props);  	
+  	super(props);  
+    this.state = {
+                  files1: [],
+                  isUploaded: false
+                 };
   }
 
 
@@ -16,12 +21,26 @@ class PlannerEditImages extends React.Component {
     
     const plannersApi = new PlannersApi();
     const id = this.props.match.params.id;
+    this.setState({
+      files1: [],
+      isUploaded: true
+    });
+
     values.files1.forEach(function (file) {
-      console.log(file);
+      
       var data = new FormData();
       data.append('file', file);
       plannersApi.uploadImages(id, data, response => {
-        console.log(response);
+        
+        var elements = document.getElementsByTagName("img");
+        for(var i = 0; i<elements.length; i++){
+          const element = elements[i];
+          const attribute = element.getAttribute('alt');
+          
+          if(attribute != null && attribute == file.name) {
+            element.parentNode.removeChild(element);
+          }
+        }         
       });
     });
   }
@@ -29,14 +48,22 @@ class PlannerEditImages extends React.Component {
   
 
   render() {
+    const {files1, isUploaded} = this.state;
+    console.log(files1);
   	return(
   	  <Container fluid style={{padding:'15px 15px'}}>
   		<Row noGutters={true}>
       		<Col lg={3} xl={3}> </Col>
       		<Col xs={12} sm={12} md={12} lg={6} xl={6}>
+          <div>
+            {isUploaded && <Alert variant="dark">
+              Images Uploaded
+            </Alert>
+            }
+          </div>
 	  			<Formik
             initialValues={{
-              files1: []
+              files1: files1
             }}
             onSubmit={this.handleSubmit}
             render={() => (
@@ -46,18 +73,16 @@ class PlannerEditImages extends React.Component {
                   name='files1'
                   label='File upload'
                   placeholder='Drop some files here'
-                  withClearButton={true}
                 />
+                <br/>
                 <SubmitBtn className="link-button">UPLOAD</SubmitBtn>
               </Form>
             )}
           />
+          <br/><br/><br/>
+          <Link to={{pathname: "/wedding-planner/" + this.props.match.params.id}}>View Profile</Link>
           <br/><br/>
-          <Link to={{pathname: "/wedding-planner/" + this.props.match.params.id}}>Planner {this.props.match.params.id}</Link>
-          <br/>
-          <br/>
-          <br/>
-          <a target="_blank" href={`/api/planners/clear/images/${this.props.match.params.id}`}>Clear Images - {this.props.match.params.id}</a>
+          <a target="_blank" href={`/api/planners/clear/images/${this.props.match.params.id}`}>Delete All Images</a>          
       		</Col>
       		<Col lg={3} xl={3}> </Col>
       	</Row>

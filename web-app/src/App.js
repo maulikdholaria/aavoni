@@ -6,6 +6,8 @@ import ThemeStyle from "./style/Theme.less";
 import Header from './screen/common/Header';
 import ViewPort from './screen/common/ViewPort';
 import HomePage from './screen/HomePage';
+import CreateAccount from './screen/CreateAccount';
+import ManageCC from './screen/ManageCC';
 import Maulik from './screen/Maulik';
 import WeddingPlannerSearch from './screen/WeddingPlannerSearch';
 import WeddingPlannerDetail from './screen/WeddingPlannerDetail';
@@ -26,6 +28,8 @@ function App() {
   	  <ViewPort></ViewPort>
       <div>
         <Route path="/" exact={true} component={HomePage} />
+        <Route path="/create-account" exact={true} component={CreateAccount} />
+        <Route path="/manage-cc" exact component={ManageCC} />
         <Route path="/maulik/add/:addid/hello/:helloid" component={Maulik} />
         <Route path="/s/wedding-planner/:location" exact component={WeddingPlannerSearch} />
         <Route path="/wedding-planner/:id" exact component={WeddingPlannerDetail} />
