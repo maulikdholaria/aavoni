@@ -29,7 +29,7 @@ class WeddingPlannerSearch extends React.Component {
     const searchApi = new SearchApi();
     const currState = store.getState();
 
-    if(!Array.isArray(currState.planners)) {
+    if(!Array.isArray(currState.planners) && currState.planners.marketCity == this.props.match.params.marketCity) {
       this.setState({
         sucess: true,
         totalPlanners: currState.planners.totalPlanners,
@@ -40,7 +40,7 @@ class WeddingPlannerSearch extends React.Component {
       });
       return;
     }
-    searchApi.searchWeddingPlanner(response => {
+    searchApi.searchWeddingPlanner(this.props.match.params.marketCity, response => {
       const responseData = response.data;
       store.dispatch(this.addCurrentWeddingPlannersSearch(responseData.data));
       this.setState({

@@ -8,8 +8,8 @@ class SearchApi {
     .then(callback)
   }
 
-  searchWeddingPlanner(callback) {
-    axios.get("api/search/wedding-planner")
+  searchWeddingPlanner(marketCity, callback) {
+    axios.get("api/search/wedding-planner/" + marketCity)
     .then(callback)
     .catch(function (error) {
       console.log(error);

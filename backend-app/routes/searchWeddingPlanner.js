@@ -4,8 +4,8 @@ var planners_table = require('../tables/planners');
 var planner_model = require('../models/planner');
 var fs = require('fs');
 
-router.get('/', function(req, res, next) {	   
-  result = planners_table.getAll({'marketCity': 'san-francisco'});
+router.get('/:marketCity', function(req, res, next) {	   
+  result = planners_table.getAll({'marketCity': req.params.marketCity});
   result.then(function(resp){
   	let weddingPlanners = [];
   	let plannerObj;
@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
   		plannerObj = new planner_model(resp[i]);
   		weddingPlanners.push(plannerObj.getInfo());
   	}
-  	res.send({'success': true, 'data': {totalPlanners: weddingPlanners.length, planners: weddingPlanners}});
+  	res.send({'success': true, 'data': {marketCity: req.params.marketCity, totalPlanners: weddingPlanners.length, planners: weddingPlanners}});
   });
 });
 

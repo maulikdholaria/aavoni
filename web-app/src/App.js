@@ -32,12 +32,12 @@ function App() {
         <Route path="/manage-cc" exact component={ManageCC} />
         <Route path="/account" exact component={Account} />
         <Route path="/dashboard" exact component={Dashboard} />
-        <Route path="/s/wedding-planner/:location" exact component={WeddingPlannerSearch} />
+        <Route path="/s/wedding-planner/:marketCity" exact component={WeddingPlannerSearch} />
         <Route path="/wedding-planner/:id" exact component={WeddingPlannerDetail} />
         <Route path="/planner/contact/:id" exact component={PlannerContact} />
         <Route path="/planner/edit/:id" exact component={PlannerEdit} />
         <Route path="/planner/edit/images/:id" exact component={PlannerEditImages} />
-        <Route path="/s/wedding-venue/:location" exact component={SearchWeddingVenue} />
+        <Route path="/s/wedding-venue/:marketCity" exact component={SearchWeddingVenue} />
         <Route path="/venue/:id" exact component={VenueDetails} />
         <Route path="/venue/contact/:id" exact component={VenueContact} />
       </div>
