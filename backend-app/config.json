@@ -9,7 +9,8 @@
 		},
 		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00",
 		"IMAGE_BASE_DIR": "/Users/mdholaria/app",
-		"STRIPE_SECRET_KEY": "sk_test_jBXyFHUarWH1OggmcAklqPHN00WJQuvf5m"
+		"STRIPE_SECRET_KEY": "sk_test_jBXyFHUarWH1OggmcAklqPHN00WJQuvf5m",
+		"SENDGRID_API_KEY": "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"
 	},
 	"staging": {
 		"mysql": {
@@ -19,7 +20,8 @@
 		  "database": "aavoni"
 		},
 		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00",
-		"IMAGE_BASE_DIR": "/usr/share/app"
+		"IMAGE_BASE_DIR": "/usr/share/app",
+		"SENDGRID": "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"
 	},
 	"production": {
 		"mysql": {
@@ -29,6 +31,7 @@
 		  "database": "aavoni"
 		},
 		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00",
-		"IMAGE_BASE_DIR": "/usr/share/app"
+		"IMAGE_BASE_DIR": "/usr/share/app",
+		"SENDGRID": "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"
 	}
 }

@@ -57,7 +57,7 @@ class EntityDetailBrowser extends React.Component {
 
   handleSubmit = (values) => {
   	const { data } = this.props;
-  	values.toUserId = data.id;
+  	values.plannerId = data.id;
 
   	store.dispatch(this.addCurrentPlannerLead(values));
   	this.setState({leadInfo: values});

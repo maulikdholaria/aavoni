@@ -2,7 +2,7 @@ export default function currentPlannerLead(state = [], action) {
   switch (action.type) {
   	case 'ADD_CURRENT_PLANNER_LEAD':
       //return state.concat(action.data)
-      console.log(action);
+      //console.log(action);
       return {...state, 
         budget: action.data.budget,
         date: action.data.date,
