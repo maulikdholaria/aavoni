@@ -2,6 +2,11 @@ const axios = require('axios');
 
 class PlannersApi {
 
+  create(params, callback) {
+    axios.post("api/planners/create/", params)
+    .then(callback)
+  }
+
   get(id, callback) {
     axios.get("api/planners/get/" + id)
     .then(callback)

@@ -27,7 +27,16 @@ class PlannerEdit extends React.Component {
   }
 
   getFormSchema = () => { 
-    return Yup.object().shape({});
+    return Yup.object().shape({
+      name: Yup.string()
+        .required('Required'),
+      about: Yup.string()
+        .required('Required'),
+      address: Yup.string()
+        .required('Required'),
+      marketCity: Yup.string()
+        .required('Required')
+    });
   }
 
   handleSubmit = (values) => {
@@ -92,7 +101,7 @@ class PlannerEdit extends React.Component {
   			        		<Col lg={8} xl={8}> <Input name="instagram" label="Instagram Page"/> </Col>
   			        		<Col lg={8} xl={8}> <Input name="pinterest" label="Pinterest Page"/> </Col>
   			        		<Col lg={8} xl={8}> <Input name="website" label="Website"/> </Col>
-  			        		<Col lg={8} xl={8}> <Input name="address" label="Mailing/Business Address"/> </Col>
+  			        		<Col lg={8} xl={8}> <Input name="address" label="Mailing/ Business Address/ City & State"/> </Col>
   			        		<Col lg={8} xl={8}> <Select name="marketCity" label="Market City" placeholder='Select...' options={GlobalMapping.marketCity} /> </Col>
 							    </Row> 
 		      		  	<SubmitBtn className="link-button">UPDATE & UOLOAD IMAGES</SubmitBtn>

@@ -49,7 +49,7 @@ router.post('/create', function(req, res, next) {
       });
     });
   }).catch(function(error) {
-      res.send({'success': false, 'reason': 'UNEXPECTED_ERROR'});
+      res.send({'success': false, errors: ['Unable to create user'], 'reason': 'UNEXPECTED_ERROR'});
   	  return;
   });
 });
