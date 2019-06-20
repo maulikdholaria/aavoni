@@ -31,7 +31,7 @@ class HomePageBrowser extends React.Component {
   render() {
   	
   	return(
-  	  <div className="home-page-desktop">
+  	  <div className="container home-page-desktop">
 	  	  
 	  		<Row noGutters={true}>
 	      		<Col> 

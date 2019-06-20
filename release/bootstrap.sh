@@ -13,5 +13,6 @@ cd /usr/share/app
 git clone git@github.com:maulikdholaria/aavoni.git
 
 yum install npm
-npm install webpack
-npm install webpack-cli
+
+#For nginx proxy to backend app at port 3001
+setsebool httpd_can_network_connect on -P
