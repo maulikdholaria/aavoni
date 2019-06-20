@@ -24,7 +24,7 @@ class WeddingPlannerSearchMobile extends React.Component {
                     <Link to={{pathname: `/wedding-planner/${planner.id}`}} style={{ textDecoration: 'none' }}>
                       <Card key={planner.id} className="search-card">
                         <Card.Body className="body">
-                          <AspectRatio ratio="16/9">
+                          <AspectRatio ratio="4/3">
                             <Card.Img variant="top" src={planner.images[0]} width="100%"/>
                           </AspectRatio>
                           <Card.Title className="title">{planner.name}</Card.Title>
