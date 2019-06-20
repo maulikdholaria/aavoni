@@ -25,7 +25,7 @@
 	},
 	"production": {
 		"mysql": {
-		  "host": "localhost",
+		  "host": "35.197.96.63",
 		  "user": "root",
 		  "password": "root",
 		  "database": "aavoni"
