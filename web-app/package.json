@@ -23,14 +23,27 @@
     "react-stripe-elements": "^3.0.0",
     "redux": "^4.0.1",
     "redux-starter-kit": "^0.5.1",
-    "yup": "^0.27.0"
+    "yup": "^0.27.0",
+    "babel-loader": "^8.0.6",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-merge": "^4.2.1",
+    "css-loader": "^2.1.1",
+    "less": "^3.9.0",
+    "less-loader": "^5.0.0",
+    "react-social-icons": "^4.1.0",
+    "style-loader": "^0.23.1",
+    "svg-inline-loader": "^0.8.0"
   },
   "scripts": {
-    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "start": "webpack-dev-server --config ./webpack.dev.js --mode development",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "bundle": "webpack --config ./webpack.config.js",
+    "bundle": "webpack --config ./webpack.prod.js",
     "prestart": "npm run bundle"
   },
   "eslintConfig": {
@@ -49,19 +62,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^2.1.1",
-    "less": "^3.9.0",
-    "less-loader": "^5.0.0",
     "react-hot-loader": "^4.8.8",
-    "react-social-icons": "^4.1.0",
-    "style-loader": "^0.23.1",
-    "svg-inline-loader": "^0.8.0",
-    "webpack": "^4.32.2",
-    "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.4.1"
   }
 }
