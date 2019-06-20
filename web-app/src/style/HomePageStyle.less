@@ -33,12 +33,13 @@
   max-width: 1600px;
   
   .block1 {
-    display: flex;
+    //display: flex;
     align-items: center;
-    height: 20vh;
+    margin-top: 50px;
+    min-height: 20vh;
     width: 100%;
     padding: 0;
-  	font-weight: 600 !important;
+    font-weight: 600 !important;
     line-height: 1.08 !important;
     font-size: 55px !important;
     max-width: 700px !important;
@@ -48,25 +49,26 @@
   }
 
   .block2 {
-  	margin: 50px 100px;
-    height: 20vh;
+    margin: 50px 100px;
+    min-height: 20vh;
 
-  	button {
-  	  margin-top: 20px;
-  	}
+    button {
+      margin-top: 20px;
+    }
   }
 
   .block3 {
     background-color: #23232c;
-    height: 50vh;
-    width: 100%;
-    padding: 0;
+    min-height: 50vh;
+    min-width: 100%;
     color: #fff;
     line-height: 1.08 !important;
     font-size: 30px !important;
     margin: 32px auto 0 !important;
-    text-align: center;
-    padding: 100px 350px;
+    text-align: center !important;
+    padding: 100px 50px;
+    align-items: center;
+    max-width: 700px !important;
   }
   
 }
