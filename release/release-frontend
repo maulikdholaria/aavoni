@@ -8,7 +8,7 @@ fi
 
 # frontend app
 cd /usr/share/app/aavoni/web-app
-mv src/Config-$1.js src/Config.js
+cp src/Config-$1.js src/Config.js
 rm -rf node_modules/*
 rm -rf node_modules/.bin/*
 rm -rf node_modules/.cache/*
