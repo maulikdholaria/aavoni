@@ -112,7 +112,7 @@ class EntityDetailBrowser extends React.Component {
       			<Carousel indicators={false} interval='3000'>
       			{data.images.map((image, index) => (
       				<Carousel.Item key={index}>
-      					<AspectRatio ratio="16/9">
+      					<AspectRatio ratio="4/3">
 						    <img
 						      src={image}
 						      alt={image}

@@ -21,6 +21,7 @@
 		},
 		"GOOGLE_API_KEY": "AIzaSyAVQngzLlTRSD_M_qBRdW_YagXLPPzwo00",
 		"IMAGE_BASE_DIR": "/usr/share/app",
+		"STRIPE_SECRET_KEY": "sk_test_jBXyFHUarWH1OggmcAklqPHN00WJQuvf5m",
 		"SENDGRID": "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"
 	},
 	"production": {
