@@ -15,22 +15,22 @@ router.post('/planner/create', function(req, res, next) {
   result.then(function(leadCreationResp){
 
   	ip_count_res = lead_ips_table.getByIP(req_ip);
-	ip_count_res.then(function(resp){
-  	  //console.log(resp);
-  	  if(resp.length != 1 ) {
-      	ip_create_res = lead_ips_table.create({ip: req_ip, totalLeads: 1});
-      	ip_create_res.then();
-      } else {
-      	total_leads = resp[0].totalLeads;
-      	total_leads += 1;
-      	ip_update_res = lead_ips_table.updateByIP(req_ip, {totalLeads: total_leads});	
-      	ip_update_res.then();
-      }
+  	ip_count_res.then(function(resp){
+    	  //console.log(resp);
+    	  if(resp.length != 1 ) {
+        	ip_create_res = lead_ips_table.create({ip: req_ip, totalLeads: 1});
+        	ip_create_res.then(function(resp){});
+        } else {
+        	total_leads = resp[0].totalLeads;
+        	total_leads += 1;
+        	ip_update_res = lead_ips_table.updateByIP(req_ip, {totalLeads: total_leads});	
+        	ip_update_res.then(function(resp){});
+        }
 
-	  if(total_leads < 50) {
-	  	leads_model.send_email(req.body);
-	  }
-	});
+  	  if(total_leads < 50) {
+  	  	leads_model.send_email(req.body);
+  	  }
+  	});
   	
   	res.send({success: true, data: {id: leadCreationResp[0]}});
 
