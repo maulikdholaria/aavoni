@@ -23,6 +23,11 @@ var leads = {
       	console.log("no planner found - " + leadInfo.plannerId);
       	return;
       }
+
+      if(resp[0].canReceiveLead != 1) {
+        console.log("Not enabled to receive lead - " + leadInfo.plannerId);
+        return;
+      }
      
 
       result = users_table.getUserById(resp[0].userId);
