@@ -25,6 +25,7 @@ router.post('/create', function(req, res, next) {
 						.update(req.body.password)
 						.digest('hex');
 
+  req.body.email = req.body.email.toLowerCase();
   result = users_table.create(req.body);
   result.then(function(resp){
   	const userId = resp[0];

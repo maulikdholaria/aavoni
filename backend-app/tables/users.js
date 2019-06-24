@@ -3,6 +3,7 @@ var tableName = 'users';
 
 var users = {
   create: function(params) {
+    params.email = params.email.toLowerCase();
     const promise = knex(tableName).insert(params);
     return promise.then();
   },
