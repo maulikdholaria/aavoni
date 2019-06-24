@@ -3,6 +3,7 @@ var router = express.Router();
 var leads_model = require('../models/leads');
 var leads_table = require('../tables/leads');
 var lead_ips_table = require('../tables/lead_ips');
+var planners_clicks_table = require('../tables/planners_clicks');
 
 router.post('/planner/create', function(req, res, next) {	
   const req_ip = req.ip;
@@ -38,6 +39,20 @@ router.post('/planner/create', function(req, res, next) {
 
   }).catch(function(error){
   	res.send({success: false, reason: 'UNEXPECTED_ERROR'});
+  });
+
+  
+});
+
+router.post('/planner/create-click', function(req, res, next) { 
+  req.body.ip = req.ip;
+  
+  result = planners_clicks_table.create_website_click(req.body);
+
+  result.then(function(resp){
+    res.send({success: true, data: {id: resp[0]}});
+  }).catch(function(error){
+    res.send({success: false, reason: 'UNEXPECTED_ERROR'});
   });
 
   

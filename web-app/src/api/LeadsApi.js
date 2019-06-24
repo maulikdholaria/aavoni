@@ -10,6 +10,14 @@ class LeadsApi {
     });
   }
 
+  plannerClickCreate(params, callback) {
+    axios.post('api/leads/planner/create-click', params)
+    .then(callback)
+    .catch(function (error) {
+      console.log(error);
+    });
+  }  
+
 }
 
 export default LeadsApi;
