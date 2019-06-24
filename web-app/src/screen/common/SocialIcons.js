@@ -11,10 +11,9 @@ class SocialIcons extends React.Component {
   }
 
   handleClick(e) {
-    const { plannerId, device } = this.props;    
-    const website = e.target.parentElement.getAttribute('href');
+    const { plannerId, device, site } = this.props;    
     const leadsApi = new LeadsApi();
-    leadsApi.plannerClickCreate({plannerId: plannerId, deviceType: device, website: website}, response => {
+    leadsApi.plannerClickCreate({plannerId: plannerId, deviceType: device, website: site}, response => {
       
     });
   }
