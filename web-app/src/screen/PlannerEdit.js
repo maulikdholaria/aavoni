@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { Form, Input, SubmitBtn, Select, Textarea } from 'react-formik-ui';
+import { Form, Input, PhoneInput, SubmitBtn, Select, Textarea } from 'react-formik-ui';
 import * as Yup from 'yup';
 import { GlobalMapping } from '../GlobalMapping';
 import UsersApi from '../api/UsersApi';
@@ -47,6 +47,7 @@ class PlannerEdit extends React.Component {
   }
 
   handleSubmit = (values) => {
+    values.phone = values.phone.replace(/[\(\)\s-]/g, "");
   	values.id = this.props.match.params.id;
   	const plannersApi = new PlannersApi();
   	plannersApi.edit(values, response => {
@@ -106,7 +107,7 @@ class PlannerEdit extends React.Component {
   			        		<Col lg={6} xl={6}> <Input name="name" label="Name / Business Name"/> </Col>
   			        		<Col lg={12} xl={12}> <Textarea name='about' label='About' rows="10"/> </Col>
                     <Col lg={6} xl={6}> <Input name="email" type="email" label="Email (For lead delivery)" autoComplete="email"/></Col>
-                    <Col lg={6} xl={6}> <Input name="phone" type="tel" label="Cell (For lead notification)" autoComplete="tel"/></Col>
+                    <Col lg={6} xl={6}> <PhoneInput name="phone" label="Cell (For lead notification)" autoComplete="tel" defaultCountry='us'/></Col>
                     <Col lg={8} xl={8}> <Select name="priceRange" label="priceRange" placeholder='Select...' options={GlobalMapping.priceRange} /> </Col>
   			        		<Col lg={8} xl={8}> <Input name="fb" label="Facebook Page"/> </Col>
   			        		<Col lg={8} xl={8}> <Input name="instagram" label="Instagram Page"/> </Col>

@@ -28,8 +28,10 @@ router.post('/planner/create', function(req, res, next) {
         }
 
   	  if(total_leads < 50) {
-  	  	leads_model.send_email(req.body);
-  	  }
+  	  	leads_model.deliver_lead(req.body);
+  	  } else {
+        console.log("Max limit reached for ip " + req_ip);
+      }
   	});
   	
   	res.send({success: true, data: {id: leadCreationResp[0]}});
