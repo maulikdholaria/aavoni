@@ -15,6 +15,8 @@ class PlannerEdit extends React.Component {
   	  data: {
         name: '',
         about: '',
+        email: '',
+        phone: '',
         priceRange: '',
         fb: '',
         instagram: '',
@@ -31,6 +33,11 @@ class PlannerEdit extends React.Component {
       name: Yup.string()
         .required('Required'),
       about: Yup.string()
+        .required('Required'),
+      phone: Yup.string()
+        .required('Required'),
+      email: Yup.string()
+        .email('Invalid email')
         .required('Required'),
       address: Yup.string()
         .required('Required'),
@@ -52,6 +59,8 @@ class PlannerEdit extends React.Component {
   initialValues = (data) => {
     return {name: data.name,
             about: data.about,
+            email: data.email,
+            phone: data.phone,
             priceRange: data.priceRange,
             fb: data.fb,
             instagram: data.instagram,
@@ -96,6 +105,8 @@ class PlannerEdit extends React.Component {
 				        	<Row>
   			        		<Col lg={6} xl={6}> <Input name="name" label="Name / Business Name"/> </Col>
   			        		<Col lg={12} xl={12}> <Textarea name='about' label='About' rows="10"/> </Col>
+                    <Col lg={6} xl={6}> <Input name="email" type="email" label="Email (For lead delivery)" autoComplete="email"/></Col>
+                    <Col lg={6} xl={6}> <Input name="phone" type="tel" label="Cell (For lead notification)" autoComplete="tel"/></Col>
                     <Col lg={8} xl={8}> <Select name="priceRange" label="priceRange" placeholder='Select...' options={GlobalMapping.priceRange} /> </Col>
   			        		<Col lg={8} xl={8}> <Input name="fb" label="Facebook Page"/> </Col>
   			        		<Col lg={8} xl={8}> <Input name="instagram" label="Instagram Page"/> </Col>
