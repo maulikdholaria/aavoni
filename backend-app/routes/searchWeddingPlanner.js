@@ -10,8 +10,10 @@ router.get('/:marketCity', function(req, res, next) {
   	let weddingPlanners = [];
   	let plannerObj;
   	for(var i = 0; i < resp.length; i++) {
-  		plannerObj = new planner_model(resp[i]);
-  		weddingPlanners.push(plannerObj.getInfo());
+      if(resp[i].images.length > 10) {
+  		  plannerObj = new planner_model(resp[i]);
+  		  weddingPlanners.push(plannerObj.getInfo());
+      }
   	}
   	res.send({'success': true, 'data': {marketCity: req.params.marketCity, totalPlanners: weddingPlanners.length, planners: weddingPlanners}});
   });
