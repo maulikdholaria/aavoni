@@ -6,8 +6,7 @@ var lead_ips_table = require('../tables/lead_ips');
 var planners_clicks_table = require('../tables/planners_clicks');
 
 router.post('/planner/create', function(req, res, next) {	
-  const req_ip = req.ip;
-  console.log(req_ip);
+  const req_ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   var total_leads = 0;
 
 
@@ -45,7 +44,8 @@ router.post('/planner/create', function(req, res, next) {
 });
 
 router.post('/planner/create-click', function(req, res, next) { 
-  req.body.ip = req.ip;
+  const clientIp = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  req.body.ip = clientIp;
   
   result = planners_clicks_table.create_website_click(req.body);
 
