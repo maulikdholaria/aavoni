@@ -41,6 +41,8 @@ router.post('/edit/:id', function(req, res, next) {
     return;
   }
 
+  req.body.email = req.body.email.toLowerCase();
+  
   const currUserId = req.session.user.id;
   result = planners_table.get(req.params.id);
   result.then(function(resp){
