@@ -19,13 +19,14 @@ class SocialIcons extends React.Component {
   }
 
   render() {  
-    const { size, facebook, instagram, pinterest, site } = this.props;
+    const { device, size, facebook, instagram, pinterest, site } = this.props;
+    const website = site + "?utm_campaign=aavoni&utm_device=" + device;
     return (
       <div className="social-icons">
         <a href={facebook} alt="facebook" target="_blank"><Icon path={mdiFacebook} className="icon" size={size}/></a>
         <a href={instagram} alt="instagram" target="_blank"><Icon path={mdiInstagram} className="icon" size={size}/></a>
         <a href={pinterest} alt="pinterest" target="_blank"><Icon path={mdiPinterest} className="icon" size={size}/></a>
-        <a onClick={this.handleClick} href={site} alt="site" target="_blank"><Icon path={mdiLink} className="icon" size={size}/></a>
+        <a onClick={this.handleClick} href={website} alt="site" target="_blank"><Icon path={mdiLink} className="icon" size={size}/></a>
       </div>
     );
   }
