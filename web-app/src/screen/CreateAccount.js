@@ -41,7 +41,7 @@ class CreateAccount extends React.Component {
         });
 
         const plannersApi = new PlannersApi();
-        plannersApi.create({userId: userId}, response => {
+        plannersApi.create({userId: userId, name: values.fname, email: values.email}, response => {
           if(response.data.success == true) {
             this.setState({
               listingEntityCreated: true,
