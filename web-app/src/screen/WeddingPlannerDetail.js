@@ -25,6 +25,7 @@ class WeddingPlannerDetail extends React.Component {
   }
 
   componentDidMount() {
+    window.analytics.page('Wedding Planner Detail');
     const plannersApi = new PlannersApi();
     const currState = store.getState();
     

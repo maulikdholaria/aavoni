@@ -81,6 +81,7 @@ class PlannerContact extends React.Component {
   }
 
   componentDidMount() {
+  	window.analytics.page('Planner Contact');
     const plannersApi = new PlannersApi();
     const currState = store.getState();
     

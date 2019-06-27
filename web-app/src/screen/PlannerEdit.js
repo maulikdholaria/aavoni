@@ -72,6 +72,7 @@ class PlannerEdit extends React.Component {
   }
 
   componentDidMount() {
+    window.analytics.page('Planner Edit');
     const usersApi = new UsersApi();
     usersApi.getLoggedInUser(response => {
       if(response.data.success == true) {

@@ -26,6 +26,7 @@ class WeddingPlannerSearch extends React.Component {
   }
 
   componentDidMount() {
+    window.analytics.page('Wedding Planner Search');
     const searchApi = new SearchApi();
     const currState = store.getState();
 

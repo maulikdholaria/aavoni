@@ -69,6 +69,10 @@ class ManageCC extends React.Component {
   	super(props);
   }
 
+  componentDidMount(){
+    window.analytics.page('Manage Credit Card');
+  }
+
   render() {
     
   	return(

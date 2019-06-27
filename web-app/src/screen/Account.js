@@ -45,6 +45,7 @@ class Account extends React.Component {
   }
 
   componentDidMount() {
+    window.analytics.page('Account Page');
     const usersApi = new UsersApi();
   	usersApi.getLoggedInUser(response => {
       if(response.data.success == true) {

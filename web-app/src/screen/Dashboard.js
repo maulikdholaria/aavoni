@@ -27,6 +27,7 @@ class Dashboard extends React.Component {
 
 
   componentDidMount() {
+    window.analytics.page('Dashboard Page');
     const usersApi = new UsersApi();
   	usersApi.getLoggedInUser(response => {
       if(response.data.success == true) {
