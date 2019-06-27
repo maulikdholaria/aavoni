@@ -12,6 +12,7 @@ class Account extends React.Component {
   	super(props);
   	this.state = {
   	  isLoggedIn: false,
+      loginFailed: false,
   	  userInfo: {id: null, email: '', fname: '', lname: ''}
   	};
   }
@@ -40,6 +41,8 @@ class Account extends React.Component {
       	this.setState({isLoggedIn: true, userInfo: response.data.data});
       	store.dispatch(this.addCurrentLoggedInUser(response.data.data));
         this.props.history.push("/dashboard");
+      } else {
+        this.setState({isLoggedIn: false, loginFailed: true});
       }
     });
   }
@@ -57,7 +60,7 @@ class Account extends React.Component {
   }
   
   render() {
-  	const { isLoggedIn, userInfo } = this.state;
+  	const { isLoggedIn, loginFailed, userInfo } = this.state;
   	
   	return(
   	  <div style={{padding: 15 + 'px 0'}}>
@@ -65,11 +68,16 @@ class Account extends React.Component {
 	  	  <Row>
 	  	    <Col xs={12} sm={12} md={4}></Col>
 	  		<Col md={4}>
+          { loginFailed && 
+          <Alert variant="dark" style={{textAlign: 'center'}}>
+            Log in error
+          </Alert> 
+          }
 	  		  { !isLoggedIn && <Formik
 	  		    initialValues={{email:'', password:''}}
 	  		    validationSchema={this.getFormSchema}
-				onSubmit={this.handleSubmit}
-			    render={({ errors, touched }) => (
+				    onSubmit={this.handleSubmit}
+			      render={({ errors, touched }) => (
 			      	
 			      <Form className="form" mode='themed'>
 			      	<Input name="email" label="Email" autoComplete="email"/>
@@ -77,14 +85,9 @@ class Account extends React.Component {
 			      	<SubmitBtn className="link-button">LOGIN</SubmitBtn>
 			      </Form>
 			        
-			    )}
-			  />
-			  }
-			  { isLoggedIn && 
-			  	<Alert variant="dark" style={{textAlign: 'center'}}>
-	    		  Logged in as <strong>{userInfo.email}</strong>
-	  			</Alert> 
-	  		  }
+			      )}
+			     />
+			    }
 	  		</Col>
 	  		<Col xs={12} sm={12} md={4}></Col>
 	  	  </Row>
