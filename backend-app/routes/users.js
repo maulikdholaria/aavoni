@@ -5,6 +5,7 @@ var config = require('../config');
 var users_table = require('../tables/users');
 const secret = 'aavoni-99';
 const stripe = require("stripe")(config["STRIPE_SECRET_KEY"]);
+var generator = require('generate-password');
 
 router.get('/me', function(req, res, next) {
   if(req.session.isAuthenticated == undefined || req.session.isAuthenticated == null || req.session.isAuthenticated == false) {
@@ -21,8 +22,9 @@ router.post('/create', function(req, res, next) {
   	return;
   }
 
+  req.body.plainPass = generator.generate({length: 10, numbers: true});
   req.body.password = crypto.createHmac('sha256', secret)
-						.update(req.body.password)
+						.update(req.body.plainPass)
 						.digest('hex');
 
   req.body.email = req.body.email.toLowerCase();

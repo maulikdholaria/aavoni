@@ -13,6 +13,7 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-fileupload": "^1.1.5",
+    "generate-password": "^1.4.2",
     "http-errors": "~1.6.3",
     "knex": "^0.17.3",
     "morgan": "~1.9.1",
