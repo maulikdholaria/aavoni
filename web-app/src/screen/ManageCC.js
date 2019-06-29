@@ -23,6 +23,7 @@ class _CardForm extends React.Component {
       .then(function(resp){  
         const usersApi = new UsersApi();
         usersApi.editStripeSource({stripeSourceId: resp.source.id}, response => {});
+        window.analytics.track('cc_added');
       })
       .catch(function(err){
         console.log(err);
