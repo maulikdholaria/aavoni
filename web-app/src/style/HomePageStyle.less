@@ -5,15 +5,18 @@
 //@home-page-background-image: '/site-assets/images/wedding-1.jpeg';
 //@home-page-background-image: '/site-assets/images/wedding-2.jpg';
 //@home-page-background-image: '/site-assets/images/wedding-3.jpg';
-@home-page-background-image: '/site-assets/images/wedding-4.jpg';
+//@home-page-background-image: '/site-assets/images/wedding-4.jpg';
+@home-page-background-image: '/site-assets/images/wedding-5.jpeg';
 
 .home-page-mobile {
   padding: 0;
+  color: #484848;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
 
   .block1 {
     padding: 0 15px;
   	margin: 2rem 0 2.143rem;
-    font-size: 35px;
+    font-size: 2em !important;
     font-weight: 600;
     line-height: 1.08;
     -webkit-font-smoothing: antialiased;
@@ -25,60 +28,69 @@
   }
 
   .block3 {
-    padding: 40px 15px;
-    height: 50vh;
+    padding: 90px 15px;
     background-color: #23232c;
     color: #fff;
-    font-size: 30px;
+    font-size: 1em;
     font-weight: 300;
     line-height: 1.08;
     text-align: center;
 
     .contact {
       margin-top: 30px;
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
+  }
+
+  a {
+    color: #6b3299;
   }
 }
 
 .home-page-desktop {
 
   max-width: 1600px;
+  color: #484848;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,Helvetica Neue,sans-serif !important;
+  min-width: 100%;
+  padding: 0px;
   
-  color: #fff;
 
   .base-block-container {
-    min-height: 20vh;
+    min-height: 100vh;
     width: 100%;
     background-image: url(@home-page-background-image) !important;
     background-size: cover !important;
     background-position: center center !important;
 
     .block-wrapper {
-      background-color: rgba(0, 0, 0, 0.55) !important;
+      //background-color: rgba(0, 0, 0, 0.55) !important;
+      background-color: #fff !important;
+      border-radius: 4px !important;
       .block1 {
         //display: flex;
         
         align-items: center;
         margin-top: 50px;
-        min-height: 30vh;
+        //min-height: 30vh;
         width: 100%;
-        padding: 50px 0 0 ;
+        padding: 25px 20px;
         font-weight: 600 !important;
         line-height: 1.08 !important;
-        font-size: 55px !important;
-        max-width: 700px !important;
-        margin: 32px auto 0 !important;
-        text-align: center !important;
+        font-size: 2em !important;
+        //max-width: 700px !important;
+        //margin: 32px auto 0 !important;
+        text-align: left !important;
         //text-shadow: 0 1px 4px rgba(0, 0, 0, .6) !important;
       }
 
       .block2 {
-        margin: 50px 250px 0;
-        min-height: 20vh;
+        //margin: 50px 250px 0;
+        //min-height: 20vh;
+        padding: 25px 25px;
 
         .label, select {
-          color: #fff;
+          //color: #fff;
           font-size: 1rem;
           font-weight: bold;
         }
@@ -93,12 +105,12 @@
   
 
   .block3 {
-    background-color: #23232c;
-    min-height: 50vh;
+    //background-color: #23232c;
+    //min-height: 50vh;
     min-width: 100%;
-    color: #fff;
+    //color: #fff;
     line-height: 1.08 !important;
-    font-size: 30px !important;
+    font-size: 1.5em !important;
     //margin: 32px auto 0 !important;
     text-align: center !important;
     padding: 100px 50px;

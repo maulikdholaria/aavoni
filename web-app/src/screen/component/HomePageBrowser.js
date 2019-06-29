@@ -33,9 +33,10 @@ class HomePageBrowser extends React.Component {
   	return(
   	  <div className="container home-page-desktop">
 	  	  
-	  		<Row noGutters={true}>
-	      		<Col xs="12" sm="12" md="12"> 
-	      			<div className="base-block-container">
+	  		<Row noGutters={true} className="base-block-container">
+	      		<Col lg="1" xl="1"> </Col>	
+	      		<Col xs="12" sm="12" md="12" lg="3" xl="3"> 
+	      			<div>
 		      			<div className="block-wrapper">
 			      			<div className="block1">Amazing planners, exclusive venues, memorable experience & beyond</div>
 			      			<Formik
@@ -49,13 +50,13 @@ class HomePageBrowser extends React.Component {
 						      	
 							        <Form className="form block2" mode='themed'>
 						        	  <Row>
-				        			    <Col xs="12" sm="12" md="5">
+				        			    <Col xs="12" sm="12" md="12" lg="12" xl="12">
 				        				  <Select name='what' label='I need a' placeholder='Select...' options={GlobalMapping.modules} />
 				        			    </Col>
-				        			  	<Col xs="12" sm="12" md="5">
+				        			  	<Col xs="12" sm="12" md="12" lg="12" xl="12">
 				        				  <Select name='where' label='In' placeholder='Select...' options={GlobalMapping.location} />
 				        			  	</Col>
-				        			  	<Col xs="12" sm="12" md="2">
+				        			  	<Col xs="12" sm="12" md="12" lg="12" xl="12">
 				        			  	  <SubmitBtn className="link-button">Search</SubmitBtn>
 				        			  	</Col>
 						        	  </Row>
@@ -65,15 +66,16 @@ class HomePageBrowser extends React.Component {
 					    />
 					    </div>
 					</div>
-				    <div className="block3">
-				    	Join the amazing community to help people celebrate time of their life.
-				    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Become a vendor </a> 
-				    	or 
-				    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Offer your venue </a>
-				    	<div className="contact">Email: <a href="mailto:rohit@aavoni.com">rohit@aavoni.com</a></div>
-			    	</div>
 	      		</Col>
+	      		<Col lg="7" xl="7"> </Col>
 	      	</Row>
+	      	 <div className="block3">
+		    	Join the amazing community to help people celebrate time of their life.
+		    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Become a vendor </a> 
+		    	or 
+		    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Offer your venue </a>
+		    	<div className="contact">Email: <a href="mailto:rohit@aavoni.com">rohit@aavoni.com</a></div>
+	    	</div>
 	      
       </div>
 
