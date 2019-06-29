@@ -70,7 +70,7 @@ class HomePageBrowser extends React.Component {
 	      		<Col lg="7" xl="7"> </Col>
 	      	</Row>
 	      	 <div className="block3">
-		    	Join the amazing community to help people celebrate time of their life.
+		    	Help people plan, organize, and celebrate the special day of their lives.
 		    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Become a vendor </a> 
 		    	or 
 		    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Offer your venue </a>
