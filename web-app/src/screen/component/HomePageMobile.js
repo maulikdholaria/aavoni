@@ -64,6 +64,7 @@ class HomePageMobile extends React.Component {
 			    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Become a vendor </a> 
 			    	or 
 			    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Offer your venue </a>
+			    	<div className="contact">Email: <a href="mailto:rohit@aavoni.com">rohit@aavoni.com</a></div>
 			    </div>
       		</Col>
       	</Row>

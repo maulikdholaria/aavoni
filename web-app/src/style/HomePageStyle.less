@@ -1,4 +1,11 @@
 @import './Theme.less';
+//@home-page-background-image: '/site-assets/images/homepage-background.jpeg';
+//@home-page-background-image: '/site-assets/images/beach-wedding.jpg';
+//@home-page-background-image: '/site-assets/images/beach-wedding-1.jpeg';
+//@home-page-background-image: '/site-assets/images/wedding-1.jpeg';
+//@home-page-background-image: '/site-assets/images/wedding-2.jpg';
+//@home-page-background-image: '/site-assets/images/wedding-3.jpg';
+@home-page-background-image: '/site-assets/images/wedding-4.jpg';
 
 .home-page-mobile {
   padding: 0;
@@ -25,6 +32,12 @@
     font-size: 30px;
     font-weight: 300;
     line-height: 1.08;
+    text-align: center;
+
+    .contact {
+      margin-top: 30px;
+      font-size: 1.2rem;
+    }
   }
 }
 
@@ -32,30 +45,52 @@
 
   max-width: 1600px;
   
-  .block1 {
-    //display: flex;
-    align-items: center;
-    margin-top: 50px;
+  color: #fff;
+
+  .base-block-container {
     min-height: 20vh;
     width: 100%;
-    padding: 0;
-    font-weight: 600 !important;
-    line-height: 1.08 !important;
-    font-size: 55px !important;
-    max-width: 700px !important;
-    margin: 32px auto 0 !important;
-    text-align: center !important;
-    //text-shadow: 0 1px 4px rgba(0, 0, 0, .6) !important;
-  }
+    background-image: url(@home-page-background-image) !important;
+    background-size: cover !important;
+    background-position: center center !important;
 
-  .block2 {
-    margin: 50px 100px;
-    min-height: 20vh;
+    .block-wrapper {
+      background-color: rgba(0, 0, 0, 0.55) !important;
+      .block1 {
+        //display: flex;
+        
+        align-items: center;
+        margin-top: 50px;
+        min-height: 30vh;
+        width: 100%;
+        padding: 50px 0 0 ;
+        font-weight: 600 !important;
+        line-height: 1.08 !important;
+        font-size: 55px !important;
+        max-width: 700px !important;
+        margin: 32px auto 0 !important;
+        text-align: center !important;
+        //text-shadow: 0 1px 4px rgba(0, 0, 0, .6) !important;
+      }
 
-    button {
-      margin-top: 20px;
+      .block2 {
+        margin: 50px 250px 0;
+        min-height: 20vh;
+
+        .label, select {
+          color: #fff;
+          font-size: 1rem;
+          font-weight: bold;
+        }
+
+        button {
+          margin-top: 20px;
+        }
+      }  
     }
+    
   }
+  
 
   .block3 {
     background-color: #23232c;
@@ -64,11 +99,16 @@
     color: #fff;
     line-height: 1.08 !important;
     font-size: 30px !important;
-    margin: 32px auto 0 !important;
+    //margin: 32px auto 0 !important;
     text-align: center !important;
     padding: 100px 50px;
     align-items: center;
     max-width: 700px !important;
+
+    .contact {
+      margin-top: 50px;
+      font-size: 1.2rem;
+    }
   }
   
 }

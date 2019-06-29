@@ -34,38 +34,43 @@ class HomePageBrowser extends React.Component {
   	  <div className="container home-page-desktop">
 	  	  
 	  		<Row noGutters={true}>
-	      		<Col> 
-	      			<div className="block1">Amazing planners, exclusive venues, memorable experience & beyond</div>
-	      			<Formik
-	      			  initialValues={{
-			        	'what': '',
-			        	'where': ''
-			      	  }}
-				      validationSchema={this.getFormSchema} 
-				      onSubmit={this.handleSubmit}
-				      render={({ errors, touched }) => (
-				      	
-					        <Form className="form block2" mode='themed'>
-				        	  <Row>
-		        			    <Col md="5">
-		        				  <Select name='what' label='I need a' placeholder='Select...' options={GlobalMapping.modules} />
-		        			    </Col>
-		        			  	<Col md="5">
-		        				  <Select name='where' label='In' placeholder='Select...' options={GlobalMapping.location} />
-		        			  	</Col>
-		        			  	<Col md="2">
-		        			  	  <SubmitBtn className="link-button">Search</SubmitBtn>
-		        			  	</Col>
-				        	  </Row>
-					        </Form>
-				        
-				      )}
-				    />
+	      		<Col xs="12" sm="12" md="12"> 
+	      			<div className="base-block-container">
+		      			<div className="block-wrapper">
+			      			<div className="block1">Amazing planners, exclusive venues, memorable experience & beyond</div>
+			      			<Formik
+			      			  initialValues={{
+					        	'what': '',
+					        	'where': ''
+					      	  }}
+						      validationSchema={this.getFormSchema} 
+						      onSubmit={this.handleSubmit}
+						      render={({ errors, touched }) => (
+						      	
+							        <Form className="form block2" mode='themed'>
+						        	  <Row>
+				        			    <Col xs="12" sm="12" md="5">
+				        				  <Select name='what' label='I need a' placeholder='Select...' options={GlobalMapping.modules} />
+				        			    </Col>
+				        			  	<Col xs="12" sm="12" md="5">
+				        				  <Select name='where' label='In' placeholder='Select...' options={GlobalMapping.location} />
+				        			  	</Col>
+				        			  	<Col xs="12" sm="12" md="2">
+				        			  	  <SubmitBtn className="link-button">Search</SubmitBtn>
+				        			  	</Col>
+						        	  </Row>
+							        </Form>
+						        
+						      )}
+					    />
+					    </div>
+					</div>
 				    <div className="block3">
 				    	Join the amazing community to help people celebrate time of their life.
 				    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Become a vendor </a> 
 				    	or 
 				    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Offer your venue </a>
+				    	<div className="contact">Email: <a href="mailto:rohit@aavoni.com">rohit@aavoni.com</a></div>
 			    	</div>
 	      		</Col>
 	      	</Row>
