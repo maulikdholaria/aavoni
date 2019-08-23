@@ -8,7 +8,6 @@ import { GlobalMapping } from '../GlobalMapping';
 import UsersApi from '../api/UsersApi';
 import PlannersApi from '../api/PlannersApi';
 
-
 class CreateAccount extends React.Component {
   constructor(props) {
   	super(props);
@@ -25,7 +24,10 @@ class CreateAccount extends React.Component {
   handleSubmit = (values) => {
     const listingEntity = values.listingEntity;
     delete values.listingEntity;
-    console.log(values);
+
+    values['country']=GlobalMapping['location'][values['marketCity']-1]['marketCountry'];
+    delete values.marketCity;
+    
     this.setState({
       userCreated: false,
       listingEntityCreated: false,
@@ -65,6 +67,10 @@ class CreateAccount extends React.Component {
         .email('Invalid email')
         .required('Required'),
       password: Yup.string()
+        .required('Required'),
+      listingEntity: Yup.string()
+        .required('Required'),
+      marketCity: Yup.string()
         .required('Required')
     });
   }
@@ -74,7 +80,6 @@ class CreateAccount extends React.Component {
     usersApi.getLoggedInUser(response => {
       if(response.data.success == true) {
         this.setState({isLoggedIn: true, userInfo: response.data.data});
-        store.dispatch(this.addCurrentLoggedInUser(response.data.data));
       } else {
         this.props.history.push("/account");
       }
@@ -102,7 +107,7 @@ class CreateAccount extends React.Component {
           </div>
 	  			<Formik
 	  			  enableReinitialize={true}
-	  			  initialValues={{fname: '', lname: '', email: '', password: ''}}
+	  			  initialValues={{fname: '', lname: '', email: '', password: '', listingEntity: '', marketCity:''}}
 	  			  validationSchema={this.getFormSchema}
 			      onSubmit={this.handleSubmit}
 			      render={({ errors, touched }) => (
@@ -114,6 +119,8 @@ class CreateAccount extends React.Component {
                     <Col lg={12} xl={12}> <Input name="email" label="Email"/> </Col>
                     <Col lg={12} xl={12}> <Input name="password" label="Password"/> </Col>
                     <Col lg={12} xl={12}> <Select name="listingEntity" label="Listing Entity" placeholder='Select...' options={GlobalMapping.listingEntity} /> </Col>
+                    <Col lg={12} xl={12}> <Select name="marketCity" label='In' placeholder='Select...'
+                    options={GlobalMapping.location}/></Col>
 							    </Row> 
 		      		  	<SubmitBtn className="link-button">CREATE</SubmitBtn>
 				        </Form>
