@@ -7,6 +7,7 @@ import SearchQuestionsStyle from '../style/SearchQuestions.less';
 import { GlobalMapping } from '../GlobalMapping';
 import { ToggleButtonGroup, ToggleButton } from '@material-ui/lab';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import SearchQuestionsApi from '../api/SearchQuestionsApi';
 
 class SearchQuestions extends React.Component {
   constructor(props) {
@@ -16,8 +17,10 @@ class SearchQuestions extends React.Component {
     };
     this.autocomplete = null;
     this.selectedLocation = '';
-    this.formData = {fname: '', lname: '', email: '', phone: '', date: '', guests: '', budget: '', message: '', event_location: ''};
+    this.formData = {fname: '', lname: '', email: '', phone: '', date: '', guests: '', budget: '', event_location: ''};
     this.eventLocationObject = {city: '', state: '', country: '', lat: 0.00, lng: 0.00};
+    this.forCountry = (this.props.match.params.country.toUpperCase());
+
   }
 
   handleToggle(event, newFormats){
@@ -35,8 +38,7 @@ class SearchQuestions extends React.Component {
         .max(50, 'Too Long!')
         .required('Required'),
       email: Yup.string()
-        .email('Invalid email')
-        .required('Required'),
+        .email('Invalid email'),
       phone: Yup.string()
         .required('Required'),
       guests: Yup.string()
@@ -77,7 +79,6 @@ class SearchQuestions extends React.Component {
   };
 
   handleBlur = (e) => {
-    console.log(e.target.name);
     let event_location_elem = document.getElementById('event_location');
     event_location_elem.value = this.selectedLocation;
   }
@@ -85,8 +86,15 @@ class SearchQuestions extends React.Component {
   handleSubmit = (values) => {
     if(typeof values.date === "object")
       values.date = values.date.toISOString().split('T')[0];
-    console.log(values);
-    console.log(this.eventLocationObject);
+
+    let searchQuestionValues = {...values, ...this.eventLocationObject};
+    searchQuestionValues['service_needed'] = this.state.formats.slice(1);
+    searchQuestionValues['forCountry'] = this.forCountry;
+    
+    const searchQuestionsApi = new SearchQuestionsApi();
+    searchQuestionsApi.create(searchQuestionValues, response => {
+      console.log(response);
+    });
   }
 
   componentDidMount() {
@@ -136,7 +144,7 @@ class SearchQuestions extends React.Component {
                     <Form className="form contact-form" mode='themed'>
                       <Row>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12} className='service-need-continer'> 
-                           <div>I need:</div>
+                           <div>I need</div>
                            
                            <ToggleButtonGroup value={formats} onChange={this.handleToggle.bind(this)} onBlur={this.handleBlur}>
                             {
@@ -147,37 +155,17 @@ class SearchQuestions extends React.Component {
                           </ToggleButtonGroup>
                         </Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> 
-                           <Input id="event_location" name="event_location" label="In" onBlur={this.handleBlur}/>
+                           <Input id="event_location" name="event_location" label="In" placeholder='Enter your wedding location...' onBlur={this.handleBlur}/>
                         </Col>
                         
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> 
                           <Select name='guests' label='Est. Guests' placeholder='Select...' onBlur={this.handleBlur}
-                            options={[
-                              { value: '0', label: 'Not Sure' },
-                              { value: '1', label: '0-50' },
-                              { value: '2', label: '51-100' },
-                              { value: '3', label: '100-150' },
-                              { value: '4', label: '151-200' },
-                              { value: '5', label: '200+' }
-                            ]}
+                            options={GlobalMapping.guestsRange}
                           />
                         </Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> 
                           <Select name='budget' label='Approximate Budget' placeholder='Select...' onBlur={this.handleBlur}
-                            options={[
-                              { value: '0', label: 'Not Sure' },
-                              { value: '1', label: '$0-$5,000' },
-                              { value: '2', label: '$5,000-$10,000' },
-                              { value: '3', label: '$10,000-$15,000' },
-                              { value: '4', label: '$15,000-$20,000' },
-                              { value: '5', label: '$20,000-$30,000' },
-                              { value: '6', label: '$30,000-$40,000' },
-                              { value: '7', label: '$40,000-$50,000' },
-                              { value: '8', label: '$50,000-$75,000' },
-                              { value: '9', label: '$75,000-$100,000' },
-                              { value: '10', label: '$100,000-$200,000' },
-                              { value: '11', label: '$200,000+' }
-                            ]}
+                            options={GlobalMapping['budgetRange_' + this.forCountry]}
                           />
                         </Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Datepicker name="date" label="Date" dateFormat="MMMM d, yyyy" onChange={this.handleBlur}/></Col>

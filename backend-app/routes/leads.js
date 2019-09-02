@@ -4,6 +4,7 @@ var leads_model = require('../models/leads');
 var leads_table = require('../tables/leads');
 var lead_ips_table = require('../tables/lead_ips');
 var planners_clicks_table = require('../tables/planners_clicks');
+var search_questions_table = require('../tables/search_questions');
 
 router.post('/planner/create', function(req, res, next) {	
   const req_ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -52,6 +53,46 @@ router.post('/planner/create-click', function(req, res, next) {
   result.then(function(resp){
     res.send({success: true, data: {id: resp[0]}});
   }).catch(function(error){
+    res.send({success: false, reason: 'UNEXPECTED_ERROR'});
+  });
+
+  
+});
+
+
+router.post('/search-questions/create', function(req, res, next) { 
+  const clientIp = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  req.body.ip = clientIp;
+
+  console.log(req.body);
+
+  let values = {contact: (req.body.phone != "" && req.body.phone != null) ? req.body.phone : req.body.email,
+                email: req.body.email, 
+                phone: req.body.phone,
+                fname: req.body.fname,
+                lname: req.body.lname,
+                guests: req.body.guests,
+                budget: req.body.budget,
+                date: req.body.date,
+                planner: (req.body.service_needed.includes("1"))? 1 : 0,
+                venue: (req.body.service_needed.includes("2"))? 1 : 0,
+                photographer: (req.body.service_needed.includes("3"))? 1 : 0,
+                catering: (req.body.service_needed.includes("4"))? 1 : 0,
+                makeup: (req.body.service_needed.includes("5"))? 1 : 0,
+                city: req.body.city,
+                state: req.body.state,
+                country: req.body.country,
+                lat: req.body.lat,
+                lng: req.body.lng,
+                forCountry: req.body.forCountry}
+  
+  console.log(values);
+  result = search_questions_table.create(values);
+
+  result.then(function(resp){
+    res.send({success: true, data: {id: resp[0]}});
+  }).catch(function(error){
+    console.log(error);
     res.send({success: false, reason: 'UNEXPECTED_ERROR'});
   });
 

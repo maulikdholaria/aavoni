@@ -33,7 +33,7 @@ function App() {
         <Route path="/manage-cc" exact component={ManageCC} />
         <Route path="/account" exact component={Account} />
         <Route path="/dashboard" exact component={Dashboard} />
-        <Route path="/search-questions" exact component={SearchQuestions} />
+        <Route path="/search-questions/:country" exact component={SearchQuestions} />
         <Route path="/s/wedding-planner/:marketCity" exact component={WeddingPlannerSearch} />
         <Route path="/wedding-planner/:id" exact component={WeddingPlannerDetail} />
         <Route path="/planner/contact/:id" exact component={PlannerContact} />

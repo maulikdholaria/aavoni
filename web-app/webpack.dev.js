@@ -12,7 +12,7 @@ module.exports = merge(common, {
       template: __dirname + '/src/index.ejs',
       filename: 'index.html',
       templateParameters: {'segmentApiKey': 'uoI6xOgFnop6uDJczFsrEoshwBrG3V5T',
-                           'googleMapsKey': 'AIzaSyCbQ_h-tKmbqPlRkOVu4IYL58zSMUjpDXE'}
+                           'googleMapsKey': 'AIzaSyAdaD1-vlEvnZqCRChTaoyIyPyVI1fdmQs'}
     })
   ],
   devServer: {
