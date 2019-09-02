@@ -11,7 +11,8 @@ module.exports = merge(common, {
     new HtmlWebpackPlugin({
       template: __dirname + '/src/index.ejs',
       filename: 'index.html',
-      templateParameters: {'segmentApiKey': 'uoI6xOgFnop6uDJczFsrEoshwBrG3V5T'}
+      templateParameters: {'segmentApiKey': 'uoI6xOgFnop6uDJczFsrEoshwBrG3V5T',
+                           'googleMapsKey': 'AIzaSyCbQ_h-tKmbqPlRkOVu4IYL58zSMUjpDXE'}
     })
   ],
   devServer: {

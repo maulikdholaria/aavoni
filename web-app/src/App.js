@@ -2,13 +2,14 @@ import React from 'react';
 import { BrowserRouter, Router, Route, Link } from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
-import ThemeStyle from "./style/Theme.less";
+import ThemeStyle from './style/Theme.less';
 import Header from './screen/common/Header';
 import ViewPort from './screen/common/ViewPort';
 import HomePage from './screen/HomePage';
 import CreateAccount from './screen/CreateAccount';
 import Account from './screen/Account';
 import Dashboard from './screen/Dashboard';
+import SearchQuestions from './screen/SearchQuestions';
 import ManageCC from './screen/ManageCC';
 import WeddingPlannerSearch from './screen/WeddingPlannerSearch';
 import WeddingPlannerDetail from './screen/WeddingPlannerDetail';
@@ -32,6 +33,7 @@ function App() {
         <Route path="/manage-cc" exact component={ManageCC} />
         <Route path="/account" exact component={Account} />
         <Route path="/dashboard" exact component={Dashboard} />
+        <Route path="/search-questions" exact component={SearchQuestions} />
         <Route path="/s/wedding-planner/:marketCity" exact component={WeddingPlannerSearch} />
         <Route path="/wedding-planner/:id" exact component={WeddingPlannerDetail} />
         <Route path="/planner/contact/:id" exact component={PlannerContact} />
