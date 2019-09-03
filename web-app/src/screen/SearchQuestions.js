@@ -93,7 +93,7 @@ class SearchQuestions extends React.Component {
     
     const searchQuestionsApi = new SearchQuestionsApi();
     searchQuestionsApi.create(searchQuestionValues, response => {
-      console.log(response);
+      this.props.history.push("/search-questions-confirmation");
     });
   }
 

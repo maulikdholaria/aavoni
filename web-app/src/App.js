@@ -10,6 +10,7 @@ import CreateAccount from './screen/CreateAccount';
 import Account from './screen/Account';
 import Dashboard from './screen/Dashboard';
 import SearchQuestions from './screen/SearchQuestions';
+import SearchQuestionsConfirmation from './screen/SearchQuestionsConfirmation';
 import ManageCC from './screen/ManageCC';
 import WeddingPlannerSearch from './screen/WeddingPlannerSearch';
 import WeddingPlannerDetail from './screen/WeddingPlannerDetail';
@@ -34,6 +35,7 @@ function App() {
         <Route path="/account" exact component={Account} />
         <Route path="/dashboard" exact component={Dashboard} />
         <Route path="/search-questions/:country" exact component={SearchQuestions} />
+        <Route path="/search-questions-confirmation" exact component={SearchQuestionsConfirmation} />
         <Route path="/s/wedding-planner/:marketCity" exact component={WeddingPlannerSearch} />
         <Route path="/wedding-planner/:id" exact component={WeddingPlannerDetail} />
         <Route path="/planner/contact/:id" exact component={PlannerContact} />
