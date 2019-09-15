@@ -23,7 +23,7 @@ class PlannerEdit extends React.Component {
         pinterest: '',
         website: '',
         address: '',
-        marketCity: ''
+        marketCityId: ''
   	  }
     };
   }
@@ -41,7 +41,7 @@ class PlannerEdit extends React.Component {
         .required('Required'),
       address: Yup.string()
         .required('Required'),
-      marketCity: Yup.string()
+      marketCityId: Yup.string()
         .required('Required')
     });
   }
@@ -49,6 +49,8 @@ class PlannerEdit extends React.Component {
   handleSubmit = (values) => {
     values.phone = values.phone.replace(/[\(\)\s-]/g, "");
   	values.id = this.props.match.params.id;
+    values['marketCountry'] = GlobalMapping['location'][values['marketCityId']-1]['marketCountry'];
+    values['marketCity'] = GlobalMapping['location'][values['marketCityId']-1]['marketCity'];
   	const plannersApi = new PlannersApi();
   	plannersApi.edit(values, response => {
       if(response.data.success == true) {
@@ -58,17 +60,17 @@ class PlannerEdit extends React.Component {
   }
 
   initialValues = (data) => {
-    return {name: data.name,
-            about: data.about,
-            email: data.email,
-            phone: data.phone,
-            priceRange: data.priceRange,
-            fb: data.fb,
-            instagram: data.instagram,
-            pinterest: data.pinterest,
-            website: data.website,
-            address: data.address,
-            marketCity: data.marketCity};
+    return {name: data.name == null? '':data.name,
+            about: data.about == null? '':data.about,
+            email: data.email == null? '':data.email,
+            phone: data.phone == null? '':data.phone,
+            priceRange: data.priceRange == null? '':data.priceRange,
+            fb: data.fb == null? '':data.fb,
+            instagram: data.instagram == null? '':data.instagram,
+            pinterest: data.pinterest == null? '':data.pinterest,
+            website: data.website == null? '':data.website,
+            address: data.address == null? '':data.address,
+            marketCityId: data.marketCityId == null? '':data.marketCityId};
   }
 
   componentDidMount() {
@@ -115,7 +117,7 @@ class PlannerEdit extends React.Component {
   			        		<Col lg={8} xl={8}> <Input name="pinterest" label="Pinterest Page"/> </Col>
   			        		<Col lg={8} xl={8}> <Input name="website" label="Website"/> </Col>
   			        		<Col lg={8} xl={8}> <Input name="address" label="Mailing/ Business Address/ City & State"/> </Col>
-  			        		<Col lg={8} xl={8}> <Select name="marketCity" label="Market City" placeholder='Select...' options={GlobalMapping.marketCity} /> </Col>
+  			        		<Col lg={8} xl={8}> <Select name="marketCityId" label="Market City" placeholder='Select...' options={GlobalMapping.location} /> </Col>
 							    </Row> 
 		      		  	<SubmitBtn className="link-button">UPDATE & UOLOAD IMAGES</SubmitBtn>
 				        </Form>
