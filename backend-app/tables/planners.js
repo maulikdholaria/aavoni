@@ -11,7 +11,7 @@ var planners = {
     return promise;
   },
   edit: function(params) {
-  	const allowed_fields = ['marketCity', 'marketCityId', 'marketCountry', 'name', 'email', 'phone', 'address', 'city', 'lat', 'lng', 'priceRange', 'fb', 'instagram', 'pinterest', 'website', 'about', 'images'];
+  	const allowed_fields = ['marketCity', 'marketCityId', 'name', 'email', 'phone', 'address', 'city', 'lat', 'lng', 'priceRange', 'fb', 'instagram', 'pinterest', 'website', 'about', 'images'];
   	
   	var obj_to_be_updated = {}
   	allowed_fields.map(function(field) {

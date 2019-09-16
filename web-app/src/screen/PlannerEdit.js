@@ -49,7 +49,6 @@ class PlannerEdit extends React.Component {
   handleSubmit = (values) => {
     values.phone = values.phone.replace(/[\(\)\s-]/g, "");
   	values.id = this.props.match.params.id;
-    values['marketCountry'] = GlobalMapping['location'][values['marketCityId']-1]['marketCountry'];
     values['marketCity'] = GlobalMapping['location'][values['marketCityId']-1]['marketCity'];
   	const plannersApi = new PlannersApi();
   	plannersApi.edit(values, response => {
