@@ -22,7 +22,6 @@
     "node-fetch": "^2.6.0",
     "node-geocoder": "^3.23.0",
     "pug": "^2.0.0-beta11",
-    "sleep": "^6.1.0",
     "stripe": "^7.1.0",
     "twilio": "^3.32.0"
   }
