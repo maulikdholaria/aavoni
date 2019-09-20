@@ -27,3 +27,15 @@ rm -f /tmp/back-end-app.out
 export NODE_ENV=$1
 nohup npm start > /tmp/back-end-app.out 2>&1 &
 
+
+### Create virtualenv if does not exist ###
+cd /usr/share/app/aavoni/backend-app
+if [ ! -d "./venv" ] 
+then
+    virtualenv venv --distribute
+fi
+
+source venv/bin/activate
+pip install -r requirements.txt
+
+
