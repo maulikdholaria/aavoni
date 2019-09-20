@@ -22,11 +22,12 @@ class DistributeLeads:
 		self.last_matched_search_question_id = self.get_last_matched_search_question_id()
 		self.latest_search_question = self.get_latest_search_question()
 		if self.latest_search_question.empty == False:
-			self.has_questions_to_process = True
 			self.market_cities = self.get_market_cities()
 			self.planners = self.get_planners()
 			self.latest_search_question_with_mc = self.determine_search_question_market_city()
 			self.planner_leads = self.derieve_planner_leads()		
+			if self.planner_leads.empty == False:
+				self.has_questions_to_process = True
 
 	def get_config(self):
 		env = self.env
@@ -131,7 +132,11 @@ class DistributeLeads:
 
 		#print matched_planners_df
 		
-		matched_leads_df = pd.merge(self.latest_search_question_with_mc, matched_planners_df, how='inner', on=['question_id'])
+		if matched_planners_df.empty == True:
+			return pd.DataFrame()
+		else:
+			matched_leads_df = pd.merge(self.latest_search_question_with_mc, matched_planners_df, how='inner', on=['question_id'])
+
 		return matched_leads_df
 
 	def send_planner_leads(self):
