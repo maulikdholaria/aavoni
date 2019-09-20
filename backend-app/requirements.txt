@@ -1,0 +1,6 @@
+ConfigParser
+MySQL-Python
+pandas
+sqlalchemy
+mysqlclient
+sendgrid
