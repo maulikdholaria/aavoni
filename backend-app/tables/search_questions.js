@@ -5,6 +5,10 @@ var search_questions = {
   create: function(params) {
     const promise = knex(tableName).insert(params);
     return promise.then();
+  },
+  get: function(id) {
+    const promise = knex(tableName).where({id: id});
+    return promise;
   }
 };
 
