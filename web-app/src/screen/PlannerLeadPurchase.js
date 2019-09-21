@@ -64,7 +64,7 @@ class PlannerLeadPurchase extends React.Component {
                   plannerInfo: {name: '',about: '',email: '',phone: '',priceRange: '',fb: '',instagram: '',pinterest: '',website: '',address: '',marketCityId: ''},
                   leadPrice: 5.00,
                   formClass: 'lead-delivery-form show-form',
-                  leadSold: false,
+                  leadSoldClass: 'lead-sold-hide',
                   submitDisabled: true};
   }
 
@@ -93,7 +93,7 @@ class PlannerLeadPurchase extends React.Component {
         if(response.data.data.search_question['plannerSold'] != 0) {
           this.setState({
             formClass: 'hide-form',
-            leadSold: true
+            leadSoldClass: 'lead-sold-show'
           });
         }
       }
@@ -112,7 +112,7 @@ class PlannerLeadPurchase extends React.Component {
   }
 
   render() {
-    const { leadInfo, plannerInfo, leadPrice, formClass, leadSold, submitDisabled } = this.state;    
+    const { leadInfo, plannerInfo, leadPrice, formClass, leadSoldClass, submitDisabled } = this.state;    
     console.log(this.state);
     return(
       <Container fluid className="planner-lead-purchase">
@@ -139,13 +139,10 @@ class PlannerLeadPurchase extends React.Component {
               </Card.Body>
             </Card>
             <div className="charge"> <span className="label">Total:</span> <span className="value">${leadPrice}</span></div>
-            <div className="lead-sold">
-                {
-                  leadSold && 
-                  <h1>Sufficient number of planners expressed interest helping {leadInfo.fname}. 
-                      Act faster next time if the wedding info matches your criteria.
-                  </h1>
-                }
+            <div className={leadSoldClass}>
+                <h1>Sufficient number of planners expressed interest helping {leadInfo.fname}. 
+                    Act faster next time if the wedding info matches your criteria.
+                </h1>
             </div>
             <div className={formClass}>
               <Formik
