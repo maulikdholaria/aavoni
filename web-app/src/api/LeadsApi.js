@@ -16,6 +16,15 @@ class LeadsApi {
     .catch(function (error) {
       console.log(error);
     });
+  }
+
+
+  plannerSearchLeadMatchGet(uuid, callback) {
+     axios.get("api/leads/planners-search-lead-match/" + uuid)
+    .then(callback)
+    .catch(function (error) {
+      console.log(error);
+    });
   }  
 
 }
