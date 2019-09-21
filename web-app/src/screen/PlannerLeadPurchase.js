@@ -8,13 +8,64 @@ import SearchQuestionsApi from '../api/SearchQuestionsApi';
 import LeadsApi from '../api/LeadsApi';
 import PlannersApi from '../api/PlannersApi';
 import LeadPurchaseStyle from '../style/LeadPurchase.less';
+import { StripeProvider, Elements, CardElement, injectStripe } from 'react-stripe-elements';
+
+var plannerLeadPurchaseStripeToken = null;
+
+class _CardForm extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  checkCCValidation = (ev) => {
+    if(ev.complete == true) {
+      const source = this.props.stripe.createToken({type: 'card'});
+      source
+      .then(resp => {  
+        console.log(resp);
+        plannerLeadPurchaseStripeToken = resp.token.id;
+        this.props.onChange();
+      })
+      .catch(function(err){
+        console.log(err);
+      });
+    }
+  }
+
+  render() {
+    return (
+      <CardElement onChange={this.checkCCValidation}/>
+    )
+  }
+}
+const CardForm = injectStripe(_CardForm);
+
+class CreditCardForm extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      
+        <Elements>
+          <CardForm onChange={this.props.onChange}/>
+        </Elements>
+      
+    )
+  }
+}
 
 class PlannerLeadPurchase extends React.Component {
   constructor(props) {
     super(props);
     this.uuid = (this.props.match.params.uuid.toLowerCase());
-    this.state = {leadInfo: {budget: '', catering: '', city: '', country: '', createdAt: '', date: '', email: '', fname: '', forCountry: '', guests: '', id: '', lat: '', lname: '', lng: '', makeup: '', phone: '', photographer: '', planner: '', state: '', venue: ''},
-                  plannerInfo: {name: '',about: '',email: '',phone: '',priceRange: '',fb: '',instagram: '',pinterest: '',website: '',address: '',marketCityId: ''}};
+    this.state = {leadInfo: {budget: '', catering: '', city: '', country: '', createdAt: '', date: '', email: '', fname: '', forCountry: '', guests: '', id: '', lat: '', lname: '', lng: '', makeup: '', phone: '', photographer: '', planner: '', state: '', venue: '', plannerSold: 0},
+                  plannerInfo: {name: '',about: '',email: '',phone: '',priceRange: '',fb: '',instagram: '',pinterest: '',website: '',address: '',marketCityId: ''},
+                  leadPrice: 5.00,
+                  formClass: 'lead-delivery-form show-form',
+                  leadSold: false,
+                  submitDisabled: true};
   }
 
   componentDidMount() {
@@ -23,11 +74,13 @@ class PlannerLeadPurchase extends React.Component {
       if(response.data.success == true) {
         let budgetRangeMappingKey = 'budgetRange_' + response.data.data.search_question['forCountry'];
         
+        const leadPrice = GlobalMapping[budgetRangeMappingKey][response.data.data.search_question['budget']]['midLimit'] * .002;
         response.data.data.search_question['guests'] = GlobalMapping['guestsRange'][response.data.data.search_question['guests']]['label'];
         response.data.data.search_question['budget'] = GlobalMapping[budgetRangeMappingKey][response.data.data.search_question['budget']]['label'];
-       
+        
         this.setState({
-            leadInfo: response.data.data.search_question
+            leadInfo: response.data.data.search_question,
+            leadPrice: leadPrice
         });
         const plannersApi = new PlannersApi();
         plannersApi.get(response.data.data.plannerId, response => {
@@ -36,16 +89,30 @@ class PlannerLeadPurchase extends React.Component {
             plannerInfo: responseData.data
           });
         });
+
+        if(response.data.data.search_question['plannerSold'] != 0) {
+          this.setState({
+            formClass: 'hide-form',
+            leadSold: true
+          });
+        }
       }
     });
   }
 
   handleSubmit = (values) => {
     console.log(values);
+    console.log(plannerLeadPurchaseStripeToken);
+  }
+
+  enablePurchase = (e) => {
+    this.setState({
+      submitDisabled : false
+    });
   }
 
   render() {
-    const { leadInfo, plannerInfo } = this.state;    
+    const { leadInfo, plannerInfo, leadPrice, formClass, leadSold, submitDisabled } = this.state;    
     console.log(this.state);
     return(
       <Container fluid className="planner-lead-purchase">
@@ -71,8 +138,16 @@ class PlannerLeadPurchase extends React.Component {
                 </Row>
               </Card.Body>
             </Card>
-            <div className="charge"> <span className="label">Total:</span> <span className="value">$5</span></div>
-            <div className="lead-delivery-form">
+            <div className="charge"> <span className="label">Total:</span> <span className="value">${leadPrice}</span></div>
+            <div className="lead-sold">
+                {
+                  leadSold && 
+                  <h1>Sufficient number of planners expressed interest helping {leadInfo.fname}. 
+                      Act faster next time if the wedding info matches your criteria.
+                  </h1>
+                }
+            </div>
+            <div className={formClass}>
               <Formik
                   enableReinitialize={true}
                   initialValues={plannerInfo}
@@ -82,8 +157,13 @@ class PlannerLeadPurchase extends React.Component {
                       <Form className="form" mode='themed'>
                         <Input name="email" type="email" label="Email" autoComplete="email"/>
                         <Input name="phone" type="tel" label="Phone" autoComplete="tel"/>
-                      
-                        <SubmitBtn className="link-button">Send Message</SubmitBtn>
+                        <StripeProvider apiKey={Config.stripe.PUBLISHABLE_KEY}>
+                          <Elements>
+                            <CreditCardForm onChange={this.enablePurchase}/>
+                          </Elements>
+                        </StripeProvider>
+                        <br/>
+                        <SubmitBtn className="link-button purchase" disabled={submitDisabled}>Purchase</SubmitBtn>
                       </Form>
                     
                   )}
