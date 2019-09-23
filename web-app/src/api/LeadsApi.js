@@ -27,6 +27,14 @@ class LeadsApi {
     });
   }  
 
+  plannerSearchLeadPurchase(params, callback) {
+    axios.post('api/leads/planner/search-lead-purchase', params)
+    .then(callback)
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
 }
 
 export default LeadsApi;

@@ -22,7 +22,6 @@ class _CardForm extends React.Component {
       const source = this.props.stripe.createToken({type: 'card'});
       source
       .then(resp => {  
-        console.log(resp);
         plannerLeadPurchaseStripeToken = resp.token.id;
         this.props.onChange();
       })
@@ -61,34 +60,43 @@ class PlannerLeadPurchase extends React.Component {
     super(props);
     this.uuid = (this.props.match.params.uuid.toLowerCase());
     this.state = {leadInfo: {budget: '', catering: '', city: '', country: '', createdAt: '', date: '', email: '', fname: '', forCountry: '', guests: '', id: '', lat: '', lname: '', lng: '', makeup: '', phone: '', photographer: '', planner: '', state: '', venue: '', plannerSold: 0},
+                  leadPurchaseInfo: {purchasedAt: null, plannerId: null}, 
                   plannerInfo: {name: '',about: '',email: '',phone: '',priceRange: '',fb: '',instagram: '',pinterest: '',website: '',address: '',marketCityId: ''},
                   leadPrice: 5.00,
                   formClass: 'lead-delivery-form show-form',
                   leadSoldClass: 'lead-sold-hide',
                   submitDisabled: true};
+    this.leadsApi = new LeadsApi();
   }
 
   componentDidMount() {
-    const leadsApi = new LeadsApi();
-    leadsApi.plannerSearchLeadMatchGet(this.uuid, response => {
+    this.leadsApi.plannerSearchLeadMatchGet(this.uuid, response => {
       if(response.data.success == true) {
         let budgetRangeMappingKey = 'budgetRange_' + response.data.data.search_question['forCountry'];
         
-        const leadPrice = GlobalMapping[budgetRangeMappingKey][response.data.data.search_question['budget']]['midLimit'] * .002;
+        const leadPrice = Math.max(2, Math.ceil(GlobalMapping[budgetRangeMappingKey][response.data.data.search_question['budget']]['midLimit'] * .0005));
         response.data.data.search_question['guests'] = GlobalMapping['guestsRange'][response.data.data.search_question['guests']]['label'];
         response.data.data.search_question['budget'] = GlobalMapping[budgetRangeMappingKey][response.data.data.search_question['budget']]['label'];
         
         this.setState({
             leadInfo: response.data.data.search_question,
-            leadPrice: leadPrice
+            leadPrice: leadPrice,
+            leadPurchaseInfo: response.data.data.purchase_info
         });
+
         const plannersApi = new PlannersApi();
-        plannersApi.get(response.data.data.plannerId, response => {
+        plannersApi.get(response.data.data.purchase_info.plannerId, response => {
           const responseData = response.data;
           this.setState({
             plannerInfo: responseData.data
           });
         });
+
+        if(response.data.data.purchase_info['purchasedAt'] != null && response.data.data.purchase_info['purchasedAt'] != "") {
+          this.setState({
+            formClass: 'hide-form'
+          });
+        }
 
         if(response.data.data.search_question['plannerSold'] != 0) {
           this.setState({
@@ -101,8 +109,17 @@ class PlannerLeadPurchase extends React.Component {
   }
 
   handleSubmit = (values) => {
-    console.log(values);
-    console.log(plannerLeadPurchaseStripeToken);
+
+    if(plannerLeadPurchaseStripeToken != null && plannerLeadPurchaseStripeToken != '') {
+      const { leadInfo, leadPrice } = this.state;
+      this.leadsApi.plannerSearchLeadPurchase({'uuid': this.uuid,
+                                              'leadId': leadInfo['id'],
+                                              'plannerId': values['id'],
+                                              'leadPrice': leadPrice,
+                                              'deliveryEmail': values['email'],
+                                              'deliveryPhone': values['phone'],
+                                              'stripePaymentToken': plannerLeadPurchaseStripeToken});
+    }
   }
 
   enablePurchase = (e) => {
@@ -113,7 +130,7 @@ class PlannerLeadPurchase extends React.Component {
 
   render() {
     const { leadInfo, plannerInfo, leadPrice, formClass, leadSoldClass, submitDisabled } = this.state;    
-    console.log(this.state);
+    
     return(
       <Container fluid className="planner-lead-purchase">
         <Row noGutters={true}>

@@ -13,7 +13,8 @@ var phone = {
      	from: fromNumber,
      	to: toNumber
    	})
-  	.then(message => console.log("Phone sid: " + message.sid));
+  	.then(message => console.log("Phone sid: " + message.sid))
+    .catch(error => console.log(error));
   },
   mask: function(phoneNum) {
   	return phoneNum.substring(0, 5) + "*****";

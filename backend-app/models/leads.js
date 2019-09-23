@@ -60,6 +60,31 @@ var leads = {
         phone.send_sms(plannerInfo.phone, msg.text);
   	  });
   	});
+  },
+  deliver_purchased_lead: function(leadInfo){
+    var msg = {
+      from: 'leads@aavoni.com'
+    };
+    msg.subject = leadInfo.fname + " " + leadInfo.lname + "'s wedding'";
+    const html_file = app.get('views') + '/lead_purchase_email.pug';
+    
+    msg.html = pug.renderFile(html_file, {leadInfo: leadInfo, guests: guests, budget: budget});
+    msg.text = "Wedding Info" + 
+               "\nName: " + leadInfo.fname + " " + leadInfo.lname +
+               "\nEmail: " + leadInfo.email +
+               "\nPhone: " + leadInfo.phone +
+               "\nDate: " + leadInfo.date +
+               "\nGuests: " + guests[leadInfo.guests] + 
+               "\nBudget: " + budget[leadInfo.budget] + 
+               "\nLocation: " + leadInfo.city + ", " + leadInfo.state;
+    
+    
+    msg.to = leadInfo.deliveryEmail;
+    //msg.to ='test-w9g0s@mail-tester.com';
+    
+    console.log(msg);
+    email.send(msg);
+    phone.send_sms(leadInfo.deliveryPhone, msg.text);
   }
 };
 

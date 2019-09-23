@@ -9,7 +9,7 @@
 		},
 		"GOOGLE_API_KEY": "AIzaSyAdaD1-vlEvnZqCRChTaoyIyPyVI1fdmQs",
 		"IMAGE_BASE_DIR": "/Users/mdholaria/app",
-		"STRIPE_SECRET_KEY": "sk_test_jBXyFHUarWH1OggmcAklqPHN00WJQuvf5m",
+		"STRIPE_SECRET_KEY": "sk_test_B19R0RMXUqtZLB3TQdk7ikvA00Y5hVnWcU",
 		"SENDGRID_API_KEY": "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",
 		"twilio": {
 			"NUMBER": "+14422640710",

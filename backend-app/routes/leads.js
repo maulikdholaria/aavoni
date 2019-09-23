@@ -8,6 +8,8 @@ var search_questions_table = require('../tables/search_questions');
 var planners_search_lead_match_table = require('../tables/planners_search_lead_match');
 var email_lib = require('../lib/email.js');
 var phone_lib = require('../lib/phone.js');
+var config = require('../config');
+const stripe = require("stripe")(config["STRIPE_SECRET_KEY"]);
 
 router.post('/planner/create', function(req, res, next) {	
   const req_ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -103,7 +105,6 @@ router.post('/search-questions/create', function(req, res, next) {
 
 router.get('/planners-search-lead-match/:uuid', function(req, res, next) { 
   let uuid = req.params.uuid;
-  console.log(uuid);
   
   result = planners_search_lead_match_table.getByUUID(uuid);
   result.then(function(resp){
@@ -116,12 +117,14 @@ router.get('/planners-search-lead-match/:uuid', function(req, res, next) {
       sq_result.then(function(sq_resp){
 
         search_question = sq_resp[0];
-        search_question['email'] = email_lib.mask(search_question['email']);
-        search_question['phone'] = phone_lib.mask(search_question['phone']);
-        search_question['lname'] = search_question['lname'].substring(0, 3) + "****";
+        if (matched_search_lead['purchasedAt'] == null || matched_search_lead['purchasedAt'] == "") {
+          search_question['email'] = email_lib.mask(search_question['email']);
+          search_question['phone'] = phone_lib.mask(search_question['phone']);
+          search_question['lname'] = search_question['lname'].substring(0, 3) + "****";
+        }
         
 
-        res.send({success: true, data: {"plannerId": matched_search_lead['plannerId'], "search_question": search_question}});  
+        res.send({success: true, data: {"purchase_info": {plannerId: matched_search_lead['plannerId'], purchasedAt: matched_search_lead['purchasedAt']}, "search_question": search_question}});  
 
 
       }).catch(function(error){
@@ -137,5 +140,72 @@ router.get('/planners-search-lead-match/:uuid', function(req, res, next) {
   });
   
   
+});
+
+router.post('/planner/search-lead-purchase', async function(req, res, next) { 
+  
+  if(process.env.NODE_ENV != 'production') {
+    req.body.deliveryEmail = 'rohit@aavoni.com';
+    req.body.deliveryPhone = '9494124179';
+  }
+  console.log(req.body);
+  res.send({success: true, data: {uuid: req.body.uuid}});
+  if(!req.body.hasOwnProperty('leadPrice') || req.body['leadPrice'] <= 2.99 || req.body['leadPrice'] == "" || req.body['leadPrice'] == null) {
+    res.send({success: false, errors: ['Unexpcted amt for lead price'], reason: 'UNEXPECTED_ERROR'});
+    return;
+  }
+
+  req.body.amtToBeCharged = req.body.leadPrice * 100;
+
+  try {
+    var strip_charge_resp = await stripe.charges.create({
+        amount: req.body.amtToBeCharged,
+        currency: "usd",
+        description: "planners_search_lead_match: " + req.body.uuid,
+        source: req.body.stripePaymentToken,
+        metadata: req.body,
+        receipt_email: req.body.deliveryEmail
+    });
+  } catch (e) {
+    console.log(req.body);
+    console.log(e);
+    res.send({success: false, reason: 'UNEXPECTED_ERROR'});
+    return;
+  }
+  
+  const purchasedAtISOString = (new Date(Date.now())).toISOString(); 
+  const purchasedAt = purchasedAtISOString.substring(0, 10) + ' ' + purchasedAtISOString.substring(11,19);
+  console.log(strip_charge_resp.id);
+
+  if(strip_charge_resp.hasOwnProperty('paid') && strip_charge_resp['paid'] === true) {
+    fields_to_be_updated = {id: req.body.leadId, 
+                            purchasedAt: purchasedAt, 
+                            ccConfirmation: strip_charge_resp.id,
+                            amtPaid: req.body.amtToBeCharged,
+                            deliveryEmail: req.body.deliveryEmail,
+                            deliveryPhone: req.body.deliveryPhone};
+    
+    result = planners_search_lead_match_table.edit(fields_to_be_updated);
+    result.then(function(resp){
+
+      sq_result = search_questions_table.get(req.body.leadId);
+      sq_result.then(function(sq_resp){
+        search_question = sq_resp[0];
+        search_question.deliveryEmail = req.body.deliveryEmail;
+        search_question.deliveryPhone = req.body.deliveryPhone;
+        console.log(search_question);
+        leads_model.deliver_purchased_lead(search_question);    
+      });
+      res.send({success: true, data: {uuid: req.body.uuid}});
+      
+      return;
+    }).catch(function(error){
+      res.send({success: false, reason: 'UNEXPECTED_ERROR'});
+      return;
+    });
+  } else {
+    res.send({success: false, errors:['Unable to capture cc charge'], reason: 'UNEXPECTED_ERROR'});
+  }
+
 });
 module.exports = router;
