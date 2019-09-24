@@ -155,7 +155,7 @@ router.post('/planner/search-lead-purchase', async function(req, res, next) {
         receipt_email: req.body.deliveryEmail
     });
   } catch (e) {
-    console.log(e);
+    //console.log(e);
     res.send({success: false, errors:['Stripe error'], reason: 'UNEXPECTED_ERROR'});
     return;
   }
@@ -172,27 +172,23 @@ router.post('/planner/search-lead-purchase', async function(req, res, next) {
                             deliveryEmail: req.body.deliveryEmail,
                             deliveryPhone: req.body.deliveryPhone};
     
-    result = planners_search_lead_match_table.edit(fields_to_be_updated);
-    result.then(function(resp){
+    planners_search_lead_match_table.edit(fields_to_be_updated)
+    .then(function(resp){
       console.log("Updated search_lead_match");
-      sq_result = search_questions_table.get(req.body.leadId);
-      sq_result.then(function(sq_resp){
+      return search_questions_table.get(req.body.leadId);
+    })
+    .then(function(sq_resp){
         console.log("Getting search question and delivering lead info");
         search_question = sq_resp[0];
         search_question.deliveryEmail = req.body.deliveryEmail;
         search_question.deliveryPhone = req.body.deliveryPhone;
         leads_model.deliver_purchased_lead(search_question);    
         res.send({success: true, data: {uuid: req.body.uuid, search_question: search_question}});      
-        return;
-      }).catch(function(error){
-        console.log(error);
-        res.send({success: false, errors: ['Unable to get search question/deliver lead'],reason: 'UNEXPECTED_ERROR'});
-        return;
-      });
+        return null;
     }).catch(function(error){
-      console.log(error);
-      res.send({success: false, errors: ['Unable to update search_lead_match'],reason: 'UNEXPECTED_ERROR'});
-      return;
+        console.log(error);
+        res.send({success: false, errors: ['Unable to update search_lead_match or get search question/deliver lead'],reason: 'UNEXPECTED_ERROR'});
+        return null;
     });
   } else {
     res.send({success: false, errors:['Unable to capture cc charge'], reason: 'UNEXPECTED_ERROR'});
