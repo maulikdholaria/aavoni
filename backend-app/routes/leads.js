@@ -45,8 +45,6 @@ router.post('/planner/create', function(req, res, next) {
   }).catch(function(error){
   	res.send({success: false, reason: 'UNEXPECTED_ERROR'});
   });
-
-  
 });
 
 router.post('/planner/create-click', function(req, res, next) { 
@@ -59,9 +57,7 @@ router.post('/planner/create-click', function(req, res, next) {
     res.send({success: true, data: {id: resp[0]}});
   }).catch(function(error){
     res.send({success: false, reason: 'UNEXPECTED_ERROR'});
-  });
-
-  
+  }); 
 });
 
 
@@ -98,58 +94,50 @@ router.post('/search-questions/create', function(req, res, next) {
   }).catch(function(error){
     console.log(error);
     res.send({success: false, reason: 'UNEXPECTED_ERROR'});
-  });
-
-  
+  }); 
 });
 
 router.get('/planners-search-lead-match/:uuid', function(req, res, next) { 
   let uuid = req.params.uuid;
-  
+  let searchQuestionId = 0;
+  let matched_search_lead = {};
+
   result = planners_search_lead_match_table.getByUUID(uuid);
   result.then(function(resp){
-    if(resp.length > 0) {
-      console.log(resp[0]['searchQuestionId']);
-      matched_search_lead = resp[0];
-
-      sq_result = search_questions_table.get(matched_search_lead['searchQuestionId']);
-      
-      sq_result.then(function(sq_resp){
-
-        search_question = sq_resp[0];
-        if (matched_search_lead['purchasedAt'] == null || matched_search_lead['purchasedAt'] == "") {
-          search_question['email'] = email_lib.mask(search_question['email']);
-          search_question['phone'] = phone_lib.mask(search_question['phone']);
-          search_question['lname'] = search_question['lname'].substring(0, 3) + "****";
-        }
-        
-
-        res.send({success: true, data: {"purchase_info": {plannerId: matched_search_lead['plannerId'], purchasedAt: matched_search_lead['purchasedAt']}, "search_question": search_question}});  
-
-
-      }).catch(function(error){
-        console.log(error);
-        res.send({success: false, reason: 'UNEXPECTED_ERROR'});
-      });
-    } else {
+    if(resp.length != 1) {
       res.send({success: false, reason: 'ENTITY_NOT_EXSIT'});
+      return;
     }
-  }).catch(function(error){
+    searchQuestionId = resp[0]['searchQuestionId'];
+    matched_search_lead = resp[0];
+
+   return search_questions_table.get(matched_search_lead['searchQuestionId']);
+  })
+  .then(sq_resp => {
+    search_question = sq_resp[0];
+    if (matched_search_lead['purchasedAt'] == null || matched_search_lead['purchasedAt'] == "") {
+      search_question['email'] = email_lib.mask(search_question['email']);
+      search_question['phone'] = phone_lib.mask(search_question['phone']);
+      search_question['lname'] = search_question['lname'].substring(0, 3) + "****";
+    }
+
+    res.send({success: true, data: {"purchase_info": {plannerId: matched_search_lead['plannerId'], purchasedAt: matched_search_lead['purchasedAt']}, "search_question": search_question}});  
+    return;
+  })
+  .catch(function(error){
     console.log(error);
     res.send({success: false, reason: 'UNEXPECTED_ERROR'});
+    return;
   });
-  
-  
 });
 
 router.post('/planner/search-lead-purchase', async function(req, res, next) { 
-  
+
   if(process.env.NODE_ENV != 'production') {
     req.body.deliveryEmail = 'rohit@aavoni.com';
     req.body.deliveryPhone = '9494124179';
   }
-  console.log(req.body);
-  res.send({success: true, data: {uuid: req.body.uuid}});
+  
   if(!req.body.hasOwnProperty('leadPrice') || req.body['leadPrice'] <= 2.99 || req.body['leadPrice'] == "" || req.body['leadPrice'] == null) {
     res.send({success: false, errors: ['Unexpcted amt for lead price'], reason: 'UNEXPECTED_ERROR'});
     return;
@@ -158,7 +146,7 @@ router.post('/planner/search-lead-purchase', async function(req, res, next) {
   req.body.amtToBeCharged = req.body.leadPrice * 100;
 
   try {
-    var strip_charge_resp = await stripe.charges.create({
+    var stripe_charge_resp = await stripe.charges.create({
         amount: req.body.amtToBeCharged,
         currency: "usd",
         description: "planners_search_lead_match: " + req.body.uuid,
@@ -167,40 +155,43 @@ router.post('/planner/search-lead-purchase', async function(req, res, next) {
         receipt_email: req.body.deliveryEmail
     });
   } catch (e) {
-    console.log(req.body);
     console.log(e);
-    res.send({success: false, reason: 'UNEXPECTED_ERROR'});
+    res.send({success: false, errors:['Stripe error'], reason: 'UNEXPECTED_ERROR'});
     return;
   }
   
   const purchasedAtISOString = (new Date(Date.now())).toISOString(); 
   const purchasedAt = purchasedAtISOString.substring(0, 10) + ' ' + purchasedAtISOString.substring(11,19);
-  console.log(strip_charge_resp.id);
 
-  if(strip_charge_resp.hasOwnProperty('paid') && strip_charge_resp['paid'] === true) {
+
+  if(stripe_charge_resp.hasOwnProperty('paid') && stripe_charge_resp['paid'] === true) {
     fields_to_be_updated = {id: req.body.leadId, 
                             purchasedAt: purchasedAt, 
-                            ccConfirmation: strip_charge_resp.id,
+                            ccConfirmation: stripe_charge_resp.id,
                             amtPaid: req.body.amtToBeCharged,
                             deliveryEmail: req.body.deliveryEmail,
                             deliveryPhone: req.body.deliveryPhone};
     
     result = planners_search_lead_match_table.edit(fields_to_be_updated);
     result.then(function(resp){
-
+      console.log("Updated search_lead_match");
       sq_result = search_questions_table.get(req.body.leadId);
       sq_result.then(function(sq_resp){
+        console.log("Getting search question and delivering lead info");
         search_question = sq_resp[0];
         search_question.deliveryEmail = req.body.deliveryEmail;
         search_question.deliveryPhone = req.body.deliveryPhone;
-        console.log(search_question);
         leads_model.deliver_purchased_lead(search_question);    
+        res.send({success: true, data: {uuid: req.body.uuid}});      
+        return;
+      }).catch(function(error){
+        console.log(error);
+        res.send({success: false, errors: ['Unable to get search question/deliver lead'],reason: 'UNEXPECTED_ERROR'});
+        return;
       });
-      res.send({success: true, data: {uuid: req.body.uuid}});
-      
-      return;
     }).catch(function(error){
-      res.send({success: false, reason: 'UNEXPECTED_ERROR'});
+      console.log(error);
+      res.send({success: false, errors: ['Unable to update search_lead_match'],reason: 'UNEXPECTED_ERROR'});
       return;
     });
   } else {
