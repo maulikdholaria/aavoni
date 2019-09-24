@@ -165,7 +165,7 @@ router.post('/planner/search-lead-purchase', async function(req, res, next) {
 
 
   if(stripe_charge_resp.hasOwnProperty('paid') && stripe_charge_resp['paid'] === true) {
-    fields_to_be_updated = {id: req.body.leadId, 
+    fields_to_be_updated = {id: req.body.leadMatchId, 
                             purchasedAt: purchasedAt, 
                             ccConfirmation: stripe_charge_resp.id,
                             amtPaid: req.body.amtToBeCharged,

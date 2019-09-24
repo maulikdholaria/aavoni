@@ -120,10 +120,11 @@ class PlannerLeadPurchase extends React.Component {
         spinnerClass: 'show-spinner',
         formClass: 'hide-form'
       });
-      const { leadInfo, leadPrice } = this.state;
+      const { leadInfo, leadMatchInfo, leadPrice } = this.state;
       this.leadsApi.plannerSearchLeadPurchase(
                   {'uuid': this.uuid,
                   'leadId': leadInfo['id'],
+                  'leadMatchId': leadMatchInfo['id'],
                   'plannerId': values['id'],
                   'leadPrice': leadPrice,
                   'deliveryEmail': values['email'],
