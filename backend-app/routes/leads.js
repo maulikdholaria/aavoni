@@ -121,7 +121,7 @@ router.get('/planners-search-lead-match/:uuid', function(req, res, next) {
       search_question['lname'] = search_question['lname'].substring(0, 3) + "****";
     }
 
-    res.send({success: true, data: {"purchase_info": {plannerId: matched_search_lead['plannerId'], purchasedAt: matched_search_lead['purchasedAt']}, "search_question": search_question}});  
+    res.send({success: true, data: {"search_question_match": matched_search_lead, "search_question": search_question}});  
     return;
   })
   .catch(function(error){
@@ -132,7 +132,7 @@ router.get('/planners-search-lead-match/:uuid', function(req, res, next) {
 });
 
 router.post('/planner/search-lead-purchase', async function(req, res, next) { 
-
+  
   if(process.env.NODE_ENV != 'production') {
     req.body.deliveryEmail = 'rohit@aavoni.com';
     req.body.deliveryPhone = '9494124179';
@@ -182,7 +182,7 @@ router.post('/planner/search-lead-purchase', async function(req, res, next) {
         search_question.deliveryEmail = req.body.deliveryEmail;
         search_question.deliveryPhone = req.body.deliveryPhone;
         leads_model.deliver_purchased_lead(search_question);    
-        res.send({success: true, data: {uuid: req.body.uuid}});      
+        res.send({success: true, data: {uuid: req.body.uuid, search_question: search_question}});      
         return;
       }).catch(function(error){
         console.log(error);
