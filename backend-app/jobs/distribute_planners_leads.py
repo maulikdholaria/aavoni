@@ -16,6 +16,7 @@ class DistributeLeads:
 	def __init__(self, env):
 		self.env = env
 		self.non_procution_email = 'rohit@aavoni.com'
+		self.max_lead_match = 50
 		self.has_questions_to_process = False
 		self.config = self.get_config()
 		self.sql_conn = self.get_mysql_conn()
@@ -121,7 +122,7 @@ class DistributeLeads:
 		for question_index, row in self.latest_search_question_with_mc.iterrows(): 
 			if row['marketCitySlug'] in planners_by_city:
 				planner_city_length = len(planners_by_city[row['marketCitySlug']])
-				matched_indexes = random.sample(range(0, planner_city_length-1), 5)
+				matched_indexes = random.sample(range(0, planner_city_length-1), self.max_lead_match)
 				for matched_idx in matched_indexes:
 					matched_planner = planners_by_city[row['marketCitySlug']][matched_idx]
 					matched_planner['question_id'] = row['question_id']
@@ -148,7 +149,7 @@ class DistributeLeads:
 		if self.env == 'production':
 			leads_to_be_sent_df = self.planner_leads
 		else:
-			leads_to_be_sent_df = self.planner_leads.sample(2)
+			leads_to_be_sent_df = self.planner_leads.sample(5)
 			leads_to_be_sent_df['email'] = self.non_procution_email
 		
 		for lead_index, lead in leads_to_be_sent_df.iterrows():
