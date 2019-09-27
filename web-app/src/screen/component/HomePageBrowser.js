@@ -14,15 +14,12 @@ class HomePageBrowser extends React.Component {
   }
 
   handleSubmit = (values) => {
-    const whatUrlParam=GlobalMapping['modules'][values['what']-1]['urlParam'];
-    const whereUrlParam=GlobalMapping['location'][values['where']-1]['marketCity'];
-    this.props.history.push("/s/" + whatUrlParam + "/" + whereUrlParam);
+	const country = GlobalMapping['location'][values['where']-1]['marketCountry'];
+    this.props.history.push("/search-questions/" + country.toLowerCase());
   }
 
   getFormSchema = () => {
     return Yup.object().shape({
-	  what: Yup.string()
-	   .required('Required'),
 	  where: Yup.string()
 	   .required('Required')
 	});
@@ -41,7 +38,6 @@ class HomePageBrowser extends React.Component {
 			      			<div className="block1">Amazing planners, exclusive venues, memorable experience & beyond</div>
 			      			<Formik
 			      			  initialValues={{
-					        	'what': '',
 					        	'where': ''
 					      	  }}
 						      validationSchema={this.getFormSchema} 
@@ -50,11 +46,8 @@ class HomePageBrowser extends React.Component {
 						      	
 							        <Form className="form block2" mode='themed'>
 						        	  <Row>
-				        			    <Col xs="12" sm="12" md="12" lg="12" xl="12">
-				        				  <Select name='what' label='I need a' placeholder='Select...' options={GlobalMapping.modules} />
-				        			    </Col>
 				        			  	<Col xs="12" sm="12" md="12" lg="12" xl="12">
-				        				  <Select name='where' label='In' placeholder='Select...' options={GlobalMapping.location} />
+				        				  <Select name='where' label='My Wedding Location' placeholder='Select...' options={GlobalMapping.location} />
 				        			  	</Col>
 				        			  	<Col xs="12" sm="12" md="12" lg="12" xl="12">
 				        			  	  <SubmitBtn className="link-button">Search</SubmitBtn>

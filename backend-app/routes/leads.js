@@ -84,7 +84,8 @@ router.post('/search-questions/create', function(req, res, next) {
                 country: req.body.country,
                 lat: req.body.lat,
                 lng: req.body.lng,
-                forCountry: req.body.forCountry}
+                forCountry: req.body.forCountry,
+                message: req.body.message}
   
   console.log(values);
   result = search_questions_table.create(values);

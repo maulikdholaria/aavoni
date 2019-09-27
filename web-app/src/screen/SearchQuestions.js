@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
-import { Form, Field, Input, SubmitBtn, Datepicker, Select } from 'react-formik-ui';
+import { Form, Field, Input, SubmitBtn, Datepicker, Select, Textarea } from 'react-formik-ui';
 import * as Yup from 'yup';
 import SearchQuestionsStyle from '../style/SearchQuestions.less';
 import { GlobalMapping } from '../GlobalMapping';
@@ -17,9 +17,10 @@ class SearchQuestions extends React.Component {
     };
     this.autocomplete = null;
     this.selectedLocation = '';
-    this.formData = {fname: '', lname: '', email: '', phone: '', date: '', guests: '', budget: '', event_location: ''};
+    this.formData = {fname: '', lname: '', email: '', phone: '', date: '', guests: '', budget: '', event_location: '', message: ''};
     this.eventLocationObject = {city: '', state: '', country: '', lat: 0.00, lng: 0.00};
     this.forCountry = (this.props.match.params.country.toUpperCase());
+    this.msgPlaceholder = 'Tell more about wedding. i.e. expection, theme (romantic / vintage / modern / rustic), reception, music, special requirements, destination wedding vs. local etc.';
 
   }
 
@@ -121,7 +122,7 @@ class SearchQuestions extends React.Component {
 
   render() {
     const { formats } = this.state;
-
+    
     return(
       <Container fluid className="search-questions">
         <Row noGutters={true}>
@@ -173,6 +174,7 @@ class SearchQuestions extends React.Component {
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="lname" label="Last Name" autoComplete="name" onBlur={this.handleBlur}/> </Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="email" type="email" label="Email" autoComplete="email" onBlur={this.handleBlur}/></Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="phone" type="tel" label="Phone" autoComplete="tel" onBlur={this.handleBlur}/></Col>
+                        <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Textarea name='message' label='Message (Recommended)' placeholder={this.msgPlaceholder} onBlur={this.handleBlur}/> </Col>
                       </Row>
                         
                         <SubmitBtn className="link-button">SUBMIT</SubmitBtn>

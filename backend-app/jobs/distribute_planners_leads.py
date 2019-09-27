@@ -192,19 +192,27 @@ class DistributeLeads:
 			<br/><br/>
 			Here is the info:
 			<br/><br/>
-			Name: %s<br/>
-			Location: %s<br/>
-			Date: %s<br/>
-			Est. Guest: %s<br/>
-			Est. Budget: %s<br/>
-			Email: %s<br/>
-			Phone: %s<br/>
+			Name: %s
+			<br/><br/>
+			Location: %s
+			<br/><br/>
+			Date: %s
+			<br/><br/>
+			Est. Guest: %s
+			<br/><br/>
+			Est. Budget: %s
+			<br/><br/>
+			Email: %s
+			<br/><br/>
+			Phone: %s
+			<br/><br/>
+			Message: %s
 			<br/><br/>
 			<a href="%s">View Contact Info</a>
 			<br/><br/>
 			Thanks,<br/>
 			Team Aaavoni
-		""" %(lead['name'], lead['fname'], lead['fname'], lead['city'], lead['date'], lead['guests'], lead['budget'], self.mask_email(lead['clientEmail']), self.mask_phone(lead['clientPhone']), lead['purchase_url'])			
+		""" %(lead['name'], lead['fname'], lead['fname'], lead['city'], lead['date'], lead['guests'], lead['budget'], self.mask_email(lead['clientEmail']), self.mask_phone(lead['clientPhone']), lead['message'], lead['purchase_url'])			
 
 		return email_body
 

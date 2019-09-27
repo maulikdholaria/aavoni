@@ -14,15 +14,12 @@ class HomePageMobile extends React.Component {
   }
 
   handleSubmit = (values) => {
-    const whatUrlParam=GlobalMapping['modules'][values['what']-1]['urlParam'];
-    const whereUrlParam=GlobalMapping['location'][values['where']-1]['marketCity'];
-    this.props.history.push("/s/" + whatUrlParam + "/" + whereUrlParam);
+    const country = GlobalMapping['location'][values['where']-1]['marketCountry'];
+    this.props.history.push("/search-questions/" + country.toLowerCase());
   }
 
   getFormSchema = () => {
     return Yup.object().shape({
-	  what: Yup.string()
-	   .required('Required'),
 	  where: Yup.string()
 	   .required('Required')
 	});
@@ -37,7 +34,6 @@ class HomePageMobile extends React.Component {
       			<div className="block1">Amazing planners, exclusive venues, memorable experience & beyond</div>
       			<Formik
       			  initialValues={{
-		        	'what': '',
 		        	'where': ''
 		      	  }}
 			      validationSchema={this.getFormSchema} 
@@ -45,16 +41,10 @@ class HomePageMobile extends React.Component {
 			      render={({ errors, touched }) => (
 			      	
 				        <Form className="form block2" mode='themed'>
-
-				          	<Select name='what' label='I need a' placeholder='Select...'
-					          options={GlobalMapping.modules}
-						    />
-						    <Select name='where' label='In' placeholder='Select...'
+						    <Select name='where' label='My Wedding Location' placeholder='Select...'
 					          options={GlobalMapping.location}
 						    />
-						    
 		      		  		<SubmitBtn className="link-button">Search</SubmitBtn>
-		      			  
 				        </Form>
 			        
 			      )}
