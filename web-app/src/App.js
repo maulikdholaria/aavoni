@@ -22,6 +22,8 @@ import SearchWeddingVenue from './screen/SearchWeddingVenue';
 import VenueDetails from './screen/VenueDetails';
 import VenueContact from './screen/VenueContact';
 import PlannerLeadPurchase from './screen/PlannerLeadPurchase';
+import TermsConditions from './screen/TermsConditions';
+import PrivacyPolicy from './screen/PrivacyPolicy';
 
 const API_HOST="http://localhost:3001"
 
@@ -48,6 +50,8 @@ function App() {
         <Route path="/venue/:id" exact component={VenueDetails} />
         <Route path="/venue/contact/:id" exact component={VenueContact} />
         <Route path="/planner-lead-purchase/:uuid" exact component={PlannerLeadPurchase} />
+        <Route path="/terms-conditions" exact component={TermsConditions} />
+        <Route path="/privacy-policy" exact component={PrivacyPolicy} />
       </div>
     </BrowserRouter>
   );

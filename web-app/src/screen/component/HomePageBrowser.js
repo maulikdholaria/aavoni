@@ -28,7 +28,8 @@ class HomePageBrowser extends React.Component {
   render() {
   	
   	return(
-  	  <div className="container home-page-desktop">
+  	  <Container className="home-page-desktop">
+  	  
 	  	  
 	  		<Row noGutters={true} className="base-block-container">
 	      		<Col lg="1" xl="1"> </Col>	
@@ -62,15 +63,30 @@ class HomePageBrowser extends React.Component {
 	      		</Col>
 	      		<Col lg="7" xl="7"> </Col>
 	      	</Row>
-	      	 <div className="block3">
-		    	Help people plan, organize, and celebrate the special day of their lives.
-		    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Become a vendor </a> 
-		    	or 
-		    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Offer your venue </a>
-		    	<div className="contact">Email: <a href="mailto:help@aavoni.com">help@aavoni.com</a></div>
-	    	</div>
+	      	<Row noGutters={true}>
+	      		<Col> 
+		      		<div className="block3">
+			    		Help people plan, organize, and celebrate the special day of their lives. <a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Partner with us </a> 
+			    		<Row noGutters={true}>
+				    		<Col xl={3} lg={3} md={3}> </Col>
+				      		<Col xl={6} lg={6} md={6}> 
+					      		<div>
+					      			<Row noGutters={true}>
+					      				<Col xl={4} lg={4} md={4}> <div className="footer-links"><a href="mailto:help@aavoni.com">help@aavoni.com</a></div> </Col>
+					      				<Col xl={4} lg={4} md={4}> <div className="footer-links"><a href="/terms-consitions">Terms & Conditions</a></div> </Col>
+					      				<Col xl={4} lg={4} md={4}> <div className="footer-links"><a href="/privacy-policy">Privacy Policy</a></div></Col>
+					      			</Row>			    		
+						    	</div>
+					    	</Col>
+					    	<Col xl={3} lg={3} md={3}> </Col>
+				    	</Row>
+			    	</div>
+		    	</Col>
+	    	</Row>
+	    	
 	      
-      </div>
+      
+      </Container>
 
   	);
   }

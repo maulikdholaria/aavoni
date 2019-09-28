@@ -49,15 +49,36 @@ class HomePageMobile extends React.Component {
 			        
 			      )}
 			    />
-			    <div className="block3">
-			    	Help people plan, organize, and celebrate the special day of their lives.
-			    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Become a vendor </a> 
-			    	or 
-			    	<a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Offer your venue </a>
-			    	<div className="contact">Email: <a href="mailto:help@aavoni.com">help@aavoni.com</a></div>
-			    </div>
       		</Col>
       	</Row>
+      	<Row noGutters={true}>
+      		<Col> 
+	      		<div className="block3">
+		    		Help people plan, organize, and celebrate the special day of their lives. <a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}> Partner with us </a> 
+		    	</div>
+	    	</Col>
+    	</Row>		
+		<Row noGutters={true}>
+			<Col sm={3} xs={3}> </Col>
+	  		<Col sm={6} xs={6}  className="footer-links"> 
+	  			<a className="footer-links" href="mailto:help@aavoni.com">help@aavoni.com</a>
+	    	</Col>
+	    	<Col sm={3} xs={3}> </Col>
+    	</Row>
+    	<Row noGutters={true}>
+			<Col sm={3} xs={3}> </Col>
+	  		<Col sm={6} xs={6} className="footer-links"> 
+	  			<a href="/terms-consitions">Terms & Conditions</a>
+	    	</Col>
+	    	<Col sm={3} xs={3}> </Col>
+    	</Row>
+    	<Row noGutters={true}>
+			<Col sm={3} xs={3}> </Col>
+	  		<Col sm={6} xs={6} className="footer-links"> 
+	  			<a href="/privacy-policy">Privacy Policy</a>
+	    	</Col>
+	    	<Col sm={3} xs={3}> </Col>
+    	</Row>
       </Container>
 
   	);
