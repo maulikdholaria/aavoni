@@ -93,8 +93,8 @@ class CreateAccount extends React.Component {
       email: Yup.string()
         .email('Invalid email')
         .required('Required'),
-      password: Yup.string()
-        .required('Required'),
+      // password: Yup.string()
+      //   .required('Required'),
       listingEntityType: Yup.string()
         .required('Required'),
       marketCity: Yup.string()
