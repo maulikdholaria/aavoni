@@ -58,24 +58,20 @@ router.post('/edit/:id', function(req, res, next) {
       return;
     } 
 
-    geocoder.geocode(req.body.address, function(gerr, gres) {
-      req.body.city = gres[0].city;
-      req.body.lat = gres[0].latitude;
-      req.body.lng = gres[0].longitude;
-      result = photographers_table.edit(req.body);
-      result.then(function(resp){
-        res.send({'success': true, 'data': {'id': parseInt(req.body.id)}});
-      });
-    
-    });
-
+    return geocoder.geocode(req.body.address);
+  }).then(function(gres) {
+    req.body.city = gres[0].city;
+    req.body.lat = gres[0].latitude;
+    req.body.lng = gres[0].longitude;
+    return photographers_table.edit(req.body);    
+  }).then(function(resp){
+    res.send({'success': true, 'data': {'id': parseInt(req.body.id)}});
+    return;
   }).catch(function(error) {
-      res.send({'success': false, 'reason': 'UNEXPECTED_ERROR'});
-      return;
+    console.log(error);
+    res.send({'success': false, 'reason': 'UNEXPECTED_ERROR'});
+    return;
   });
-
-  
-
 });
 
 router.post('/upload/images/:id', function(req, res, next) {    
