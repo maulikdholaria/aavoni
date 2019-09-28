@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { GlobalMapping } from '../GlobalMapping';
 import UsersApi from '../api/UsersApi';
 import PlannersApi from '../api/PlannersApi';
+import PhotographersApi from '../api/PhotographersApi';
 
 class CreateAccount extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class CreateAccount extends React.Component {
                   listingEntityCreated: false,
                   userId: 0,
                   listingEntityId: 0};
+    this.listingEntityType = 0;                  
   }
 
   getFormSchema = () => { 
@@ -22,8 +24,8 @@ class CreateAccount extends React.Component {
   }
 
   handleSubmit = (values) => {
-    const listingEntity = values.listingEntity;
-    delete values.listingEntity;
+    this.listingEntityType = parseInt(values.listingEntityType);
+    delete values.listingEntityType;
 
     values['country']=GlobalMapping['location'][values['marketCity']-1]['marketCountry'];
     delete values.marketCity;
@@ -33,6 +35,7 @@ class CreateAccount extends React.Component {
       listingEntityCreated: false,
       userId: 0
     });
+
   	const usersApi = new UsersApi();
   	usersApi.create(values, response => {
       if(response.data.success == true) {
@@ -42,14 +45,38 @@ class CreateAccount extends React.Component {
           userId: userId
         });
 
-        const plannersApi = new PlannersApi();
-        plannersApi.create({userId: userId, name: values.fname, email: values.email}, response => {
-          if(response.data.success == true) {
-            this.setState({
-              listingEntityCreated: true,
-              listingEntityId: response.data.data.id
-            });
-          }
+        switch(this.listingEntityType) {
+          case 1:
+            this.createPlanner({userId: userId, name: values.fname, email: values.email});
+            break;
+          case 3:
+            console.log("creating photographer");
+            this.createPhotographer({userId: userId, name: values.fname, email: values.email});
+            break;
+        }
+      }
+    });
+  }
+
+  createPlanner(valuesObj) {
+    const plannersApi = new PlannersApi();
+    plannersApi.create(valuesObj, response => {
+      if(response.data.success == true) {
+        this.setState({
+          listingEntityCreated: true,
+          listingEntityId: response.data.data.id
+        });
+      }
+    });
+  }
+
+  createPhotographer(valuesObj) {
+    const photographersApi = new PhotographersApi();
+    photographersApi.create(valuesObj, response => {
+      if(response.data.success == true) {
+        this.setState({
+          listingEntityCreated: true,
+          listingEntityId: response.data.data.id
         });
       }
     });
@@ -68,7 +95,7 @@ class CreateAccount extends React.Component {
         .required('Required'),
       password: Yup.string()
         .required('Required'),
-      listingEntity: Yup.string()
+      listingEntityType: Yup.string()
         .required('Required'),
       marketCity: Yup.string()
         .required('Required')
@@ -100,14 +127,18 @@ class CreateAccount extends React.Component {
             }
           </div>
           <div>
-            {listingEntityCreated && <Alert variant="dark">
+            {listingEntityCreated && this.listingEntityType == 1 && <Alert variant="dark">
               <Link to={{pathname: "/planner/edit/" + listingEntityId}}> Planner Created - {listingEntityId} </Link>
+            </Alert>
+            }
+            {listingEntityCreated && this.listingEntityType == 3 && <Alert variant="dark">
+              <Link to={{pathname: "/photographer/edit/" + listingEntityId}}> Photographer Created - {listingEntityId} </Link>
             </Alert>
             }
           </div>
 	  			<Formik
 	  			  enableReinitialize={true}
-	  			  initialValues={{fname: '', lname: '', email: '', password: '', listingEntity: '', marketCity:''}}
+	  			  initialValues={{fname: '', lname: '', email: '', password: '', listingEntityType: '', marketCity:''}}
 	  			  validationSchema={this.getFormSchema}
 			      onSubmit={this.handleSubmit}
 			      render={({ errors, touched }) => (
@@ -118,7 +149,7 @@ class CreateAccount extends React.Component {
   			        		<Col lg={6} xl={6}> <Input name="lname" label="Last Name"/> </Col>
                     <Col lg={12} xl={12}> <Input name="email" label="Email"/> </Col>
                     <Col lg={12} xl={12}> <Input name="password" label="Password"/> </Col>
-                    <Col lg={12} xl={12}> <Select name="listingEntity" label="Listing Entity" placeholder='Select...' options={GlobalMapping.listingEntity} /> </Col>
+                    <Col lg={12} xl={12}> <Select name="listingEntityType" label="Listing Entity" placeholder='Select...' options={GlobalMapping.listingEntity} /> </Col>
                     <Col lg={12} xl={12}> <Select name="marketCity" label='In' placeholder='Select...'
                     options={GlobalMapping.location}/></Col>
 							    </Row> 

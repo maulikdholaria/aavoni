@@ -14,6 +14,7 @@ var searchVenueRouter = require('./routes/searchVenue');
 var usersRouter = require('./routes/users');
 var venueRouter = require('./routes/venue');
 var plannersRouter = require('./routes/planners');
+var photographersRouter = require('./routes/photographers');
 var leadsRouter = require('./routes/leads');
 
 var app = express();
@@ -62,6 +63,7 @@ app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/venue', venueRouter);
 app.use('/api/planners/', plannersRouter);
+app.use('/api/photographers/', photographersRouter);
 app.use('/api/leads/', leadsRouter);
 app.use('/api/search/wedding-planner', searchWeddingPlannerRouter);
 app.use('/api/search/venue', searchVenueRouter);
