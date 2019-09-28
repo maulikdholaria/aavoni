@@ -22,7 +22,7 @@ class PhotographerEdit extends React.Component {
         instagram: '',
         pinterest: '',
         website: '',
-        address: '',
+        address: 'San Francisco, CA',
         marketCityId: ''
   	  }
     };
