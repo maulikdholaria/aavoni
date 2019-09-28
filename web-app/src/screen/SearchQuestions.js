@@ -20,7 +20,7 @@ class SearchQuestions extends React.Component {
     this.formData = {fname: '', lname: '', email: '', phone: '', date: '', guests: '', budget: '', event_location: '', message: ''};
     this.eventLocationObject = {city: '', state: '', country: '', lat: 0.00, lng: 0.00};
     this.forCountry = (this.props.match.params.country.toUpperCase());
-    this.msgPlaceholder = 'Tell more about wedding. i.e. expection, theme (romantic / vintage / modern / rustic), reception, music, special requirements, destination wedding vs. local etc.';
+    this.msgPlaceholder = 'Tell us more about wedding. i.e. theme (romantic / vintage / modern / rustic), reception, music, food & drinks etc. \nProvide link to wedding materials you may have prepared (Google Drive, Dropbox etc.)';
 
   }
 
@@ -174,7 +174,7 @@ class SearchQuestions extends React.Component {
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="lname" label="Last Name" autoComplete="name" onBlur={this.handleBlur}/> </Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="email" type="email" label="Email" autoComplete="email" onBlur={this.handleBlur}/></Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="phone" type="tel" label="Phone" autoComplete="tel" onBlur={this.handleBlur}/></Col>
-                        <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Textarea name='message' label='Message (Recommended)' placeholder={this.msgPlaceholder} onBlur={this.handleBlur}/> </Col>
+                        <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Textarea name='message' label='Message (Recommended)' placeholder={this.msgPlaceholder} onBlur={this.handleBlur} rows="6"/> </Col>
                       </Row>
                         
                         <SubmitBtn className="link-button">SUBMIT</SubmitBtn>
