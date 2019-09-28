@@ -32,8 +32,8 @@ class PhotographerEdit extends React.Component {
     return Yup.object().shape({
       name: Yup.string()
         .required('Required'),
-      phone: Yup.string()
-        .required('Required'),
+      // phone: Yup.string()
+      //   .required('Required'),
       email: Yup.string()
         .email('Invalid email')
         .required('Required'),
