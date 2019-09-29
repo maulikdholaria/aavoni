@@ -35,6 +35,22 @@ class LeadsApi {
     });
   }
 
+  photographerSearchLeadMatchGet(uuid, callback) {
+     axios.get("api/leads/photographers-search-lead-match/" + uuid)
+    .then(callback)
+    .catch(function (error) {
+      console.log(error);
+    });
+  }  
+
+  photographerSearchLeadPurchase(params, callback) {
+    axios.post('api/leads/photographer/search-lead-purchase', params)
+    .then(callback)
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
 }
 
 export default LeadsApi;

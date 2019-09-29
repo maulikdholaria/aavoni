@@ -6,6 +6,7 @@ var lead_ips_table = require('../tables/lead_ips');
 var planners_clicks_table = require('../tables/planners_clicks');
 var search_questions_table = require('../tables/search_questions');
 var planners_search_lead_match_table = require('../tables/planners_search_lead_match');
+var photographers_search_lead_match_table = require('../tables/photographers_search_lead_match');
 var email_lib = require('../lib/email.js');
 var phone_lib = require('../lib/phone.js');
 var config = require('../config');
@@ -116,6 +117,7 @@ router.get('/planners-search-lead-match/:uuid', function(req, res, next) {
   })
   .then(sq_resp => {
     search_question = sq_resp[0];
+    search_question.message = search_question.message.toString('utf8');
     if (matched_search_lead['purchasedAt'] == null || matched_search_lead['purchasedAt'] == "") {
       search_question['email'] = email_lib.mask(search_question['email']);
       search_question['phone'] = phone_lib.mask(search_question['phone']);
@@ -196,4 +198,40 @@ router.post('/planner/search-lead-purchase', async function(req, res, next) {
   }
 
 });
+
+router.get('/photographers-search-lead-match/:uuid', function(req, res, next) { 
+  let uuid = req.params.uuid;
+  let searchQuestionId = 0;
+  let matched_search_lead = {};
+
+  result = photographers_search_lead_match_table.getByUUID(uuid);
+  result.then(function(resp){
+    if(resp.length != 1) {
+      res.send({success: false, reason: 'ENTITY_NOT_EXSIT'});
+      return;
+    }
+    searchQuestionId = resp[0]['searchQuestionId'];
+    matched_search_lead = resp[0];
+
+   return search_questions_table.get(matched_search_lead['searchQuestionId']);
+  })
+  .then(sq_resp => {
+    search_question = sq_resp[0];
+    search_question.message = search_question.message.toString('utf8');
+    if (matched_search_lead['purchasedAt'] == null || matched_search_lead['purchasedAt'] == "") {
+      search_question['email'] = email_lib.mask(search_question['email']);
+      search_question['phone'] = phone_lib.mask(search_question['phone']);
+      search_question['lname'] = search_question['lname'].substring(0, 3) + "****";
+    }
+
+    res.send({success: true, data: {"search_question_match": matched_search_lead, "search_question": search_question}});  
+    return;
+  })
+  .catch(function(error){
+    console.log(error);
+    res.send({success: false, reason: 'UNEXPECTED_ERROR'});
+    return;
+  });
+});
+
 module.exports = router;

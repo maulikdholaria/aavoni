@@ -6,11 +6,11 @@ import { Config } from '../Config';
 import { GlobalMapping } from '../GlobalMapping';
 import SearchQuestionsApi from '../api/SearchQuestionsApi';
 import LeadsApi from '../api/LeadsApi';
-import PlannersApi from '../api/PlannersApi';
+import PhotographersApi from '../api/PhotographersApi';
 import LeadPurchaseStyle from '../style/LeadPurchase.less';
 import { StripeProvider, Elements, CardElement, injectStripe } from 'react-stripe-elements';
 
-var plannerLeadPurchaseStripeToken = null;
+var photographerLeadPurchaseStripeToken = null;
 
 class _CardForm extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class _CardForm extends React.Component {
       const source = this.props.stripe.createToken({type: 'card'});
       source
       .then(resp => {  
-        plannerLeadPurchaseStripeToken = resp.token.id;
+        photographerLeadPurchaseStripeToken = resp.token.id;
         this.props.onChange();
       })
       .catch(function(err){
@@ -55,14 +55,14 @@ class CreditCardForm extends React.Component {
   }
 }
 
-class PlannerLeadPurchase extends React.Component {
+class PhotographerLeadPurchase extends React.Component {
   constructor(props) {
     super(props);
     this.uuid = (this.props.match.params.uuid.toLowerCase());
     this.state = {headerInfoClass: '',
-                  leadInfo: {budget: '', catering: '', city: '', country: '', createdAt: '', date: '', email: '', fname: '', forCountry: '', guests: '', id: '', lat: '', lname: '', lng: '', makeup: '', phone: '', photographer: '', planner: '', state: '', venue: '', plannerSold: 0},
+                  leadInfo: {budget: '', catering: '', city: '', country: '', createdAt: '', date: '', email: '', fname: '', forCountry: '', guests: '', id: '', lat: '', lname: '', lng: '', makeup: '', phone: '', photographer: '', photographer: '', state: '', venue: '', photographerSold: 0},
                   leadMatchInfo: {}, 
-                  plannerInfo: {name: '',about: '',email: '',phone: '',priceRange: '',fb: '',instagram: '',pinterest: '',website: '',address: '',marketCityId: ''},
+                  photographerInfo: {name: '',about: '',email: '',phone: '',priceRange: '',fb: '',instagram: '',pinterest: '',website: '',address: '',marketCityId: ''},
                   leadPrice: 5.00,
                   leadPriceClass: 'lead-price show-element',
                   formClass: 'lead-delivery-form show-form',
@@ -73,7 +73,7 @@ class PlannerLeadPurchase extends React.Component {
   }
 
   componentDidMount() {
-    this.leadsApi.plannerSearchLeadMatchGet(this.uuid, response => {
+    this.leadsApi.photographerSearchLeadMatchGet(this.uuid, response => {
       if(response.data.success == true) {
         let budgetRangeMappingKey = 'budgetRange_' + response.data.data.search_question['forCountry'];
         
@@ -88,11 +88,11 @@ class PlannerLeadPurchase extends React.Component {
             leadMatchInfo: response.data.data.search_question_match
         });
 
-        const plannersApi = new PlannersApi();
-        plannersApi.get(response.data.data.search_question_match.plannerId, response => {
+        const photographersApi = new PhotographersApi();
+        photographersApi.get(response.data.data.search_question_match.photographerId, response => {
           const responseData = response.data;
           this.setState({
-            plannerInfo: responseData.data
+            photographerInfo: responseData.data
           });
         });
 
@@ -104,7 +104,7 @@ class PlannerLeadPurchase extends React.Component {
           });
         }
 
-        if(response.data.data.search_question['plannerSold'] != 0) {
+        if(response.data.data.search_question['photographerSold'] != 0) {
           this.setState({
             formClass: 'hide-form',
             leadSoldClass: 'lead-sold-show'
@@ -116,21 +116,21 @@ class PlannerLeadPurchase extends React.Component {
 
   handleSubmit = (values) => {
 
-    if(plannerLeadPurchaseStripeToken != null && plannerLeadPurchaseStripeToken != '') {
+    if(photographerLeadPurchaseStripeToken != null && photographerLeadPurchaseStripeToken != '') {
       this.setState({
         spinnerClass: 'show-spinner',
         formClass: 'hide-form'
       });
       const { leadInfo, leadMatchInfo, leadPrice } = this.state;
-      this.leadsApi.plannerSearchLeadPurchase(
+      this.leadsApi.photographerSearchLeadPurchase(
                   {'uuid': this.uuid,
                   'leadId': leadInfo['id'],
                   'leadMatchId': leadMatchInfo['id'],
-                  'plannerId': values['id'],
+                  'photographerId': values['id'],
                   'leadPrice': leadPrice,
                   'deliveryEmail': values['email'],
                   'deliveryPhone': values['phone'],
-                  'stripePaymentToken': plannerLeadPurchaseStripeToken},
+                  'stripePaymentToken': photographerLeadPurchaseStripeToken},
                   response => {
                     let budgetRangeMappingKey = 'budgetRange_' + response.data.data.search_question['forCountry'];
                     response.data.data.search_question['guests'] = GlobalMapping['guestsRange'][response.data.data.search_question['guests']]['label'];
@@ -153,7 +153,7 @@ class PlannerLeadPurchase extends React.Component {
   }
 
   render() {
-    const { headerInfoClass, leadInfo, plannerInfo, leadPrice, formClass, leadPriceClass, spinnerClass, leadSoldClass, submitDisabled } = this.state;    
+    const { headerInfoClass, leadInfo, photographerInfo, leadPrice, formClass, leadPriceClass, spinnerClass, leadSoldClass, submitDisabled } = this.state;    
     
     return(
       <Container fluid className="lead-purchase-screen">
@@ -183,7 +183,7 @@ class PlannerLeadPurchase extends React.Component {
             </Card>
             <div className={leadPriceClass}> <span className="label">Total:</span> <span className="value">${leadPrice}</span></div>
             <div className={leadSoldClass}>
-                <h1>Sufficient number of planners expressed interest helping {leadInfo.fname}. 
+                <h1>Sufficient number of photographers expressed interest helping {leadInfo.fname}. 
                     Act faster next time if the wedding info matches your criteria.
                 </h1>
             </div>
@@ -194,7 +194,7 @@ class PlannerLeadPurchase extends React.Component {
             <div className={formClass}>
               <Formik
                   enableReinitialize={true}
-                  initialValues={plannerInfo}
+                  initialValues={photographerInfo}
                   onSubmit={this.handleSubmit}
                   render={({ errors, touched }) => (
                     
@@ -223,4 +223,4 @@ class PlannerLeadPurchase extends React.Component {
   }
 }
 
-export default PlannerLeadPurchase;
+export default PhotographerLeadPurchase;
