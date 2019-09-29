@@ -73,7 +73,7 @@ class HomePageBrowser extends React.Component {
 					      		<div>
 					      			<Row noGutters={true}>
 					      				<Col xl={4} lg={4} md={4}> <div className="footer-links"><a href="mailto:help@aavoni.com">help@aavoni.com</a></div> </Col>
-					      				<Col xl={4} lg={4} md={4}> <div className="footer-links"><a href="/terms-consitions">Terms & Conditions</a></div> </Col>
+					      				<Col xl={4} lg={4} md={4}> <div className="footer-links"><a href="/terms-conditions">Terms & Conditions</a></div> </Col>
 					      				<Col xl={4} lg={4} md={4}> <div className="footer-links"><a href="/privacy-policy">Privacy Policy</a></div></Col>
 					      			</Row>			    		
 						    	</div>

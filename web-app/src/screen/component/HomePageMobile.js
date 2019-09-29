@@ -68,7 +68,7 @@ class HomePageMobile extends React.Component {
     	<Row noGutters={true}>
 			<Col sm={3} xs={3}> </Col>
 	  		<Col sm={6} xs={6} className="footer-links"> 
-	  			<a href="/terms-consitions">Terms & Conditions</a>
+	  			<a href="/terms-conditions">Terms & Conditions</a>
 	    	</Col>
 	    	<Col sm={3} xs={3}> </Col>
     	</Row>

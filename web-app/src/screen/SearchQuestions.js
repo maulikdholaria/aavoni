@@ -20,7 +20,7 @@ class SearchQuestions extends React.Component {
     this.formData = {fname: '', lname: '', email: '', phone: '', date: '', guests: '', budget: '', event_location: '', message: ''};
     this.eventLocationObject = {city: '', state: '', country: '', lat: 0.00, lng: 0.00};
     this.forCountry = (this.props.match.params.country.toUpperCase());
-    this.msgPlaceholder = 'Tell us more about wedding. i.e. theme (romantic / vintage / modern / rustic), reception, music, food & drinks etc. \nProvide link to wedding materials you may have prepared (Google Drive, Dropbox etc.)';
+    this.msgPlaceholder = 'Tell us more about your wedding expectation. i.e. theme (romantic / vintage / modern / rustic), reception, music, food & drinks etc. \nProvide links to wedding materials you may have put together (Google Drive, Dropbox etc.)';
 
   }
 
