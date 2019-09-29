@@ -65,7 +65,7 @@ var leads = {
     var msg = {
       from: 'leads@aavoni.com'
     };
-    msg.subject = leadInfo.fname + " " + leadInfo.lname + "'s wedding'";
+    msg.subject = leadInfo.fname + " " + leadInfo.lname + "'s wedding info";
     const html_file = app.get('views') + '/lead_purchase_email.pug';
     
     msg.html = pug.renderFile(html_file, {leadInfo: leadInfo, guests: guests, budget: budget});
