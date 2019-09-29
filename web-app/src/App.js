@@ -21,6 +21,7 @@ import PhotographerEdit from './screen/PhotographerEdit';
 import SearchWeddingVenue from './screen/SearchWeddingVenue';
 import VenueDetails from './screen/VenueDetails';
 import VenueContact from './screen/VenueContact';
+import SearchQuestionDetail from './screen/SearchQuestionDetail';
 import PlannerLeadPurchase from './screen/PlannerLeadPurchase';
 import PhotographerLeadPurchase from './screen/PhotographerLeadPurchase';
 import TermsConditions from './screen/TermsConditions';
@@ -50,6 +51,7 @@ function App() {
         <Route path="/s/wedding-venue/:marketCity" exact component={SearchWeddingVenue} />
         <Route path="/venue/:id" exact component={VenueDetails} />
         <Route path="/venue/contact/:id" exact component={VenueContact} />
+        <Route path="/search-question-detail/:id" exact component={SearchQuestionDetail} />
         <Route path="/planner-lead-purchase/:uuid" exact component={PlannerLeadPurchase} />
         <Route path="/photographer-lead-purchase/:uuid" exact component={PhotographerLeadPurchase} />
         <Route path="/terms-conditions" exact component={TermsConditions} />

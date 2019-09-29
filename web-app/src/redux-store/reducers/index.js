@@ -4,6 +4,7 @@ import currentPlannerDetail from './currentPlannerDetail';
 import venues from './venues';
 import currentVenueDetail from './currentVenueDetail';
 import currentPlannerLead from './currentPlannerLead';
+import searchQuestionDetail from './searchQuestionDetail';
 import loggedInUser from './loggedInUser';
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   currentPlannerDetail,
   currentVenueDetail,
   currentPlannerLead,
+  searchQuestionDetail,
   loggedInUser
 })

@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button, Card, Spinner } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { Form, Field, Input, SubmitBtn } from 'react-formik-ui';
 import { Config } from '../Config';
 import { GlobalMapping } from '../GlobalMapping';
+import store from '../redux-store/store';
 import SearchQuestionsApi from '../api/SearchQuestionsApi';
 import LeadsApi from '../api/LeadsApi';
 import PhotographersApi from '../api/PhotographersApi';
@@ -72,6 +74,13 @@ class PhotographerLeadPurchase extends React.Component {
     this.leadsApi = new LeadsApi();
   }
 
+  addSearchQuestionDetail(data) {
+    return {
+      type: 'ADD_SEARCH_QUESTION_DETAIL',
+      data
+    }
+  }
+
   componentDidMount() {
     this.leadsApi.photographerSearchLeadMatchGet(this.uuid, response => {
       if(response.data.success == true) {
@@ -82,6 +91,7 @@ class PhotographerLeadPurchase extends React.Component {
         response.data.data.search_question['guests'] = GlobalMapping['guestsRange'][response.data.data.search_question['guests']]['label'];
         response.data.data.search_question['budget'] = GlobalMapping[budgetRangeMappingKey][response.data.data.search_question['budget']]['label'];
         
+        store.dispatch(this.addSearchQuestionDetail(response.data.data.search_question));
         this.setState({
             leadInfo: response.data.data.search_question,
             leadPrice: leadPrice,
@@ -178,6 +188,10 @@ class PhotographerLeadPurchase extends React.Component {
                   <Col lg={12} xl={12} md={12} sm={12} xs={12}> <span className="label">Budget:</span> <span className="value">{leadInfo.budget} </span></Col>
                   <Col lg={12} xl={12} md={12} sm={12} xs={12}> <span className="label">Date:</span> <span className="value">{leadInfo.date} </span></Col>
                   <Col lg={12} xl={12} md={12} sm={12} xs={12}> <span className="label">Location:</span> <span className="value">{leadInfo.city}, {leadInfo.state} </span></Col>
+                  <Col lg={12} xl={12} md={12} sm={12} xs={12}> 
+                    <span className="label">Wedding Details:</span> 
+                    <span className="value"> <Link to={{pathname: `/search-question-detail/${leadInfo.id}`}} style={{ textDecoration: 'none' }}>View</Link></span>
+                  </Col>
                 </Row>
               </Card.Body>
             </Card>
