@@ -9,6 +9,7 @@ import sqlalchemy as sql
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
+
 class DistributeLeads:
 	def __init__(self, env):
 		self.env = env
@@ -21,10 +22,10 @@ class DistributeLeads:
 		self.latest_search_question = self.get_latest_search_question()
 		if self.latest_search_question.empty == False:
 			self.market_cities = self.get_market_cities()
-			self.planners = self.get_planners()
+			self.photographers = self.get_photographers()
 			self.latest_search_question_with_mc = self.determine_search_question_market_city()
-			self.planner_leads = self.derieve_planner_leads()		
-			if self.planner_leads.empty == False:
+			self.photographer_leads = self.derieve_photographer_leads()		
+			if self.photographer_leads.empty == False:
 				self.has_questions_to_process = True
 
 	def get_config(self):
@@ -39,7 +40,7 @@ class DistributeLeads:
 		return None
 
 	def get_mysql_conn(self):
-		config = self.config		
+		config = self.config
 		connect_string = 'mysql://%s:%s@%s/%s' %(config['mysql']['user'], config['mysql']['password'], config['mysql']['host'], config['mysql']['database'])
 		print connect_string
 		sql_engine = sql.create_engine(connect_string)
@@ -61,7 +62,7 @@ class DistributeLeads:
 
 	def get_last_matched_search_question_id(self):
 		print "%s(): Getting last matched lead" %(sys._getframe(  ).f_code.co_name)
-		sql = "SELECT max(searchQuestionId) AS last_search_question_id FROM planners_search_lead_match"
+		sql = "SELECT max(searchQuestionId) AS last_search_question_id FROM photographers_search_lead_match"
 		df = pd.read_sql_query(sql, self.sql_conn)
 		last_search_question_id = 0 if df.last_search_question_id[0] is None else df['last_search_question_id'][0];
 		return last_search_question_id
@@ -69,7 +70,7 @@ class DistributeLeads:
 
 	def get_latest_search_question(self):
 		print "%s(): Getting lastest search questions" %(sys._getframe(  ).f_code.co_name)
-		sql = "SELECT * FROM search_questions WHERE id > %d and planner=1" %(self.last_matched_search_question_id)
+		sql = "SELECT * FROM search_questions WHERE id > %d and photographer=1" %(self.last_matched_search_question_id)
 		df = pd.read_sql_query(sql, self.sql_conn)	
 		df.rename(columns={"id": "question_id", "email": "clientEmail", "phone": "clientPhone"}, inplace=True)
 		return df
@@ -88,76 +89,77 @@ class DistributeLeads:
 		#merged_df.rename(columns={"id_x": "question_id", "id_y": "marketcity_id"}, inplace=True
 		return merged_df
 
-	def get_planners(self):
-		print "%s(): Getting planners" %(sys._getframe(  ).f_code.co_name)
-		sql = """SELECT id AS planner_id, name, marketCity, phone, email,
+	def get_photographers(self):
+		print "%s(): Getting photographers" %(sys._getframe(  ).f_code.co_name)
+		sql = """SELECT id AS photographer_id, name, marketCity, phone, email,
 	   					CASE
 							WHEN email != '' AND phone != '' THEN 'both'
 							WHEN email != '' THEN 'email'
 							WHEN phone != '' THEN 'phone'
         					END AS availableDeliveryMethod
-				FROM planners WHERE email != '' OR phone != ''"""
+				FROM photographers WHERE email != '' OR phone != ''"""
 		df = pd.read_sql_query(sql, self.sql_conn)	
 		return df
 
-	def derieve_planner_leads(self):
-		print "%s(): Deriving planner leads latest_search_question_with_mc <-> planners" %(sys._getframe(  ).f_code.co_name)
+	def derieve_photographer_leads(self):
+		print "%s(): Deriving photographer leads latest_search_question_with_mc <-> photographers" %(sys._getframe(  ).f_code.co_name)
 		
 		#print self.latest_search_question_with_mc
 		
-		planners_by_city = {}
-		for index, row in self.planners.iterrows():
-			if row['marketCity'] in planners_by_city:
-				planners_by_city[row['marketCity']].append(row.to_dict())
+		photographers_by_city = {}
+		for index, row in self.photographers.iterrows():
+			if row['marketCity'] in photographers_by_city:
+				photographers_by_city[row['marketCity']].append(row.to_dict())
 			else:
-				planners_by_city[row['marketCity']] = []
+				photographers_by_city[row['marketCity']] = []
 
-		matched_planners = []
+		
+		matched_photographers = []
 		for question_index, row in self.latest_search_question_with_mc.iterrows(): 
-			if row['marketCitySlug'] in planners_by_city:
-				planner_city_length = len(planners_by_city[row['marketCitySlug']])
-				matched_indexes = random.sample(range(0, planner_city_length-1), self.max_lead_match)
+			if row['marketCitySlug'] in photographers_by_city:
+				photographer_city_length = len(photographers_by_city[row['marketCitySlug']])
+				matched_indexes = random.sample(range(0, photographer_city_length-1), self.max_lead_match)
 				for matched_idx in matched_indexes:
-					matched_planner = planners_by_city[row['marketCitySlug']][matched_idx]
-					matched_planner['question_id'] = row['question_id']
-					matched_planner['uuid'] = str(uuid.uuid1())
-					matched_planners.append(matched_planner)
+					matched_photographer = photographers_by_city[row['marketCitySlug']][matched_idx]
+					matched_photographer['question_id'] = row['question_id']
+					matched_photographer['uuid'] = str(uuid.uuid1())
+					matched_photographers.append(matched_photographer)
 		
-		matched_planners_df = pd.DataFrame(matched_planners)
+		matched_photographers_df = pd.DataFrame(matched_photographers)
 
-		#print matched_planners_df
+		#print matched_photographers_df
 		
-		if matched_planners_df.empty == True:
+		if matched_photographers_df.empty == True:
 			return pd.DataFrame()
 		else:
-			matched_leads_df = pd.merge(self.latest_search_question_with_mc, matched_planners_df, how='inner', on=['question_id'])
+			matched_leads_df = pd.merge(self.latest_search_question_with_mc, matched_photographers_df, how='inner', on=['question_id'])
 
 		return matched_leads_df
 
-	def send_planner_leads(self):
-		print "%s(): Sending planner leads" %(sys._getframe(  ).f_code.co_name)
+	def send_photographer_leads(self):
+		print "%s(): Sending photographer leads" %(sys._getframe(  ).f_code.co_name)
 		if self.has_questions_to_process == False:
 			print "All caught up"
 			return
 		
 		if self.env == 'production':
-			leads_to_be_sent_df = self.planner_leads
+			leads_to_be_sent_df = self.photographer_leads
 		else:
-			leads_to_be_sent_df = self.planner_leads.sample(5)
+			leads_to_be_sent_df = self.photographer_leads.sample(5)
 			leads_to_be_sent_df['email'] = self.non_production_email
 		
 		for lead_index, lead in leads_to_be_sent_df.iterrows():
-			email_status = self.send_planner_email(lead)
+			email_status = self.send_photographer_email(lead)
 			if email_status == True:
-				self.save_planner_lead_send(lead)
-			print "Email | QuestionId: %d | PlannerId: %d | %s | %s" %(lead['question_id'], lead['planner_id'], lead['email'], str(email_status))
+				self.save_photographer_lead_send(lead)
+			print "Email | QuestionId: %d | photographerId: %d | %s | %s" %(lead['question_id'], lead['photographer_id'], lead['email'], str(email_status))
 
-	def send_planner_email(self, lead):
-		email_body = self.planners_email_body(lead)
+	def send_photographer_email(self, lead):
+		email_body = self.photographers_email_body(lead)
 
 		message = Mail(from_email='leads@aavoni.com',
 	    			   to_emails=lead['email'],
-					   subject="%s needs your wedding planning expertise" %(lead['fname']),
+					   subject="%s needs your photography expertise" %(lead['fname']),
 	    			   html_content=email_body)
 		try:
 		    sg = SendGridAPIClient(self.config['SENDGRID_API_KEY'])
@@ -170,19 +172,19 @@ class DistributeLeads:
 		    print(str(e))
 		    return False
 
-	def save_planner_lead_send(self, lead):
+	def save_photographer_lead_send(self, lead):
 		sql_insert_statement = """INSERT INTO 
-								  planners_search_lead_match (searchQuestionId, plannerId, uuid) 
-							   	  VALUES(%d, %d, '%s')""" %(lead['question_id'],lead['planner_id'],lead['uuid'])
+								  photographers_search_lead_match (searchQuestionId, photographerId, uuid) 
+							   	  VALUES(%d, %d, '%s')""" %(lead['question_id'],lead['photographer_id'],lead['uuid'])
 		rs = self.sql_conn.execute(sql_insert_statement)
 		return True
 
-	def planners_email_body(self, lead):
-		lead['purchase_url'] = "https://www.aavoni.com/planner-lead-purchase/%s" %(lead['uuid'])
+	def photographers_email_body(self, lead):
+		lead['purchase_url'] = "https://www.aavoni.com/photographer-lead-purchase/%s" %(lead['uuid'])
 		email_body = """
 			Hello %s, 
 			<br/><br/>
-			You expertise can help %s plan thier wedding.
+			You expertise can help %s capture their wedding memories.
 			<br/><br/>
 			Here is the info:
 			<br/><br/>
@@ -247,7 +249,7 @@ if __name__ == "__main__":
 
 
 	dlObj = DistributeLeads(NODE_ENV)	
-	dlObj.send_planner_leads()	
+	dlObj.send_photographer_leads()	
 
 
 
