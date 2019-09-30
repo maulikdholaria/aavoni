@@ -82,9 +82,9 @@ var leads = {
     msg.to = leadInfo.deliveryEmail;
     //msg.to ='test-w9g0s@mail-tester.com';
     
-    console.log(msg);
+    //console.log(msg);
     email.send(msg);
-    phone.send_sms(leadInfo.deliveryPhone, msg.text);
+    //phone.send_sms(leadInfo.deliveryPhone, msg.text);
   }
 };
 
