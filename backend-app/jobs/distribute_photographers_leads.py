@@ -14,7 +14,7 @@ class DistributeLeads:
 	def __init__(self, env):
 		self.env = env
 		self.non_production_email = 'rohit@aavoni.com'
-		self.max_lead_match = 50
+		self.max_lead_match = 100
 		self.has_questions_to_process = False
 		self.config = self.get_config()
 		self.sql_conn = self.get_mysql_conn()
@@ -118,7 +118,7 @@ class DistributeLeads:
 		for question_index, row in self.latest_search_question_with_mc.iterrows(): 
 			if row['marketCitySlug'] in photographers_by_city:
 				photographer_city_length = len(photographers_by_city[row['marketCitySlug']])
-				matched_indexes = random.sample(range(0, photographer_city_length-1), self.max_lead_match)
+				matched_indexes = random.sample(range(0, photographer_city_length-1), min(self.max_lead_match, photographer_city_length-1))
 				for matched_idx in matched_indexes:
 					matched_photographer = photographers_by_city[row['marketCitySlug']][matched_idx]
 					matched_photographer['question_id'] = row['question_id']
@@ -145,7 +145,7 @@ class DistributeLeads:
 		if self.env == 'production':
 			leads_to_be_sent_df = self.photographer_leads
 		else:
-			leads_to_be_sent_df = self.photographer_leads.sample(5)
+			leads_to_be_sent_df = self.photographer_leads.sample(3)
 			leads_to_be_sent_df['email'] = self.non_production_email
 		
 		for lead_index, lead in leads_to_be_sent_df.iterrows():
@@ -184,11 +184,11 @@ class DistributeLeads:
 		email_body = """
 			Hello %s, 
 			<br/><br/>
-			You expertise can help %s capture their wedding memories.
+			You expertise can help %s capture wedding memories.
 			<br/><br/>
 			Here is the info:
 			<br/><br/>
-			Name: %s
+			Name: %s %s
 			<br/><br/>
 			Location: %s
 			<br/><br/>
@@ -208,7 +208,7 @@ class DistributeLeads:
 			<br/><br/>
 			Thanks,<br/>
 			Team Aaavoni
-		""" %(lead['name'], lead['fname'], lead['fname'], lead['city'], lead['date'], lead['guests'], lead['budget'], self.mask_email(lead['clientEmail']), self.mask_phone(lead['clientPhone']), lead['message'], lead['purchase_url'])			
+		""" %(lead['name'], lead['fname'], lead['fname'], lead['lname'], lead['city'], lead['date'], lead['guests'], lead['budget'], self.mask_email(lead['clientEmail']), self.mask_phone(lead['clientPhone']), lead['message'], lead['purchase_url'])			
 
 		return email_body
 
