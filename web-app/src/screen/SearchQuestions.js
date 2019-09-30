@@ -94,6 +94,7 @@ class SearchQuestions extends React.Component {
     
     const searchQuestionsApi = new SearchQuestionsApi();
     searchQuestionsApi.create(searchQuestionValues, response => {
+      window.analytics.track('search_questions_submitted');
       this.props.history.push("/search-questions-confirmation");
     });
   }
@@ -132,7 +133,7 @@ class SearchQuestions extends React.Component {
               Get personalized wedding professionals
             </h1>
             <p>
-              Answer just a few questions to find wedding professionals, all in one place.
+              Answer a few questions and we will find amazing professionals suited to your wedding location and date for memorable experience & price. 
             </p>
             <div>
 
