@@ -138,7 +138,7 @@ class CreateAccount extends React.Component {
           </div>
 	  			<Formik
 	  			  enableReinitialize={true}
-	  			  initialValues={{fname: '', lname: '', email: '', password: '', listingEntityType: 3, marketCity:1}}
+	  			  initialValues={{fname: '', lname: '', email: '', password: '', listingEntityType: 3, marketCity:3}}
 	  			  validationSchema={this.getFormSchema}
 			      onSubmit={this.handleSubmit}
 			      render={({ errors, touched }) => (
