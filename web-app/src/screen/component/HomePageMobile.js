@@ -59,26 +59,16 @@ class HomePageMobile extends React.Component {
 	    	</Col>
     	</Row>		
 		<Row noGutters={true}>
-			<Col sm={3} xs={3}> </Col>
-	  		<Col sm={6} xs={6}  className="footer-links"> 
+			<Col sm={4} xs={4}  className="footer-links"> 
 	  			<a className="footer-links" href="mailto:help@aavoni.com">help@aavoni.com</a>
 	    	</Col>
-	    	<Col sm={3} xs={3}> </Col>
-    	</Row>
-    	<Row noGutters={true}>
-			<Col sm={3} xs={3}> </Col>
-	  		<Col sm={6} xs={6} className="footer-links"> 
+	    	<Col sm={4} xs={4} className="footer-links"> 
 	  			<a href="/terms-conditions">Terms & Conditions</a>
 	    	</Col>
-	    	<Col sm={3} xs={3}> </Col>
-    	</Row>
-    	<Row noGutters={true}>
-			<Col sm={3} xs={3}> </Col>
-	  		<Col sm={6} xs={6} className="footer-links"> 
+	    	<Col sm={4} xs={4} className="footer-links"> 
 	  			<a href="/privacy-policy">Privacy Policy</a>
 	    	</Col>
-	    	<Col sm={3} xs={3}> </Col>
-    	</Row>
+		</Row>
       </Container>
 
   	);
