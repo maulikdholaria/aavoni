@@ -9,6 +9,7 @@ module.exports = merge(common, {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
+      favicon: 'src/images/favicon.ico',
       template: __dirname + '/src/index.ejs',
       filename: 'index.html',
       templateParameters: {'segmentApiKey': 'uoI6xOgFnop6uDJczFsrEoshwBrG3V5T',
