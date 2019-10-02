@@ -170,7 +170,7 @@ class SearchQuestions extends React.Component {
                             options={GlobalMapping['budgetRange_' + this.forCountry]}
                           />
                         </Col>
-                        <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Datepicker name="date" label="Date" dateFormat="MMMM d, yyyy" onChange={this.handleBlur}/></Col>
+                        <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="date" type="date" label="Date" onBlur={this.handleBlur}/></Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="fname" label="First Name" autoComplete="name" onBlur={this.handleBlur}/> </Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="lname" label="Last Name" autoComplete="name" onBlur={this.handleBlur}/> </Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="email" type="email" label="Email" autoComplete="email" onBlur={this.handleBlur}/></Col>
