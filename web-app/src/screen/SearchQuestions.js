@@ -20,7 +20,7 @@ class SearchQuestions extends React.Component {
     this.formData = {fname: '', lname: '', email: '', phone: '', date: '', guests: '', budget: '', event_location: '', message: ''};
     this.eventLocationObject = {city: '', state: '', country: '', lat: 0.00, lng: 0.00};
     this.forCountry = (this.props.match.params.country.toUpperCase());
-    this.msgPlaceholder = 'Tell us more about your wedding expectation. i.e. theme (romantic / vintage / modern / rustic), reception, music, food & drinks etc. \nProvide links to wedding materials you may have put together (Google Drive, Dropbox etc.)';
+    this.msgPlaceholder = 'Tell us more about your wedding preferences. i.e. theme (romantic / vintage / modern / rustic), reception, music, food & drinks etc. Provide links to wedding materials you may have put together (Pinterest boards, Google Drive, Dropbox etc.)';
 
   }
 
@@ -133,7 +133,7 @@ class SearchQuestions extends React.Component {
               Get personalized wedding professionals
             </h1>
             <p>
-              Answer a few questions and we will find amazing professionals suited to your wedding location and date for memorable experience & price. 
+              Answer a few questions and we will find amazing professionals suited to your wedding location and date for a memorable experience at the right price.
             </p>
             <div>
 
