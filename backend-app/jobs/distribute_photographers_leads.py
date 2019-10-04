@@ -3,12 +3,14 @@ import sys
 import json
 import random
 import uuid
+import time
 import pandas as pd
 import numpy as np
 import sqlalchemy as sql
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-
+sys.path.insert(0, '../lib_py')
+from global_mapping import GlobalMapping
 
 class DistributeLeads:
 	def __init__(self, env):
@@ -120,6 +122,7 @@ class DistributeLeads:
 				photographer_city_length = len(photographers_by_city[row['marketCitySlug']])
 				matched_indexes = random.sample(range(0, photographer_city_length-1), min(self.max_lead_match, photographer_city_length-1))
 				for matched_idx in matched_indexes:
+					time.sleep(0.5)
 					matched_photographer = photographers_by_city[row['marketCitySlug']][matched_idx]
 					matched_photographer['question_id'] = row['question_id']
 					matched_photographer['uuid'] = str(uuid.uuid1())
@@ -190,13 +193,13 @@ class DistributeLeads:
 			<br/><br/>
 			Name: %s %s
 			<br/><br/>
-			Location: %s
+			Wedding Location: %s
 			<br/><br/>
-			Date: %s
+			Wedding Date: %s
 			<br/><br/>
 			Est. Guest: %s
 			<br/><br/>
-			Est. Budget: %s
+			Est. Wedding Budget: %s
 			<br/><br/>
 			Email: %s
 			<br/><br/>
@@ -208,7 +211,7 @@ class DistributeLeads:
 			<br/><br/>
 			Thanks,<br/>
 			Team Aaavoni
-		""" %(lead['name'], lead['fname'], lead['fname'], lead['lname'], lead['city'], lead['date'], lead['guests'], lead['budget'], self.mask_email(lead['clientEmail']), self.mask_phone(lead['clientPhone']), lead['message'], lead['purchase_url'])			
+		""" %(lead['name'], lead['fname'], lead['fname'], lead['lname'], lead['city'], lead['date'], GlobalMapping.getGuests(lead['guests'])['label'], GlobalMapping.getBudget(lead['forCountry'], lead['budget'])['label'], self.mask_email(lead['clientEmail']), self.mask_phone(lead['clientPhone']), lead['message'], lead['purchase_url'])			
 
 		return email_body
 

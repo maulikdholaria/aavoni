@@ -9,6 +9,8 @@ import numpy as np
 import sqlalchemy as sql
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+sys.path.insert(0, '../lib_py')
+from global_mapping import GlobalMapping
 
 class DistributeLeads:
 	def __init__(self, env):
@@ -190,13 +192,13 @@ class DistributeLeads:
 			<br/><br/>
 			Name: %s %s
 			<br/><br/>
-			Location: %s
+			Wedding Location: %s
 			<br/><br/>
-			Date: %s
+			Wedding Date: %s
 			<br/><br/>
 			Est. Guest: %s
 			<br/><br/>
-			Est. Budget: %s
+			Est. Wedding Budget: %s
 			<br/><br/>
 			Email: %s
 			<br/><br/>
@@ -208,7 +210,7 @@ class DistributeLeads:
 			<br/><br/>
 			Thanks,<br/>
 			Team Aaavoni
-		""" %(lead['name'], lead['fname'], lead['fname'], lead['lname'], lead['city'], lead['date'], lead['guests'], lead['budget'], self.mask_email(lead['clientEmail']), self.mask_phone(lead['clientPhone']), lead['message'], lead['purchase_url'])			
+		""" %(lead['name'], lead['fname'], lead['fname'], lead['lname'], lead['city'], lead['date'], GlobalMapping.getGuests(lead['guests'])['label'], GlobalMapping.getBudget(lead['forCountry'], lead['budget'])['label'], self.mask_email(lead['clientEmail']), self.mask_phone(lead['clientPhone']), lead['message'], lead['purchase_url'])			
 
 		return email_body
 
