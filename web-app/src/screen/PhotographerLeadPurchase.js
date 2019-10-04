@@ -173,7 +173,7 @@ class PhotographerLeadPurchase extends React.Component {
           <Col xl={4} lg={8} md={8} sm={12} xs={12}>
             <div className={headerInfoClass}>
               <h1>
-                Thanks for showing interest in {leadInfo.fname}'s wedding
+                Thank you for your interest in {leadInfo.fname}’s wedding
               </h1>
               <p>
                 Full contact info will be available after purchase.
