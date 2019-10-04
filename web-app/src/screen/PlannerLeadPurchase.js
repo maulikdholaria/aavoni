@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button, Card, Spinner } from 'react-bootstrap';
 import { Formik } from 'formik';
@@ -177,6 +178,9 @@ class PlannerLeadPurchase extends React.Component {
               <p>
                 Full contact info will be available after purchase.
               </p>
+              <p>
+                <Link to={{pathname: `/lead-purchase-how-it-works`}} style={{ textDecoration: 'none' }}>How this works?</Link>
+              </p>
             </div>
             <Card style={{ width: '100%' }}>
               <Card.Body>
@@ -186,7 +190,14 @@ class PlannerLeadPurchase extends React.Component {
                   <Col lg={12} xl={12} md={12} sm={12} xs={12}> <span className="label">Phone:</span> <span className="value">{leadInfo.phone} </span></Col>
                   <Col lg={12} xl={12} md={12} sm={12} xs={12}> <span className="label">Guests:</span> <span className="value">{leadInfo.guests} </span></Col>
                   <Col lg={12} xl={12} md={12} sm={12} xs={12}> <span className="label">Budget:</span> <span className="value">{leadInfo.budget} </span></Col>
-                  <Col lg={12} xl={12} md={12} sm={12} xs={12}> <span className="label">Date:</span> <span className="value">{leadInfo.date} </span></Col>
+                  <Col lg={12} xl={12} md={12} sm={12} xs={12}> 
+                    <span className="label">Date:</span> 
+                    <span className="value">
+                      <Moment format="MMMM D, YYYY">
+                        {leadInfo.date}
+                      </Moment>
+                    </span>
+                  </Col>
                   <Col lg={12} xl={12} md={12} sm={12} xs={12}> <span className="label">Location:</span> <span className="value">{leadInfo.city}, {leadInfo.state} </span></Col>
                   <Col lg={12} xl={12} md={12} sm={12} xs={12}> 
                     <span className="label">Wedding Details:</span> 

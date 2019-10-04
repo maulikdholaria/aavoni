@@ -26,6 +26,7 @@ import PlannerLeadPurchase from './screen/PlannerLeadPurchase';
 import PhotographerLeadPurchase from './screen/PhotographerLeadPurchase';
 import TermsConditions from './screen/TermsConditions';
 import PrivacyPolicy from './screen/PrivacyPolicy';
+import LeadPurchaseHowItWorks from './screen/LeadPurchaseHowItWorks';
 
 const API_HOST="http://localhost:3001"
 
@@ -56,6 +57,7 @@ function App() {
         <Route path="/photographer-lead-purchase/:uuid" exact component={PhotographerLeadPurchase} />
         <Route path="/terms-conditions" exact component={TermsConditions} />
         <Route path="/privacy-policy" exact component={PrivacyPolicy} />
+        <Route path="/lead-purchase-how-it-works" exact component={LeadPurchaseHowItWorks} />
       </div>
     </BrowserRouter>
   );
