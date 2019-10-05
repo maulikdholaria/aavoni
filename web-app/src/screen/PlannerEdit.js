@@ -32,10 +32,10 @@ class PlannerEdit extends React.Component {
     return Yup.object().shape({
       name: Yup.string()
         .required('Required'),
-      about: Yup.string()
-        .required('Required'),
-      phone: Yup.string()
-        .required('Required'),
+      // about: Yup.string()
+      //   .required('Required'),
+      // phone: Yup.string()
+      //   .required('Required'),
       email: Yup.string()
         .email('Invalid email')
         .required('Required'),
@@ -68,8 +68,8 @@ class PlannerEdit extends React.Component {
             instagram: data.instagram == null? '':data.instagram,
             pinterest: data.pinterest == null? '':data.pinterest,
             website: data.website == null? '':data.website,
-            address: data.address == null? '':data.address,
-            marketCityId: data.marketCityId == null? '':data.marketCityId};
+            address: data.address == null? 'Los Angeles, CA':data.address,
+            marketCityId: data.marketCityId == null? 3:data.marketCityId};
   }
 
   componentDidMount() {
