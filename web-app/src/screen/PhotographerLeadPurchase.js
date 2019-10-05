@@ -102,6 +102,7 @@ class PhotographerLeadPurchase extends React.Component {
         const photographersApi = new PhotographersApi();
         photographersApi.get(response.data.data.search_question_match.photographerId, response => {
           const responseData = response.data;
+          responseData.data.phone = '';
           this.setState({
             photographerInfo: responseData.data
           });

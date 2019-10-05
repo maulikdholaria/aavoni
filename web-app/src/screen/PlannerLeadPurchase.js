@@ -102,6 +102,7 @@ class PlannerLeadPurchase extends React.Component {
         const plannersApi = new PlannersApi();
         plannersApi.get(response.data.data.search_question_match.plannerId, response => {
           const responseData = response.data;
+          responseData.data.phone = '';
           this.setState({
             plannerInfo: responseData.data
           });
