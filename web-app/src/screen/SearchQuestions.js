@@ -133,7 +133,7 @@ class SearchQuestions extends React.Component {
               Get personalized wedding professionals
             </h1>
             <p>
-              Answer a few questions and we will find amazing professionals suited to your wedding location and date for a memorable experience at the right price.
+              Answer a few quick questions to get matched with wedding  professionals best suited to help you plan your dream wedding.
             </p>
             <div>
 

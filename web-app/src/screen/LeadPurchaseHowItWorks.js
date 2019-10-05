@@ -25,7 +25,7 @@ class LeadPurchaseHowItWorks extends React.Component {
           		<Col xl={4} lg={4} md={12} sm={12} xs={12} className='component-col'>
           			<img src='site-assets/images/icons/professionals.svg'/>
           			<p className='step'>Step 1</p>
-          			<p>You are one of the qualified wedding professionals who is matched with couple's wedding preferences.</p>
+          			<p>You are one of the qualified wedding professionals who is matched with a couple's wedding preferences.</p>
           		</Col>
           		<Col xl={4} lg={4} md={12} sm={12} xs={12} className='component-col'>
           			<img src='site-assets/images/icons/acceptance.svg'/>

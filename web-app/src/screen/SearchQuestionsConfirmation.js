@@ -30,12 +30,12 @@ class SearchQuestionsConfirmation extends React.Component {
           		<Col xl={4} lg={4} md={12} sm={12} xs={12} className='component-col'>
           			<img src='site-assets/images/icons/acceptance.svg'/>
           			<p className='step'>Step 2</p>
-          			<p>Only qualified professionals will receive your info and should contact you soon.</p>
+          			<p>Only qualified professionals will receive your info and  contact you.</p>
           		</Col>
           		<Col xl={4} lg={4} md={12} sm={12} xs={12} className='component-col'>
           			<img src='site-assets/images/icons/email-info.svg'/>
           			<p className='step'>Step 3</p>
-          			<p>We'll share their info once they accept your request.</p>
+          			<p>We'll share their information once they accept your request.</p>
           		</Col>
           	</Row>
           </Col>
