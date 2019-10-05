@@ -239,7 +239,11 @@ class PhotographerLeadPurchase extends React.Component {
                   )}
               />
             </div>
-            
+            <div className="footer-info">
+              <p>
+                Completed profiles helps us match better. Set up your profile like <Link to={{pathname: `/s/wedding-planner/${photographerInfo.marketCity}`}} style={{ textDecoration: 'none' }}>other professionals</Link> in your area for free. Start <a href="https://forms.gle/LkqSoYkGVqnjr1HF6" target="_blank" style={{ textDecoration: 'none' }}>here</a>
+              </p>
+            </div>
           </Col>
           <Col xl={4} lg={2} md={2}></Col>
         </Row>
