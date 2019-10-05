@@ -18,12 +18,13 @@ module.exports = merge(common, {
   ],
   devServer: {
     contentBase: './dist',
-    port: 3000,
+    host: 'dev.aavoni.com',
+    port: 80,
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:3001',
-      '/images': 'http://localhost:3001',
-      '/site-assets': 'http://localhost:3001'
+      '/api': 'http://dev.aavoni.com:3001',
+      '/images': 'http://dev.aavoni.com:3001',
+      '/site-assets': 'http://dev.aavoni.com:3001'
     },
     hot: true
   }
