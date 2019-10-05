@@ -122,7 +122,8 @@ class DistributeLeads:
 				photographer_city_length = len(photographers_by_city[row['marketCitySlug']])
 				matched_indexes = random.sample(range(0, photographer_city_length-1), min(self.max_lead_match, photographer_city_length-1))
 				for matched_idx in matched_indexes:
-					time.sleep(0.5)
+					if self.env == 'production':
+						time.sleep(0.5)
 					matched_photographer = photographers_by_city[row['marketCitySlug']][matched_idx]
 					matched_photographer['question_id'] = row['question_id']
 					matched_photographer['uuid'] = str(uuid.uuid1())
@@ -189,7 +190,7 @@ class DistributeLeads:
 			<br/><br/>
 			You expertise can help %s capture wedding memories.
 			<br/><br/>
-			Here is the info:
+			Here is the wedding information:
 			<br/><br/>
 			Name: %s %s
 			<br/><br/>

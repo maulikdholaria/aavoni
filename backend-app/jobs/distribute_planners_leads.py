@@ -121,7 +121,8 @@ class DistributeLeads:
 				planner_city_length = len(planners_by_city[row['marketCitySlug']])
 				matched_indexes = random.sample(range(0, planner_city_length-1), min(self.max_lead_match, planner_city_length-1))
 				for matched_idx in matched_indexes:
-					time.sleep(0.5)
+					if self.env == 'production':
+						time.sleep(0.5)
 					matched_planner = planners_by_city[row['marketCitySlug']][matched_idx]
 					matched_planner['question_id'] = row['question_id']
 					matched_planner['uuid'] = str(uuid.uuid1())
@@ -188,7 +189,7 @@ class DistributeLeads:
 			<br/><br/>
 			You expertise can help %s plan thier wedding.
 			<br/><br/>
-			Here is the info:
+			Here is the wedding information:
 			<br/><br/>
 			Name: %s %s
 			<br/><br/>
