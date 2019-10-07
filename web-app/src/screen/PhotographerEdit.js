@@ -63,8 +63,8 @@ class PhotographerEdit extends React.Component {
             instagram: data.instagram == null? '':data.instagram,
             pinterest: data.pinterest == null? '':data.pinterest,
             website: data.website == null? '':data.website,
-            address: data.address == null? 'Los Angeles, CA':data.address,
-            marketCityId: data.marketCityId == null? 3:data.marketCityId};
+            address: data.address == null? 'Manhattan, NY':data.address,
+            marketCityId: data.marketCityId == null? 2:data.marketCityId};
   }
 
   componentDidMount() {
