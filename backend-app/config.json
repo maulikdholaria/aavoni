@@ -27,7 +27,7 @@
 		"GOOGLE_API_KEY": "AIzaSyAdaD1-vlEvnZqCRChTaoyIyPyVI1fdmQs",
 		"IMAGE_BASE_DIR": "/usr/share/app",
 		"STRIPE_SECRET_KEY": "sk_test_jBXyFHUarWH1OggmcAklqPHN00WJQuvf5m",
-		"SENDGRID": "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",
+		"SENDGRID_API_KEY": "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",
 		"twilio": {
 			"NUMBER": "+14422640710",
 			"ACCOUNT_SID": "AC06182d73001c3aa0fb41a0bc6b92ca72",
@@ -44,7 +44,7 @@
 		"GOOGLE_API_KEY": "AIzaSyAW9D6T9xGlWAUHlbciguD7QFtjvnPbE8g",
 		"IMAGE_BASE_DIR": "/usr/share/app",
 		"STRIPE_SECRET_KEY": "sk_live_ds5DgoeARc9gUlOzndROMsww00blZMEuLT",
-		"SENDGRID": "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",
+		"SENDGRID_API_KEY": "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",
 		"twilio": {
 			"NUMBER": "+14422640710",
 			"ACCOUNT_SID": "AC06182d73001c3aa0fb41a0bc6b92ca72",
