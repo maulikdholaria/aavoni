@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import random
+import hashlib
 import uuid
 import time
 import pandas as pd
@@ -119,13 +120,13 @@ class DistributeLeads:
 		for question_index, row in self.latest_search_question_with_mc.iterrows(): 
 			if row['marketCitySlug'] in planners_by_city:
 				planner_city_length = len(planners_by_city[row['marketCitySlug']])
-				matched_indexes = random.sample(range(0, planner_city_length-1), min(self.max_lead_match, planner_city_length-1))
+				matched_indexes = random.sample(range(0, planner_city_length-1), max(planner_city_length-1, planner_city_length-1))
 				for matched_idx in matched_indexes:
-					if self.env == 'production':
-						time.sleep(0.5)
+					# if self.env == 'production':
+					# 	time.sleep(0.5)
 					matched_planner = planners_by_city[row['marketCitySlug']][matched_idx]
 					matched_planner['question_id'] = row['question_id']
-					matched_planner['uuid'] = str(uuid.uuid1())
+					matched_planner['uuid'] =  hashlib.sha256(str(matched_planner['email'])+str(matched_planner['planner_id'])+str(matched_planner['question_id'])+str(uuid.uuid4())+str(uuid.uuid1())+str(time.time())+'-'+str(random.random()).encode()).hexdigest()
 					matched_planners.append(matched_planner)
 		
 		matched_planners_df = pd.DataFrame(matched_planners)
@@ -179,7 +180,11 @@ class DistributeLeads:
 		sql_insert_statement = """INSERT INTO 
 								  planners_search_lead_match (searchQuestionId, plannerId, uuid) 
 							   	  VALUES(%d, %d, '%s')""" %(lead['question_id'],lead['planner_id'],lead['uuid'])
-		rs = self.sql_conn.execute(sql_insert_statement)
+		try:
+			rs = self.sql_conn.execute(sql_insert_statement)
+		except Exception as e:
+		    print(str(e))
+
 		return True
 
 	def planners_email_body(self, lead):
