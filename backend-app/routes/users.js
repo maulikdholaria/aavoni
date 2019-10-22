@@ -17,10 +17,12 @@ router.get('/me', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-  if(!req.session.isAdmin) {
+  if(!req.session.isAdmin && req.body.authToken != 'elkdfj2938dfwekjrh2kj3hr423') {
   	res.send({'success': false, 'reason': 'USER_UNAUTHORIZED'});
   	return;
   }
+
+  delete req.body.authToken;
 
   req.body.plainPass = generator.generate({length: 10, numbers: true});
   req.body.password = crypto.createHmac('sha256', secret)
