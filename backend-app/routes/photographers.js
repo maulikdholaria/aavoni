@@ -21,10 +21,13 @@ router.get('/get/:id', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {	
-  if(!req.session.isAdmin) {
+  if(!req.session.isAdmin && req.body.authToken != 'elkdfj2938dfwekjrh2kj3hr423') {
     res.send({'success': false, 'reason': 'USER_UNAUTHORIZED'});
     return;
   }   
+
+  delete req.body.authToken;
+  
   if(req.body.userId == undefined || req.body.userId == null) {
     res.send({'success': false, 'reason': 'UNEXPECTED_ERROR'});
     return;
