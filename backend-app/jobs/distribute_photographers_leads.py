@@ -77,7 +77,8 @@ class DistributeLeads:
 				from search_questions sq
 				left join (select searchquestionId from photographers_search_lead_match group by 1) ph on sq.id = ph.searchquestionId
 				where ph.searchquestionId is null
-				and sq.markedAsBad = 0"""
+				and sq.markedAsBad = 0
+				and sq.photographer = 1"""
 		df = pd.read_sql_query(sql, self.sql_conn)	
 		df.rename(columns={"id": "question_id", "email": "clientEmail", "phone": "clientPhone"}, inplace=True)
 		return df
