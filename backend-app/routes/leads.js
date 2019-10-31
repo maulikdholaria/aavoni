@@ -117,8 +117,14 @@ router.get('/planners-search-lead-match/:uuid', function(req, res, next) {
   })
   .then(sq_resp => {
     search_question = sq_resp[0];
+    if(search_question.message == null) {
+      search_question.message = '';
+    }
+    if(search_question.lname == null) {
+      search_question.lname = '';
+    }
     search_question.message = search_question.message.toString('utf8');
-    if (matched_search_lead['purchasedAt'] == null || matched_search_lead['purchasedAt'] == "") {
+    if(matched_search_lead['purchasedAt'] == null || matched_search_lead['purchasedAt'] == "") {
       search_question['email'] = email_lib.mask(search_question['email']);
       search_question['phone'] = phone_lib.mask(search_question['phone']);
       search_question['lname'] = search_question['lname'].substring(0, 3) + "****";
@@ -217,8 +223,14 @@ router.get('/photographers-search-lead-match/:uuid', function(req, res, next) {
   })
   .then(sq_resp => {
     search_question = sq_resp[0];
+    if(search_question.message == null) {
+      search_question.message = '';
+    }
+    if(search_question.lname == null) {
+      search_question.lname = '';
+    }
     search_question.message = search_question.message.toString('utf8');
-    if (matched_search_lead['purchasedAt'] == null || matched_search_lead['purchasedAt'] == "") {
+    if(matched_search_lead['purchasedAt'] == null || matched_search_lead['purchasedAt'] == "") {
       search_question['email'] = email_lib.mask(search_question['email']);
       search_question['phone'] = phone_lib.mask(search_question['phone']);
       search_question['lname'] = search_question['lname'].substring(0, 3) + "****";
