@@ -16,6 +16,7 @@ class DistributeLeads:
 	def __init__(self, env):
 		self.env = env
 		self.non_production_email = 'rohit@aavoni.com'
+		self.non_production_phone = '+19494124179'
 		self.max_lead_match = 100
 		self.has_questions_to_process = False
 		self.config = self.get_config()
@@ -72,7 +73,7 @@ class DistributeLeads:
 
 	def get_latest_search_question(self):
 		print "%s(): Getting lastest search questions" %(sys._getframe(  ).f_code.co_name)
-		sql = """select *
+		sql = """select sq.*
 				from search_questions sq
 				left join (select searchquestionId from photographers_search_lead_match group by 1) ph on sq.id = ph.searchquestionId
 				where ph.searchquestionId is null
@@ -156,6 +157,7 @@ class DistributeLeads:
 		else:
 			leads_to_be_sent_df = self.photographer_leads.sample(3)
 			leads_to_be_sent_df['email'] = self.non_production_email
+			leads_to_be_sent_df['phone'] = self.non_production_phone
 		
 		for lead_index, lead in leads_to_be_sent_df.iterrows():
 			email_status = self.send_photographer_email(lead)

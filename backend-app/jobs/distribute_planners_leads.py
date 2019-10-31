@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 import sqlalchemy as sql
 from sendgrid import SendGridAPIClient
+from twilio.rest import Client
 from sendgrid.helpers.mail import Mail
 sys.path.insert(0, '../lib_py')
 from global_mapping import GlobalMapping
@@ -17,6 +18,7 @@ class DistributeLeads:
 	def __init__(self, env):
 		self.env = env
 		self.non_production_email = 'rohit@aavoni.com'
+		self.non_production_phone = '+19494124179'
 		self.max_lead_match = 100
 		self.has_questions_to_process = False
 		self.config = self.get_config()
@@ -73,7 +75,7 @@ class DistributeLeads:
 
 	def get_latest_search_question(self):
 		print "%s(): Getting lastest search questions" %(sys._getframe(  ).f_code.co_name)
-		sql = """select *
+		sql = """select sq.*
 				from search_questions sq
 				left join (select searchquestionId from planners_search_lead_match group by 1) pl on sq.id = pl.searchquestionId
 				where pl.searchquestionId is null
@@ -157,12 +159,28 @@ class DistributeLeads:
 		else:
 			leads_to_be_sent_df = self.planner_leads.sample(3)
 			leads_to_be_sent_df['email'] = self.non_production_email
+			leads_to_be_sent_df['phone'] = self.non_production_phone
 		
 		for lead_index, lead in leads_to_be_sent_df.iterrows():
 			email_status = self.send_planner_email(lead)
 			if email_status == True:
+				# if lead['forCountry'] == 'IN':
+				# 	self.send_planner_whatsapp(lead)
 				self.save_planner_lead_send(lead)
 			print "Email | QuestionId: %d | PlannerId: %d | %s | %s" %(lead['question_id'], lead['planner_id'], lead['email'], str(email_status))
+
+	def send_planner_whatsapp(self, lead):
+
+		if lead['forCountry'] == 'IN' and "+91" not in lead['phone']:
+			lead['phone'] = "+91%s" %(lead['phone'])
+
+		email_body = self.planners_whatsapp_body(lead)
+		client = Client(self.config['twilio']['ACCOUNT_SID'], self.config['twilio']['AUTH_TOKEN'])
+
+		message = client.messages.create(from_='whatsapp:%s' %(self.config['twilio']['WHATSAPP_NUMBER']),
+	    								 body=email_body,
+	    								 to='whatsapp:%s' %(lead['phone']))
+		return True
 
 	def send_planner_email(self, lead):
 		email_body = self.planners_email_body(lead)
@@ -192,6 +210,39 @@ class DistributeLeads:
 		    print(str(e))
 
 		return True
+
+	def planners_whatsapp_body(self, lead):
+		lead['purchase_url'] = "https://www.aavoni.com/planner-lead-purchase/%s" %(lead['uuid'])
+		email_body = """
+			Hello %s, 
+			
+			You expertise can help %s plan thier wedding.
+			
+			Here is the wedding information:
+			
+			Name: %s %s
+			
+			Wedding Location: %s
+			
+			Wedding Date: %s
+			
+			Est. Guest: %s
+			
+			Est. Wedding Budget: %s
+			
+			Email: %s
+			
+			Phone: %s
+			
+			Message: %s
+			
+			Get Contact Info: %s
+			
+			Thanks,
+			Team Aaavoni
+		""" %(lead['name'], lead['fname'], lead['fname'], lead['lname'], lead['city'], lead['date'], GlobalMapping.getGuests(lead['guests'])['label'], GlobalMapping.getBudget(lead['forCountry'], lead['budget'])['label'], self.mask_email(lead['clientEmail']), self.mask_phone(lead['clientPhone']), lead['message'], lead['purchase_url'])			
+
+		return email_body
 
 	def planners_email_body(self, lead):
 		lead['purchase_url'] = "https://www.aavoni.com/planner-lead-purchase/%s" %(lead['uuid'])
