@@ -73,7 +73,11 @@ class DistributeLeads:
 
 	def get_latest_search_question(self):
 		print "%s(): Getting lastest search questions" %(sys._getframe(  ).f_code.co_name)
-		sql = "SELECT * FROM search_questions WHERE id > %d and planner=1" %(self.last_matched_search_question_id)
+		sql = """select *
+				from search_questions sq
+				left join (select searchquestionId from planners_search_lead_match group by 1) pl on sq.id = pl.searchquestionId
+				where pl.searchquestionId is null
+				and sq.markedAsBad = 0""" 
 		df = pd.read_sql_query(sql, self.sql_conn)	
 		df.rename(columns={"id": "question_id", "email": "clientEmail", "phone": "clientPhone"}, inplace=True)
 		return df
@@ -115,18 +119,20 @@ class DistributeLeads:
 				planners_by_city[row['marketCity']].append(row.to_dict())
 			else:
 				planners_by_city[row['marketCity']] = []
+				planners_by_city[row['marketCity']].append(row.to_dict())
 
 		matched_planners = []
 		for question_index, row in self.latest_search_question_with_mc.iterrows(): 
 			if row['marketCitySlug'] in planners_by_city:
 				planner_city_length = len(planners_by_city[row['marketCitySlug']])
-				matched_indexes = random.sample(range(0, planner_city_length-1), max(planner_city_length-1, planner_city_length-1))
+				matched_indexes = random.sample(range(0, planner_city_length), max(planner_city_length, planner_city_length))
 				for matched_idx in matched_indexes:
 					# if self.env == 'production':
 					# 	time.sleep(0.5)
 					matched_planner = planners_by_city[row['marketCitySlug']][matched_idx]
 					matched_planner['question_id'] = row['question_id']
-					matched_planner['uuid'] =  hashlib.sha256(str(matched_planner['email'])+str(matched_planner['planner_id'])+str(matched_planner['question_id'])+str(uuid.uuid4())+str(uuid.uuid1())+str(time.time())+'-'+str(random.random()).encode()).hexdigest()
+					#matched_planner['uuid'] =  hashlib.sha256(str(matched_planner['email'])+str(matched_planner['planner_id'])+str(matched_planner['question_id'])+str(uuid.uuid4())+str(uuid.uuid1())+str(time.time())+'-'+str(random.random()).encode()).hexdigest()
+					matched_planner['uuid'] = str(uuid.uuid1())
 					matched_planners.append(matched_planner)
 		
 		matched_planners_df = pd.DataFrame(matched_planners)

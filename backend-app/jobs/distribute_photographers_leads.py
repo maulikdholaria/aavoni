@@ -72,7 +72,11 @@ class DistributeLeads:
 
 	def get_latest_search_question(self):
 		print "%s(): Getting lastest search questions" %(sys._getframe(  ).f_code.co_name)
-		sql = "SELECT * FROM search_questions WHERE id > %d and photographer=1" %(self.last_matched_search_question_id)
+		sql = """select *
+				from search_questions sq
+				left join (select searchquestionId from photographers_search_lead_match group by 1) ph on sq.id = ph.searchquestionId
+				where ph.searchquestionId is null
+				and sq.markedAsBad = 0"""
 		df = pd.read_sql_query(sql, self.sql_conn)	
 		df.rename(columns={"id": "question_id", "email": "clientEmail", "phone": "clientPhone"}, inplace=True)
 		return df
@@ -114,16 +118,17 @@ class DistributeLeads:
 				photographers_by_city[row['marketCity']].append(row.to_dict())
 			else:
 				photographers_by_city[row['marketCity']] = []
+				photographers_by_city[row['marketCity']].append(row.to_dict())
 
 		
 		matched_photographers = []
 		for question_index, row in self.latest_search_question_with_mc.iterrows(): 
 			if row['marketCitySlug'] in photographers_by_city:
 				photographer_city_length = len(photographers_by_city[row['marketCitySlug']])
-				matched_indexes = random.sample(range(0, photographer_city_length-1), min(self.max_lead_match, photographer_city_length-1))
+				matched_indexes = random.sample(range(0, photographer_city_length), min(photographer_city_length, photographer_city_length))
 				for matched_idx in matched_indexes:
-					if self.env == 'production':
-						time.sleep(0.5)
+					# if self.env == 'production':
+					# 	time.sleep(0.5)
 					matched_photographer = photographers_by_city[row['marketCitySlug']][matched_idx]
 					matched_photographer['question_id'] = row['question_id']
 					matched_photographer['uuid'] = str(uuid.uuid1())
