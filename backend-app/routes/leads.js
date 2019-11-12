@@ -130,7 +130,7 @@ router.get('/planners-search-lead-match/:uuid', function(req, res, next) {
       search_question['lname'] = search_question['lname'].substring(0, 3) + "****";
     }
 
-    res.send({success: true, data: {"search_question_match": matched_search_lead, "search_question": search_question}});  
+    res.send({success: true, data: {"search_question_match": matched_search_lead, "search_question": search_question, "pricing": leads_model.get_pricing(search_question)}});  
     return;
   })
   .catch(function(error){
@@ -152,56 +152,63 @@ router.post('/planner/search-lead-purchase', async function(req, res, next) {
     return;
   }
 
-  req.body.amtToBeCharged = req.body.leadPrice * 100;
+  search_questions_table.get(req.body.leadId).then(async function(search_question_resp){
+    const leadPricing = leads_model.get_pricing(search_question_resp[0]);
 
-  try {
-    var stripe_charge_resp = await stripe.charges.create({
-        amount: req.body.amtToBeCharged,
-        currency: "usd",
-        description: "planners_search_lead_match: " + req.body.uuid,
-        source: req.body.stripePaymentToken,
-        metadata: req.body,
-        receipt_email: req.body.deliveryEmail
-    });
-  } catch (e) {
-    //console.log(e);
-    res.send({success: false, errors:['Stripe error'], reason: 'UNEXPECTED_ERROR'});
-    return;
-  }
-  
-  const purchasedAtISOString = (new Date(Date.now())).toISOString(); 
-  const purchasedAt = purchasedAtISOString.substring(0, 10) + ' ' + purchasedAtISOString.substring(11,19);
+    req.body.amtToBeCharged = leadPricing.chargePrice;
 
-
-  if(stripe_charge_resp.hasOwnProperty('paid') && stripe_charge_resp['paid'] === true) {
-    fields_to_be_updated = {id: req.body.leadMatchId, 
-                            purchasedAt: purchasedAt, 
-                            ccConfirmation: stripe_charge_resp.id,
-                            amtPaid: req.body.amtToBeCharged,
-                            deliveryEmail: req.body.deliveryEmail,
-                            deliveryPhone: req.body.deliveryPhone};
+    try {
+      var stripe_charge_resp = await stripe.charges.create({
+          amount: req.body.amtToBeCharged,
+          currency: "usd",
+          description: "planners_search_lead_match: " + req.body.uuid,
+          source: req.body.stripePaymentToken,
+          metadata: req.body,
+          receipt_email: req.body.deliveryEmail
+      });
+    } catch (e) {
+      //console.log(e);
+      res.send({success: false, errors:['Stripe error'], reason: 'UNEXPECTED_ERROR'});
+      return;
+    }
     
-    planners_search_lead_match_table.edit(fields_to_be_updated)
-    .then(function(resp){
-      console.log("Updated search_lead_match");
-      return search_questions_table.get(req.body.leadId);
-    })
-    .then(function(sq_resp){
-        console.log("Getting search question and delivering lead info");
-        search_question = sq_resp[0];
-        search_question.deliveryEmail = req.body.deliveryEmail;
-        search_question.deliveryPhone = req.body.deliveryPhone;
-        leads_model.deliver_purchased_lead(search_question);    
-        res.send({success: true, data: {uuid: req.body.uuid, search_question: search_question}});      
-        return null;
-    }).catch(function(error){
-        console.log(error);
-        res.send({success: false, errors: ['Unable to update search_lead_match or get search question/deliver lead'],reason: 'UNEXPECTED_ERROR'});
-        return null;
-    });
-  } else {
-    res.send({success: false, errors:['Unable to capture cc charge'], reason: 'UNEXPECTED_ERROR'});
-  }
+    const purchasedAtISOString = (new Date(Date.now())).toISOString(); 
+    const purchasedAt = purchasedAtISOString.substring(0, 10) + ' ' + purchasedAtISOString.substring(11,19);
+
+
+    if(stripe_charge_resp.hasOwnProperty('paid') && stripe_charge_resp['paid'] === true) {
+      fields_to_be_updated = {id: req.body.leadMatchId, 
+                              purchasedAt: purchasedAt, 
+                              ccConfirmation: stripe_charge_resp.id,
+                              amtPaid: req.body.amtToBeCharged,
+                              deliveryEmail: req.body.deliveryEmail,
+                              deliveryPhone: req.body.deliveryPhone};
+      
+      planners_search_lead_match_table.edit(fields_to_be_updated)
+      .then(function(resp){
+        console.log("Updated search_lead_match");
+        return search_questions_table.get(req.body.leadId);
+      })
+      .then(function(sq_resp){
+          console.log("Getting search question and delivering lead info");
+          search_question = sq_resp[0];
+          search_question.deliveryEmail = req.body.deliveryEmail;
+          search_question.deliveryPhone = req.body.deliveryPhone;
+          leads_model.deliver_purchased_lead(search_question);    
+          res.send({success: true, data: {uuid: req.body.uuid, search_question: search_question}});      
+          return null;
+      }).catch(function(error){
+          console.log(error);
+          res.send({success: false, errors: ['Unable to update search_lead_match or get search question/deliver lead'],reason: 'UNEXPECTED_ERROR'});
+          return null;
+      });
+    } else {
+      res.send({success: false, errors:['Unable to capture cc charge'], reason: 'UNEXPECTED_ERROR'});
+    }
+  }).catch(error => {
+    res.send({success: false, errors: ['Not able to find the lead'], reason: 'UNEXPECTED_ERROR'});
+    return;
+  });
 
 });
 
@@ -236,7 +243,7 @@ router.get('/photographers-search-lead-match/:uuid', function(req, res, next) {
       search_question['lname'] = search_question['lname'].substring(0, 3) + "****";
     }
 
-    res.send({success: true, data: {"search_question_match": matched_search_lead, "search_question": search_question}});  
+    res.send({success: true, data: {"search_question_match": matched_search_lead, "search_question": search_question, "pricing": leads_model.get_pricing(search_question)}});  
     return;
   })
   .catch(function(error){
@@ -258,57 +265,63 @@ router.post('/photographer/search-lead-purchase', async function(req, res, next)
     return;
   }
 
-  req.body.amtToBeCharged = req.body.leadPrice * 100;
+  search_questions_table.get(req.body.leadId).then(async function(search_question_resp){
+    const leadPricing = leads_model.get_pricing(search_question_resp[0]);
 
-  try {
-    var stripe_charge_resp = await stripe.charges.create({
-        amount: req.body.amtToBeCharged,
-        currency: "usd",
-        description: "photographers_search_lead_match: " + req.body.uuid,
-        source: req.body.stripePaymentToken,
-        metadata: req.body,
-        receipt_email: req.body.deliveryEmail
-    });
-  } catch (e) {
-    //console.log(e);
-    res.send({success: false, errors:['Stripe error'], reason: 'UNEXPECTED_ERROR'});
-    return;
-  }
-  
-  const purchasedAtISOString = (new Date(Date.now())).toISOString(); 
-  const purchasedAt = purchasedAtISOString.substring(0, 10) + ' ' + purchasedAtISOString.substring(11,19);
+    req.body.amtToBeCharged = leadPricing.chargePrice;
 
-
-  if(stripe_charge_resp.hasOwnProperty('paid') && stripe_charge_resp['paid'] === true) {
-    fields_to_be_updated = {id: req.body.leadMatchId, 
-                            purchasedAt: purchasedAt, 
-                            ccConfirmation: stripe_charge_resp.id,
-                            amtPaid: req.body.amtToBeCharged,
-                            deliveryEmail: req.body.deliveryEmail,
-                            deliveryPhone: req.body.deliveryPhone};
+    try {
+      var stripe_charge_resp = await stripe.charges.create({
+          amount: req.body.amtToBeCharged,
+          currency: "usd",
+          description: "photographers_search_lead_match: " + req.body.uuid,
+          source: req.body.stripePaymentToken,
+          metadata: req.body,
+          receipt_email: req.body.deliveryEmail
+      });
+    } catch (e) {
+      //console.log(e);
+      res.send({success: false, errors:['Stripe error'], reason: 'UNEXPECTED_ERROR'});
+      return;
+    }
     
-    photographers_search_lead_match_table.edit(fields_to_be_updated)
-    .then(function(resp){
-      console.log("Updated search_lead_match");
-      return search_questions_table.get(req.body.leadId);
-    })
-    .then(function(sq_resp){
-        console.log("Getting search question and delivering lead info");
-        search_question = sq_resp[0];
-        search_question.deliveryEmail = req.body.deliveryEmail;
-        search_question.deliveryPhone = req.body.deliveryPhone;
-        leads_model.deliver_purchased_lead(search_question);    
-        res.send({success: true, data: {uuid: req.body.uuid, search_question: search_question}});      
-        return null;
-    }).catch(function(error){
-        console.log(error);
-        res.send({success: false, errors: ['Unable to update search_lead_match or get search question/deliver lead'],reason: 'UNEXPECTED_ERROR'});
-        return null;
-    });
-  } else {
-    res.send({success: false, errors:['Unable to capture cc charge'], reason: 'UNEXPECTED_ERROR'});
-  }
+    const purchasedAtISOString = (new Date(Date.now())).toISOString(); 
+    const purchasedAt = purchasedAtISOString.substring(0, 10) + ' ' + purchasedAtISOString.substring(11,19);
 
+
+    if(stripe_charge_resp.hasOwnProperty('paid') && stripe_charge_resp['paid'] === true) {
+      fields_to_be_updated = {id: req.body.leadMatchId, 
+                              purchasedAt: purchasedAt, 
+                              ccConfirmation: stripe_charge_resp.id,
+                              amtPaid: req.body.amtToBeCharged,
+                              deliveryEmail: req.body.deliveryEmail,
+                              deliveryPhone: req.body.deliveryPhone};
+      
+      photographers_search_lead_match_table.edit(fields_to_be_updated)
+      .then(function(resp){
+        console.log("Updated search_lead_match");
+        return search_questions_table.get(req.body.leadId);
+      })
+      .then(function(sq_resp){
+          console.log("Getting search question and delivering lead info");
+          search_question = sq_resp[0];
+          search_question.deliveryEmail = req.body.deliveryEmail;
+          search_question.deliveryPhone = req.body.deliveryPhone;
+          leads_model.deliver_purchased_lead(search_question);    
+          res.send({success: true, data: {uuid: req.body.uuid, search_question: search_question}});      
+          return null;
+      }).catch(function(error){
+          console.log(error);
+          res.send({success: false, errors: ['Unable to update search_lead_match or get search question/deliver lead'],reason: 'UNEXPECTED_ERROR'});
+          return null;
+      });
+    } else {
+      res.send({success: false, errors:['Unable to capture cc charge'], reason: 'UNEXPECTED_ERROR'});
+    }
+  }).catch(error => {
+    res.send({success: false, errors: ['Not able to find the lead'], reason: 'UNEXPECTED_ERROR'});
+    return;
+  });
 });
 
 module.exports = router;

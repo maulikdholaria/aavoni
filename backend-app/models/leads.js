@@ -85,6 +85,17 @@ var leads = {
     //console.log(msg);
     email.send(msg);
     //phone.send_sms(leadInfo.deliveryPhone, msg.text);
+  },
+  get_pricing: function(leadInfo) {
+    console.log(leadInfo);
+    if(leadInfo['forCountry'].toLowerCase() == 'us') {
+      return {localCurrency: 'usd', localCurrencySymbol: "$",localPrice: 3.00, chargePrice: 300};
+    }
+    else if(leadInfo['forCountry'].toLowerCase() == 'in') {
+      return {localCurrency: 'inr', localCurrencySymbol: "₹", localPrice: 71.00, chargePrice: 100};
+    } else {
+      return {localCurrency: 'usd', localCurrencySymbol: "$", localPrice: 5.00, chargePrice: 500};
+    }
   }
 };
 

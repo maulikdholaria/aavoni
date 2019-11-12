@@ -166,7 +166,7 @@ class SearchQuestions extends React.Component {
                           />
                         </Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> 
-                          <Select name='budget' label='Approximate Budget' placeholder='Select...' onBlur={this.handleBlur}
+                          <Select name='budget' label='Approximate Wedding Budget' placeholder='Select...' onBlur={this.handleBlur}
                             options={GlobalMapping['budgetRange_' + this.forCountry]}
                           />
                         </Col>

@@ -67,6 +67,7 @@ class PhotographerLeadPurchase extends React.Component {
                   leadMatchInfo: {}, 
                   photographerInfo: {name: '',about: '',email: '',phone: '',priceRange: '',fb: '',instagram: '',pinterest: '',website: '',address: '',marketCityId: ''},
                   leadPrice: 5.00,
+                  currencySymbol: "$",
                   leadPriceClass: 'lead-price show-element',
                   formClass: 'lead-delivery-form show-form',
                   spinnerClass: 'hide-spinner',
@@ -88,14 +89,14 @@ class PhotographerLeadPurchase extends React.Component {
         let budgetRangeMappingKey = 'budgetRange_' + response.data.data.search_question['forCountry'];
         
         //const leadPrice = Math.max(2, Math.ceil(GlobalMapping[budgetRangeMappingKey][response.data.data.search_question['budget']]['midLimit'] * .0005));
-        const leadPrice = 3;
         response.data.data.search_question['guests'] = GlobalMapping['guestsRange'][response.data.data.search_question['guests']]['label'];
         response.data.data.search_question['budget'] = GlobalMapping[budgetRangeMappingKey][response.data.data.search_question['budget']]['label'];
         
         store.dispatch(this.addSearchQuestionDetail(response.data.data.search_question));
         this.setState({
             leadInfo: response.data.data.search_question,
-            leadPrice: leadPrice,
+            leadPrice: response.data.data.pricing.localPrice,
+            currencySymbol: response.data.data.pricing.localCurrencySymbol,
             leadMatchInfo: response.data.data.search_question_match
         });
 
@@ -165,7 +166,7 @@ class PhotographerLeadPurchase extends React.Component {
   }
 
   render() {
-    const { headerInfoClass, leadInfo, photographerInfo, leadPrice, formClass, leadPriceClass, spinnerClass, leadSoldClass, submitDisabled } = this.state;    
+    const { headerInfoClass, leadInfo, photographerInfo, leadPrice, currencySymbol, formClass, leadPriceClass, spinnerClass, leadSoldClass, submitDisabled } = this.state;    
     
     return(
       <Container fluid className="lead-purchase-screen">
@@ -207,7 +208,7 @@ class PhotographerLeadPurchase extends React.Component {
                 </Row>
               </Card.Body>
             </Card>
-            <div className={leadPriceClass}> <span className="label">Total:</span> <span className="value">${leadPrice}</span></div>
+            <div className={leadPriceClass}> <span className="label">Total:</span> <span className="value">{currencySymbol}{leadPrice}</span></div>
             <div className={leadSoldClass}>
                 <h1>Sufficient number of photographers expressed interest helping {leadInfo.fname}. 
                     Act faster next time if the wedding info matches your criteria.
