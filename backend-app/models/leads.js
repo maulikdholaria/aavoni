@@ -92,7 +92,7 @@ var leads = {
       return {localCurrency: 'usd', localCurrencySymbol: "$",localPrice: 3.00, chargePrice: 300};
     }
     else if(leadInfo['forCountry'].toLowerCase() == 'in') {
-      return {localCurrency: 'inr', localCurrencySymbol: "₹", localPrice: 71.00, chargePrice: 100};
+      return {localCurrency: 'inr', localCurrencySymbol: "₹", localPrice: 81.00, chargePrice: 100};
     } else {
       return {localCurrency: 'usd', localCurrencySymbol: "$", localPrice: 5.00, chargePrice: 500};
     }
