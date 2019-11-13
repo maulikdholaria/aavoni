@@ -39,7 +39,7 @@ class SearchQuestions extends React.Component {
         .max(50, 'Too Long!')
         .required('Required'),
       email: Yup.string()
-        .email('Invalid email'),
+        .email('Invalid Email'),
       phone: Yup.string()
         .required('Required'),
       guests: Yup.string()
@@ -48,6 +48,7 @@ class SearchQuestions extends React.Component {
         .required('Required'),
       event_location: Yup.string()
         .required('Required')
+        .min(3, 'Valid Location Required')
     });
   }
 
