@@ -14,7 +14,7 @@ module.exports = merge(common, {
       templateParameters: {'segmentApiKey': '42CI83ly0QjtNOAOcdYpsOfU71Xjcrrl',
   						   'googleMapsKey': 'AIzaSyAW9D6T9xGlWAUHlbciguD7QFtjvnPbE8g'}
     }),
-    new CompressionPlugin({algorithm: 'brotliCompress'})
+    new CompressionPlugin()
   ],
   optimization: {
     minimize: true,
