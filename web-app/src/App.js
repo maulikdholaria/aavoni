@@ -22,8 +22,7 @@ import SearchWeddingVenue from './screen/SearchWeddingVenue';
 import VenueDetails from './screen/VenueDetails';
 import VenueContact from './screen/VenueContact';
 import SearchQuestionDetail from './screen/SearchQuestionDetail';
-import PlannerLeadPurchase from './screen/PlannerLeadPurchase';
-import PhotographerLeadPurchase from './screen/PhotographerLeadPurchase';
+import LeadPurchasePage from './screen/LeadPurchasePage';
 import TermsConditions from './screen/TermsConditions';
 import PrivacyPolicy from './screen/PrivacyPolicy';
 import LeadPurchaseHowItWorks from './screen/LeadPurchaseHowItWorks';
@@ -53,8 +52,8 @@ function App() {
         <Route path="/venue/:id" exact component={VenueDetails} />
         <Route path="/venue/contact/:id" exact component={VenueContact} />
         <Route path="/search-question-detail/:id" exact component={SearchQuestionDetail} />
-        <Route path="/planner-lead-purchase/:uuid" exact component={PlannerLeadPurchase} />
-        <Route path="/photographer-lead-purchase/:uuid" exact component={PhotographerLeadPurchase} />
+        <Route path="/planner-lead-purchase/:uuid" exact component={LeadPurchasePage} />
+        <Route path="/photographer-lead-purchase/:uuid" exact component={LeadPurchasePage} />
         <Route path="/terms-conditions" exact component={TermsConditions} />
         <Route path="/privacy-policy" exact component={PrivacyPolicy} />
         <Route path="/lead-purchase-how-it-works" exact component={LeadPurchaseHowItWorks} />

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button, Card, Spinner } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { Form, Field, Input, SubmitBtn } from 'react-formik-ui';
-import { Config } from '../Config';
 import { GlobalMapping } from '../GlobalMapping';
 import store from '../redux-store/store';
 import SearchQuestionsApi from '../api/SearchQuestionsApi';
@@ -61,7 +60,7 @@ class CreditCardForm extends React.Component {
 class PhotographerLeadPurchase extends React.Component {
   constructor(props) {
     super(props);
-    this.uuid = (this.props.match.params.uuid.toLowerCase());
+    this.uuid = (this.props.uuid.toLowerCase());
     this.state = {headerInfoClass: '',
                   leadInfo: {budget: '', catering: '', city: '', country: '', createdAt: '', date: '', email: '', fname: '', forCountry: '', guests: '', id: '', lat: '', lname: '', lng: '', makeup: '', phone: '', photographer: '', photographer: '', state: '', venue: '', photographerSold: 0},
                   leadMatchInfo: {}, 
@@ -167,7 +166,8 @@ class PhotographerLeadPurchase extends React.Component {
 
   render() {
     const { headerInfoClass, leadInfo, photographerInfo, leadPrice, currencySymbol, formClass, leadPriceClass, spinnerClass, leadSoldClass, submitDisabled } = this.state;    
-    
+    const stripePublishKey = this.props.stripePublishKey;
+
     return(
       <Container fluid className="lead-purchase-screen">
         <Row noGutters={true}>
@@ -228,7 +228,7 @@ class PhotographerLeadPurchase extends React.Component {
                       <Form className="form" mode='themed'>
                         <Input name="email" type="email" label="Email" autoComplete="email"/>
                         <Input name="phone" type="tel" label="Phone" autoComplete="tel"/>
-                        <StripeProvider apiKey={Config.stripe.PUBLISHABLE_KEY}>
+                        <StripeProvider apiKey={stripePublishKey}>
                           <Elements>
                             <CreditCardForm onChange={this.enablePurchase}/>
                           </Elements>
