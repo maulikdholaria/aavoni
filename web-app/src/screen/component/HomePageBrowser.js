@@ -14,7 +14,7 @@ class HomePageBrowser extends React.Component {
   }
 
   handleSubmit = (values) => {
-	const country = GlobalMapping['location'][values['where']-1]['marketCountry'];
+	const country = GlobalMapping['marketCountries'][values['where']-1]['marketCountry'];
     this.props.history.push("/search-questions/" + country.toLowerCase());
   }
 
@@ -48,7 +48,7 @@ class HomePageBrowser extends React.Component {
 							        <Form className="form block2" mode='themed'>
 						        	  <Row>
 				        			  	<Col xs="12" sm="12" md="12" lg="12" xl="12">
-				        				  <Select name='where' label='My Wedding Location' placeholder='Select...' options={GlobalMapping.location} />
+				        				  <Select name='where' label='My Wedding Location Is In' placeholder='Select...' options={GlobalMapping.marketCountries} />
 				        			  	</Col>
 				        			  	<Col xs="12" sm="12" md="12" lg="12" xl="12">
 				        			  	  <SubmitBtn className="link-button">Search</SubmitBtn>

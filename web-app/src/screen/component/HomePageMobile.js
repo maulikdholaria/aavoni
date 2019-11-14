@@ -14,7 +14,7 @@ class HomePageMobile extends React.Component {
   }
 
   handleSubmit = (values) => {
-    const country = GlobalMapping['location'][values['where']-1]['marketCountry'];
+    const country = GlobalMapping['marketCountries'][values['where']-1]['marketCountry'];
     this.props.history.push("/search-questions/" + country.toLowerCase());
   }
 
@@ -41,8 +41,8 @@ class HomePageMobile extends React.Component {
 			      render={({ errors, touched }) => (
 			      	
 				        <Form className="form block2" mode='themed'>
-						    <Select name='where' label='My Wedding Location' placeholder='Select...'
-					          options={GlobalMapping.location}
+						    <Select name='where' label='My Wedding Location Is In' placeholder='Select...'
+					          options={GlobalMapping.marketCountries}
 						    />
 		      		  		<SubmitBtn className="link-button">Search</SubmitBtn>
 				        </Form>
