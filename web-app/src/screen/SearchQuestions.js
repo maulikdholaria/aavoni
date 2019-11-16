@@ -46,6 +46,8 @@ class SearchQuestions extends React.Component {
         .required('Required'),
       budget: Yup.string()
         .required('Required'),
+      date: Yup.string()
+        .required('Required'),  
       event_location: Yup.string()
         .required('Required')
         .min(3, 'Valid Location Required')
@@ -147,7 +149,7 @@ class SearchQuestions extends React.Component {
                     <Form className="form contact-form" mode='themed'>
                       <Row>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12} className='service-need-continer'> 
-                           <div>I need</div>
+                           <div>I need (Select at least one)</div>
                            
                            <ToggleButtonGroup value={formats} onChange={this.handleToggle.bind(this)} onBlur={this.handleBlur}>
                             {
@@ -171,11 +173,11 @@ class SearchQuestions extends React.Component {
                             options={GlobalMapping['budgetRange_' + this.forCountry]}
                           />
                         </Col>
-                        <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="date" type="date" label="Date" onBlur={this.handleBlur}/></Col>
+                        <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="date" type="date" label="Date (Appox.)" onBlur={this.handleBlur}/></Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="fname" label="First Name" autoComplete="name" onBlur={this.handleBlur}/> </Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="lname" label="Last Name" autoComplete="name" onBlur={this.handleBlur}/> </Col>
-                        <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="email" type="email" label="Email" autoComplete="email" onBlur={this.handleBlur}/></Col>
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="phone" type="tel" label="Phone" autoComplete="tel" onBlur={this.handleBlur}/></Col>
+                        <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Input name="email" type="email" label="Email" autoComplete="email" onBlur={this.handleBlur}/></Col>                        
                         <Col lg={12} xl={12} md={12} sm={12} xs={12}> <Textarea name='message' label='Message (Recommended)' placeholder={this.msgPlaceholder} onBlur={this.handleBlur} rows="6"/> </Col>
                       </Row>
                         
