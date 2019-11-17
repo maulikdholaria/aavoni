@@ -184,8 +184,8 @@ class DistributeLeads:
 	    								 	body=email_body,
 	    								 	to='%s' %(lead['phone']))
 		except:
-  			print message
-  			
+  			print("Error sending text")
+
 		return True
 
 	def send_planner_whatsapp(self, lead):
