@@ -179,9 +179,13 @@ class DistributeLeads:
 		email_body = self.planners_whatsapp_body(lead)
 		client = Client(self.config['twilio']['ACCOUNT_SID'], self.config['twilio']['AUTH_TOKEN'])
 
-		message = client.messages.create(from_='%s' %(self.config['twilio']['NUMBER']),
-	    								 body=email_body,
-	    								 to='%s' %(lead['phone']))
+		try:
+			message = client.messages.create(from_='%s' %(self.config['twilio']['NUMBER']),
+	    								 	body=email_body,
+	    								 	to='%s' %(lead['phone']))
+		except:
+  			print message
+  			
 		return True
 
 	def send_planner_whatsapp(self, lead):
