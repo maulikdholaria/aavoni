@@ -168,7 +168,21 @@ class DistributeLeads:
 				# if lead['forCountry'] == 'IN':
 				# 	self.send_planner_whatsapp(lead)
 				self.save_planner_lead_send(lead)
+				self.send_planner_text(lead)
 			print "Email | QuestionId: %d | PlannerId: %d | %s | %s" %(lead['question_id'], lead['planner_id'], lead['email'], str(email_status))
+
+	def send_planner_text(self, lead):
+
+		if lead['forCountry'] == 'IN' and "+91" not in lead['phone']:
+			lead['phone'] = "+91%s" %(lead['phone'])
+
+		email_body = self.planners_whatsapp_body(lead)
+		client = Client(self.config['twilio']['ACCOUNT_SID'], self.config['twilio']['AUTH_TOKEN'])
+
+		message = client.messages.create(from_='%s' %(self.config['twilio']['NUMBER']),
+	    								 body=email_body,
+	    								 to='%s' %(lead['phone']))
+		return True
 
 	def send_planner_whatsapp(self, lead):
 
