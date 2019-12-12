@@ -226,10 +226,10 @@ class DistributeLeads:
 		sql_insert_statement = """INSERT INTO 
 								  planners_search_lead_match (searchQuestionId, plannerId, uuid) 
 							   	  VALUES(%d, %d, '%s')""" %(lead['question_id'],lead['planner_id'],lead['uuid'])
-		try:
-			rs = self.sql_conn.execute(sql_insert_statement)
-		except Exception as e:
-		    print(str(e))
+		#try:
+		rs = self.sql_conn.execute(sql_insert_statement)
+		#except Exception as e:
+		#    print(str(e))
 
 		return True
 
