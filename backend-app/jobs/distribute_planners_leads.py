@@ -163,16 +163,16 @@ class DistributeLeads:
 			leads_to_be_sent_df['phone'] = self.non_production_phone
 		
 		for lead_index, lead in leads_to_be_sent_df.iterrows():
-			try:
-				email_status = self.send_planner_email(lead)
-				if email_status == True:
-					# if lead['forCountry'] == 'IN':
-					# 	self.send_planner_whatsapp(lead)
-					self.save_planner_lead_send(lead)
-					self.send_planner_text(lead)
-				print "Email | QuestionId: %d | PlannerId: %d | %s | %s" %(lead['question_id'], lead['planner_id'], lead['email'], str(email_status))
-			except:
-				print "Error delivering lead"
+			#try:
+			email_status = self.send_planner_email(lead)
+			if email_status == True:
+				# if lead['forCountry'] == 'IN':
+				# 	self.send_planner_whatsapp(lead)
+				self.save_planner_lead_send(lead)
+				self.send_planner_text(lead)
+			print "Email | QuestionId: %d | PlannerId: %d | %s | %s" %(lead['question_id'], lead['planner_id'], lead['email'], str(email_status))
+			#except:
+			#	print "Error delivering lead"
 
 	def send_planner_text(self, lead):
 
