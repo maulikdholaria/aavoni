@@ -1,5 +1,6 @@
 #!/bin/sh
 sudo su
+yum -y install wget unzip
 yum install nginx
 systemctl start nginx
 
@@ -25,3 +26,6 @@ ln -s /usr/local/bin/node /bin/node
 
 #For nginx proxy to backend app at port 3001
 setsebool httpd_can_network_connect on -P
+
+#setting up bash variables
+echo  'export NODE_ENV=production' >> ~/.bashrc
